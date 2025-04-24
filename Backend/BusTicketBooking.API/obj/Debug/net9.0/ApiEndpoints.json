@@ -1,0 +1,86 @@
+[
+  {
+    "ContainingType": "BusTicketBooking.API.Controllers.AuthController",
+    "Method": "Dangky",
+    "RelativePath": "api/Auth/Dangky",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "BusTicketBooking.API.DTOs.DangkyDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusTicketBooking.API.Controllers.AuthController",
+    "Method": "Dangnhap",
+    "RelativePath": "api/Auth/Dangnhap",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "BusTicketBooking.API.DTOs.DangnhapDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusTicketBooking.API.Controllers.AuthController",
+    "Method": "XacThucEmail",
+    "RelativePath": "api/Auth/XacThucEmail",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusTicketBooking.API.Controllers.ChuyenxeController",
+    "Method": "TimChuyenxe",
+    "RelativePath": "api/Chuyenxe/TimChuyenXe",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "BusTicketBooking.API.DTOs.ChuyenxeRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusTicketBooking.API.Controllers.KhachhangController",
+    "Method": "LayThongTinKhachHang",
+    "RelativePath": "api/Khachhang/LayThongTinKhachHang",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BusTicketBooking.API.Controllers.TinhController",
+    "Method": "GetAll",
+    "RelativePath": "api/Tinh",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

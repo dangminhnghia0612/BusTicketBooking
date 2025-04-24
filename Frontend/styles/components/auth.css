@@ -1,0 +1,92 @@
+/* Toàn bộ trang */
+body {
+  background: linear-gradient(135deg, #f36f21, #f9a825);
+  font-family: "Arial", sans-serif;
+}
+
+/* Card đăng nhập */
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Tiêu đề form */
+#form-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #f36f21;
+}
+
+/* Input fields */
+.form-control {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #f36f21;
+  box-shadow: 0 0 5px rgba(243, 111, 33, 0.5);
+}
+
+/* Nút bấm */
+.btn-primary {
+  background-color: #f36f21;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #d65a1a;
+  box-shadow: 0 4px 10px rgba(214, 90, 26, 0.3);
+}
+
+/* Toggle chuyển đổi giữa Đăng nhập và Đăng ký */
+#toggle-form {
+  font-size: 14px;
+  font-weight: bold;
+  color: #f36f21;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+#toggle-form:hover {
+  color: #d65a1a;
+  text-decoration: underline;
+}
+
+/* Hiệu ứng khi di chuột vào các trường */
+.form-label {
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-group input::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* Hiệu ứng khi focus vào input */
+.form-group input:focus::placeholder {
+  color: transparent;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .card {
+    padding: 20px;
+  }
+
+  #form-title {
+    font-size: 20px;
+  }
+
+  .btn-primary {
+    font-size: 14px;
+  }
+}
