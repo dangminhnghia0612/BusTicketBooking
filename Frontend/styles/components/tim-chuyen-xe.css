@@ -1,0 +1,94 @@
+body {
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
+}
+.card {
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  width: 100%;
+}
+.card-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  background-color: white;
+}
+.card-footer {
+  border-top: 1px solid #f0f0f0;
+  padding: 10px 0;
+  background-color: white;
+}
+.time-badge {
+  font-size: 22px;
+  font-weight: bold;
+}
+.duration-badge {
+  color: #6c757d;
+  font-size: 14px;
+}
+.location {
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+.price {
+  color: #ff5722;
+  font-size: 18px;
+  font-weight: bold;
+}
+.warning-text {
+  color: #ff9800;
+  font-size: 13px;
+}
+.nav-link {
+  color: #333;
+  font-weight: 500;
+  text-align: center;
+  padding: 10px 8px;
+  font-size: 0.9rem;
+}
+/* .nav-link.active {
+  color: #333;
+  border-bottom: 2px solid #ff5722;
+} */
+.btn-book {
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.btn-book:hover {
+  background-color: #e64a19;
+  color: white;
+}
+.amenity-badge {
+  background-color: #f1f8e9;
+  color: #558b2f;
+  border-radius: 4px;
+  padding: 3px 8px;
+  margin-right: 5px;
+  font-size: 12px;
+}
+.seats-available {
+  color: #558b2f;
+  font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .time-badge {
+    font-size: 18px;
+  }
+  .location {
+    font-size: 0.8rem;
+  }
+  .nav-link {
+    padding: 8px 5px;
+    font-size: 0.8rem;
+  }
+}

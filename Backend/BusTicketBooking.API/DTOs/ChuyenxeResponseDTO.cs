@@ -2,7 +2,6 @@
 
 namespace BusTicketBooking.API.DTOs
 {
-    [Keyless]
     public class ChuyenxeResponseDTO
     {
         public int Ma_Chuyenxe { get; set; }

@@ -16,7 +16,6 @@ public partial class QLBanvexeDbContext : DbContext
         : base(options)
     {
     }
-    public DbSet<ChuyenxeResponseDTO> ChuyenxeResponseDTO { get; set; }
     public virtual DbSet<Apdungkhuyenmai> Apdungkhuyenmai { get; set; }
 
     public virtual DbSet<Benxe> Benxe { get; set; }
@@ -594,7 +593,6 @@ public partial class QLBanvexeDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Xe_Loaixe");
         });
-        modelBuilder.Entity<ChuyenxeResponseDTO>().HasNoKey(); // Đánh dấu không có khóa
         OnModelCreatingPartial(modelBuilder);
     }
 

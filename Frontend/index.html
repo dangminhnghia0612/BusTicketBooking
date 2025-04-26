@@ -94,6 +94,7 @@
               type="text"
               id="departure-input"
               placeholder="Nhập điểm đi"
+              value="TP HCM"
               autocomplete="off"
             />
             <select
@@ -112,6 +113,7 @@
               type="text"
               id="destination-input"
               placeholder="Nhập điểm đến"
+              value="Khánh Hòa"
               autocomplete="off"
             />
             <select
@@ -123,11 +125,11 @@
           </div>
           <div class="form-group">
             <label>Ngày đi</label>
-            <input type="date" value="2025-04-23" />
+            <input type="date" id="departure-date" />
           </div>
           <div class="form-group">
             <label>Số vé</label>
-            <select>
+            <select id="ticket-count">
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -135,9 +137,22 @@
               <option value="5">5</option>
             </select>
           </div>
-          <button type="submit" class="btn-search">Tìm chuyến xe</button>
+          <button type="button" id="search-button" class="btn-search">
+            Tìm chuyến xe
+          </button>
         </form>
       </div>
+    </section>
+    <section
+      id="iframe-container"
+      class="container"
+      style="display: none; margin-top: 20px"
+    >
+      <iframe
+        id="result-iframe"
+        src=""
+        style="width: 100%; height: 600px; border: none"
+      ></iframe>
     </section>
 
     <footer class="footer">

@@ -1,5 +1,6 @@
 ﻿using BusTicketBooking.API.Data;
 using BusTicketBooking.API.DTOs;
+using BusTicketBooking.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,12 +21,11 @@ namespace BusTicketBooking.API.Controllers
         {
             try
             {
-                var ds = await _context.ChuyenxeResponseDTO.FromSqlInterpolated(
-                   $@"EXEC sp_TimChuyenXe @TinhDi = {dto.Diemdi}, @TinhDen = {dto.Diemden}, @NgayDi = {dto.Ngaydi}, @Soluongve = {dto.Soluongve}").ToListAsync();
-                if (ds.Count == 0 )
-                {
-                    return NotFound(new {Message = "Không tìm thấy"});
-                }
+                //var ds = await _context.ChuyenxeResponseDTO.FromSqlInterpolated(
+                //   $@"EXEC sp_TimChuyenXe @TinhDi = {dto.Diemdi}, @TinhDen = {dto.Diemden}, @NgayDi = {dto.Ngaydi}, @Soluongve = {dto.Soluongve}").ToListAsync();
+                var ds = await _context.Database.SqlQuery<ChuyenxeResponseDTO>
+                    ($@"EXEC sp_TimChuyenXe @TinhDi = {dto.Diemdi}, @TinhDen = {dto.Diemden}, @NgayDi = {dto.Ngaydi}, @Soluongve = {dto.Soluongve}")
+                .ToListAsync();
                 return Ok(ds);
             }
             catch (Exception ex)

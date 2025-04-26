@@ -176,3 +176,4 @@ D:\BusTicketBooking\Backend\BusTicketBooking.API\obj\Debug\net9.0\staticwebasset
 D:\BusTicketBooking\Backend\BusTicketBooking.API\bin\Debug\net9.0\BouncyCastle.Cryptography.dll
 D:\BusTicketBooking\Backend\BusTicketBooking.API\bin\Debug\net9.0\MailKit.dll
 D:\BusTicketBooking\Backend\BusTicketBooking.API\bin\Debug\net9.0\MimeKit.dll
+D:\BusTicketBooking\Backend\BusTicketBooking.API\obj\Debug\net9.0\BusTicketBooking.API.sourcelink.json

@@ -1,12 +1,11 @@
 import { layDanhSachTinh } from "./api/tinh.js";
-
 document.addEventListener("DOMContentLoaded", async function () {
   const before = document.getElementsByClassName("before-login")[0];
   const after = document.getElementsByClassName("after-login")[0];
   const userName = document.getElementById("user-name");
   const userAvatar = document.getElementById("user-avatar");
 
-  thietLapNgayMacDinh('input[type="date"]');
+  ThietLapNgayMacDinh('input[type="date"]');
 
   // Kiểm tra xem người dùng đã đăng nhập chưa
   const customerName = localStorage.getItem("hotenKH");
@@ -21,26 +20,33 @@ document.addEventListener("DOMContentLoaded", async function () {
       userAvatar.style.display = "none";
     }
   }
-  xulyDangXuat();
+  XulyDangXuat();
 
   // Danh sách các điểm đi
   const locations = await layDanhSachTinh();
   const departureInput = document.getElementById("departure-input");
   const departureSuggestions = document.getElementById("departure-suggestions");
-  goiYDiaDiem(departureInput, departureSuggestions, locations);
+  GoiYDiaDiem(departureInput, departureSuggestions, locations);
   const destinationInput = document.getElementById("destination-input");
   const destinationSuggestions = document.getElementById(
     "destination-suggestions"
   );
-  goiYDiaDiem(destinationInput, destinationSuggestions, locations);
+  GoiYDiaDiem(destinationInput, destinationSuggestions, locations);
 
-  //hoán đổi giá trị giữa ô đi và đến
+  //Sự kiện nút Swap
   const swapButton = document.getElementById("swap-button");
   swapButton.addEventListener("click", function () {
-    hoanDoi();
+    HoanDoi();
+  });
+
+  //Sự kiện click vào nút tìm chuyến xe
+  const searchButton = document.getElementById("search-button");
+  searchButton.addEventListener("click", function () {
+    TimChuyenXe();
   });
 });
-function thietLapNgayMacDinh(inputSelector) {
+
+function ThietLapNgayMacDinh(inputSelector) {
   const ngayDiInput = document.querySelector(inputSelector);
 
   if (!ngayDiInput) {
@@ -60,7 +66,7 @@ function thietLapNgayMacDinh(inputSelector) {
   // Gán giá trị mặc định cho input
   ngayDiInput.value = formattedDate;
 }
-function goiYDiaDiem(inputElement, suggestionsElement, data) {
+function GoiYDiaDiem(inputElement, suggestionsElement, data) {
   inputElement.addEventListener("input", function () {
     const query = inputElement.value.toLowerCase().trim();
     suggestionsElement.innerHTML = ""; // Xóa gợi ý cũ
@@ -89,7 +95,6 @@ function goiYDiaDiem(inputElement, suggestionsElement, data) {
         const selectedOption =
           suggestionsElement.options[suggestionsElement.selectedIndex];
         inputElement.value = selectedOption.textContent; // Điền tên tỉnh vào ô input
-        console.log("Mã tỉnh được chọn:", selectedOption.value); // Xử lý MaTinh
         suggestionsElement.style.display = "none"; // Ẩn danh sách gợi ý
       });
     } else {
@@ -104,7 +109,7 @@ function goiYDiaDiem(inputElement, suggestionsElement, data) {
     }
   });
 }
-function xulyDangXuat() {
+function XulyDangXuat() {
   const logoutButton = document.getElementById("logout");
   logoutButton.addEventListener("click", function (e) {
     e.preventDefault();
@@ -113,11 +118,37 @@ function xulyDangXuat() {
     window.location.reload();
   });
 }
-function hoanDoi() {
+function HoanDoi() {
   const departureInput = document.getElementById("departure-input");
   const destinationInput = document.getElementById("destination-input");
   const temp = departureInput.value;
   departureInput.value = destinationInput.value;
   destinationInput.value = temp;
 }
-function timChuyenXe() {}
+function TimChuyenXe() {
+  const iframeContainer = document.getElementById("iframe-container");
+  const resultIframe = document.getElementById("result-iframe");
+
+  // Lấy giá trị từ các input
+  const departure = document.getElementById("departure-input").value;
+  const destination = document.getElementById("destination-input").value;
+  const date = document.getElementById("departure-date").value;
+  const ticketCount = document.getElementById("ticket-count").value;
+
+  // Kiểm tra nếu các trường bắt buộc chưa được nhập
+  if (!departure || !destination) {
+    alert("Vui lòng nhập đầy đủ thông tin!");
+    return;
+  }
+
+  // Tạo URL với query string để truyền dữ liệu đến `tim-chuyen-xe.html`
+  const url = `./pages/tim-chuyen-xe.html?departure=${encodeURIComponent(
+    departure
+  )}&destination=${encodeURIComponent(
+    destination
+  )}&date=${date}&tickets=${ticketCount}`;
+
+  // Hiển thị iframe và gán URL
+  iframeContainer.style.display = "block";
+  resultIframe.src = url;
+}
