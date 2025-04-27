@@ -53,7 +53,7 @@ namespace BusTicketBooking.API.Controllers
                     kh.Hoten = dto.Hoten;
                     kh.Ngaytao = DateTime.Now;
                     kh.Ngaycapnhat = DateTime.Now;
-                    kh.Ghichu = verificationToken;
+                    kh.Token = verificationToken;
                     await _context.SaveChangesAsync();
                     await _emailService.GuiEmailAsync(dto.Email, "Nhà xe Minh Nghĩa - Xác thực tài khoản đăng ký", emailBody);
                     return Ok(new { Message = "Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản." });
@@ -69,7 +69,7 @@ namespace BusTicketBooking.API.Controllers
                 MaVaitro = 2, 
                 Ngaytao = DateTime.Now,
                 Ngaycapnhat = DateTime.Now,
-                Ghichu = verificationToken
+                Token = verificationToken
             };
             _context.Khachhang.Add(khachhang);
             await _context.SaveChangesAsync();
@@ -81,7 +81,7 @@ namespace BusTicketBooking.API.Controllers
         public async Task<IActionResult> XacThucEmail([FromQuery] string token)
         {
             // Tìm khách hàng theo token
-            var khachhang = await _context.Khachhang.FirstOrDefaultAsync(kh => kh.Ghichu == token);
+            var khachhang = await _context.Khachhang.FirstOrDefaultAsync(kh => kh.Token == token);
 
             if (khachhang == null)
             {
@@ -89,7 +89,7 @@ namespace BusTicketBooking.API.Controllers
             }
 
             khachhang.MaTinhtrang = 2;
-            khachhang.Ghichu = null;
+            khachhang.Token = null;
 
             await _context.SaveChangesAsync();
 

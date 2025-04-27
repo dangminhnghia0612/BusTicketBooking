@@ -604,3 +604,8 @@ typings/
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 Typescript/*
 Webpack/*
+*.json
+*.json
+Backend/BusTicketBooking.API/.vs/BusTicketBooking.API/v17/DocumentLayout.backup.json
+Backend/BusTicketBooking.API/.vs/BusTicketBooking.API/v17/.suo
+*.bin

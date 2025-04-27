@@ -9,10 +9,6 @@ public partial class Datve
 
     public int MaChuyenxe { get; set; }
 
-    public int? MaThanhtoan { get; set; }
-
-    public int? MaHuydatve { get; set; }
-
     public int? MaKhachhang { get; set; }
 
     public int MaTinhtrang { get; set; }
@@ -23,7 +19,7 @@ public partial class Datve
 
     public decimal? Giagoc { get; set; }
 
-    public decimal? Tongtien { get; set; }
+    public decimal? Giasaukhuyenmai { get; set; }
 
     public string? Ghichu { get; set; }
 
@@ -35,15 +31,15 @@ public partial class Datve
 
     public virtual ICollection<Apdungkhuyenmai> Apdungkhuyenmai { get; set; } = new List<Apdungkhuyenmai>();
 
-    public virtual Chuyenxe MaChuyenxeNavigation { get; set; } = null!;
+    public virtual ICollection<Huydatve> Huydatve { get; set; } = new List<Huydatve>();
 
-    public virtual Huydatve? MaHuydatveNavigation { get; set; }
+    public virtual Chuyenxe MaChuyenxeNavigation { get; set; } = null!;
 
     public virtual Khachhang? MaKhachhangNavigation { get; set; }
 
-    public virtual Thanhtoan? MaThanhtoanNavigation { get; set; }
-
     public virtual Tinhtrangdatve MaTinhtrangNavigation { get; set; } = null!;
+
+    public virtual ICollection<Thanhtoan> Thanhtoan { get; set; } = new List<Thanhtoan>();
 
     public virtual ICollection<Vexe> Vexe { get; set; } = new List<Vexe>();
 }

@@ -7,6 +7,8 @@ public partial class Huydatve
 {
     public int MaHuydatve { get; set; }
 
+    public int MaDatve { get; set; }
+
     public int MaLydo { get; set; }
 
     public int? MaQuantrivien { get; set; }
@@ -19,9 +21,9 @@ public partial class Huydatve
 
     public decimal? Tienhoantra { get; set; }
 
-    public virtual ICollection<Datve> Datve { get; set; } = new List<Datve>();
-
     public virtual Chinhsach MaChinhsachNavigation { get; set; } = null!;
+
+    public virtual Datve MaDatveNavigation { get; set; } = null!;
 
     public virtual Lydohuydatve MaLydoNavigation { get; set; } = null!;
 

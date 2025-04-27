@@ -28,32 +28,52 @@ IF exists (SELECT * FROM Khachhang)					DBCC CHECKIDENT (Khachhang, RESEED, 0)
 IF exists (SELECT * FROM Vaitro)					DBCC CHECKIDENT (Vaitro, RESEED, 0)
 
 -- DELETE DATA FROM TABLES
-DELETE FROM Apdungkhuyenmai
 DELETE FROM Vexe
-DELETE FROM Datve
-DELETE FROM Tinhtrangdatve
+DELETE FROM Apdungkhuyenmai
 DELETE FROM Huydatve
-DELETE FROM Lydohuydatve
-DELETE FROM Chinhsach
-DELETE FROM Khachhang
-DELETE FROM Tinhtrangkhachhang
-DELETE FROM Bieungu
-DELETE FROM Thongtinnhaxe
-DELETE FROM Tintuc
+DELETE FROM Thanhtoan
+DELETE FROM Datve
 DELETE FROM Chuyenxe
 DELETE FROM Tuyenxe
-DELETE FROM Benxe
-DELETE FROM Quan
-DELETE FROM Tinh
-DELETE FROM Ghe
-DELETE FROM Xe
-DELETE FROM Loaixe
-DELETE FROM Thanhtoan
-DELETE FROM Phuongthucthanhtoan
 DELETE FROM Khuyenmai
-DELETE FROM Loaikhuyenmai
+DELETE FROM Benxe
+DELETE FROM Ghe
+DELETE FROM Thongtinnhaxe
+DELETE FROM Bieungu
+DELETE FROM Tintuc
+DELETE FROM Khachhang
+DELETE FROM Chinhsach
 DELETE FROM Quantrivien
+DELETE FROM Quan
+DELETE FROM Xe
+DELETE FROM Tinhtrangkhachhang
 DELETE FROM Vaitro
+DELETE FROM Lydohuydatve
+DELETE FROM Loaikhuyenmai
+DELETE FROM Tinhtrangdatve
+DELETE FROM Phuongthucthanhtoan
+DELETE FROM Tinh
+DELETE FROM Loaixe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 INSERT INTO Vaitro(Ten, Mota) VALUES
@@ -67,17 +87,15 @@ INSERT INTO Tinhtrangkhachhang(Ten) VALUES
 (N'Khóa tài khoản');  
 
 
-INSERT INTO Khachhang(Ma_Vaitro, Ma_Tinhtrang, Sodienthoai, Matkhau, Email, Hoten, Gioitinh, Ngaysinh, Diachi, Nghenghiep, Anh, Ghichu, Ngaytao, Ngaycapnhat, Dangnhapcuoi) VALUES
---Chưa kích hoạt
-(2, 1, '+84987654321', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, GETDATE(), GETDATE(), NULL),
+INSERT INTO Khachhang(Ma_Vaitro, Ma_Tinhtrang, Sodienthoai, Matkhau, Email, Hoten, Token, Gioitinh, Ngaysinh, Diachi, Nghenghiep, Anh, Ghichu, Ngaytao, Ngaycapnhat, Dangnhapcuoi) VALUES
 -- Khách hàng thường
-(2, 2, '+84912345678', '$2b$10$U3aVZRl4mhWYPoDcy7eGxu.fF4H4sYvqgK2DrXhDYMKZUZKys3H9m', 'user1@gmail.com', N'Nguyễn Văn Hải'  , 1, '1990-05-15', N'123 Đường Lê Lợi, Q.1, TP.HCM'			   , N'Kỹ sư'		  , NULL, NULL, GETDATE(), GETDATE(), GETDATE()),
-(2, 2, '+84911111111', '$2b$10$U3aVZRl4mhWYPoDcy7eGxu.fF4H4sYvqgK2DrXhDYMKZUZKys3H9m', 'user2@gmail.com', N'Trần Văn Nam'    , 1, '1988-04-12', N'12 Đường Lê Duẩn, Q.1, TP.HCM'			   , N'Kế toán'		  , NULL, NULL, GETDATE(), GETDATE(), GETDATE()),
-(2, 2, '+84922222222', '$2b$10$U3aVZRl4mhWYPoDcy7eGxu.fF4H4sYvqgK2DrXhDYMKZUZKys3H9m', 'user3@gmail.com', N'Nguyễn Thị Hương', 0, '1992-07-25', N'34 Đường Nguyễn Thị Minh Khai, Q.3, TP.HCM', N'Giáo viên'	  , NULL, NULL, GETDATE(), GETDATE(), GETDATE()),
-(2, 2, '+84933333333', '$2b$10$U3aVZRl4mhWYPoDcy7eGxu.fF4H4sYvqgK2DrXhDYMKZUZKys3H9m', 'user4@gmail.com', N'Lê Minh Tuấn'	   , 1, '1985-11-30', N'56 Đường Cách Mạng Tháng 8, Q.10, TP.HCM'  , N'Lập trình viên', NULL, NULL, GETDATE(), GETDATE(), GETDATE()),
-(2, 2, '+84944444444', '$2b$10$U3aVZRl4mhWYPoDcy7eGxu.fF4H4sYvqgK2DrXhDYMKZUZKys3H9m', 'user5@gmail.com', N'Phạm Thị Mai'	   , 0, '1990-02-14', N'78 Đường Lý Thường Kiệt, Q.11, TP.HCM'	   , N'Y tá'		  , NULL, NULL, GETDATE(), GETDATE(), GETDATE()),
+(2, 2, '+84912345678', '$2b$10$U3aVZRl4mhWYPoDcy7eGxu.fF4H4sYvqgK2DrXhDYMKZUZKys3H9m', 'user1@gmail.com', N'Nguyễn Văn Hải'  , NULL, 1, '1990-05-15', N'123 Đường Lê Lợi, Q.1, TP.HCM'			   , N'Kỹ sư'		  , NULL, NULL, GETDATE(), GETDATE(), GETDATE()),
+(2, 2, '+84911111111', '$2b$10$U3aVZRl4mhWYPoDcy7eGxu.fF4H4sYvqgK2DrXhDYMKZUZKys3H9m', 'user2@gmail.com', N'Trần Văn Nam'    , NULL, 1, '1988-04-12', N'12 Đường Lê Duẩn, Q.1, TP.HCM'			   , N'Kế toán'		  , NULL, NULL, GETDATE(), GETDATE(), GETDATE()),
+(2, 2, '+84922222222', '$2b$10$U3aVZRl4mhWYPoDcy7eGxu.fF4H4sYvqgK2DrXhDYMKZUZKys3H9m', 'user3@gmail.com', N'Nguyễn Thị Hương', NULL, 0, '1992-07-25', N'34 Đường Nguyễn Thị Minh Khai, Q.3, TP.HCM', N'Giáo viên'	  , NULL, NULL, GETDATE(), GETDATE(), GETDATE()),
+(2, 2, '+84933333333', '$2b$10$U3aVZRl4mhWYPoDcy7eGxu.fF4H4sYvqgK2DrXhDYMKZUZKys3H9m', 'user4@gmail.com', N'Lê Minh Tuấn'	   , NULL, 1, '1985-11-30', N'56 Đường Cách Mạng Tháng 8, Q.10, TP.HCM'  , N'Lập trình viên', NULL, NULL, GETDATE(), GETDATE(), GETDATE()),
+(2, 2, '+84944444444', '$2b$10$U3aVZRl4mhWYPoDcy7eGxu.fF4H4sYvqgK2DrXhDYMKZUZKys3H9m', 'user5@gmail.com', N'Phạm Thị Mai'	   , NULL, 0, '1990-02-14', N'78 Đường Lý Thường Kiệt, Q.11, TP.HCM'	   , N'Y tá'		  , NULL, NULL, GETDATE(), GETDATE(), GETDATE()),
 -- Tài khoản bị khóa
-(2, 3, '+84965874123', '$2b$10$U3aVZRl4mhWYPoDcy7eGxu.fF4H4sYvqgK2DrXhDYMKZUZKys3H9m', 'banneduser@gmail.com', N'Hoàng Văn E', 1, '1978-07-10', N'654 Đường 3/2, Q.10, TP.HCM', N'Kinh doanh', NULL, N'Vi phạm điều khoản sử dụng', GETDATE(), GETDATE(), GETDATE());
+(2, 3, '+84965874123', '$2b$10$U3aVZRl4mhWYPoDcy7eGxu.fF4H4sYvqgK2DrXhDYMKZUZKys3H9m', 'banneduser@gmail.com', N'Hoàng Văn E', NULL, 1, '1978-07-10', N'654 Đường 3/2, Q.10, TP.HCM', N'Kinh doanh', NULL, N'Vi phạm điều khoản sử dụng', GETDATE(), GETDATE(), GETDATE());
 
 INSERT INTO Quantrivien(Ma_Vaitro, Tendangnhap, Matkhau, Sodienthoai, Hoten, Anh, Ngaytao, Ngaycapnhat) VALUES
 (1, 'admin1', '123', '0901234567', N'Đặng Minh Nghĩa', NULL, GETDATE(), GETDATE()),
@@ -95,7 +113,7 @@ INSERT INTO Thongtinnhaxe(Ma_Quantrivien, Ten, Mota, Ngaytao, Ngaycapnhat) VALUE
 (1, N'Fax', N'(84.8) 3850 6595', GETDATE(), GETDATE());
 
 
-INSERT INTO Loaixe(Tenloai, Soghe, Nhavesinh, Anh, Sodoghe) VALUES
+INSERT INTO Loaixe(Tenloai, Soluongghe, Nhavesinh, Anh, Sodoghe) VALUES
 (N'Xe giường nằm đôi 22 chỗ', 22, 1, NULL, '[
 									  {
 										"tang": 1,
@@ -199,10 +217,10 @@ INSERT INTO Tinhtrangdatve(Ten) VALUES
 (N'Hủy'),
 (N'Thành công');
 
-
-INSERT INTO Chinhsach(Ten, Mota, Sogiotruockhoihanh, Phantram, Kichhoat, Ngaytao, Ngaycapnhat) VALUES
-(N'Hủy trước 4 giờ', N'Hoàn 90% tiền vé', 4, 90.00, 1, GETDATE(), GETDATE()),
-(N'Hủy sau 4 giờ', N'Không thể hủy', 4, 0.00, 1, GETDATE(), GETDATE());
+select * from Chinhsach
+INSERT INTO Chinhsach(Ma_Quantrivien, Ten, Mota, Sogiotruockhoihanh, Phantram, Kichhoat, Ngaytao, Ngaycapnhat) VALUES
+(1, N'Hủy trước 4 giờ', N'Hoàn 90% tiền vé', 4, 90.00, 1, GETDATE(), GETDATE()),
+(1, N'Hủy sau 4 giờ', N'Không thể hủy', 4, 0.00, 1, GETDATE(), GETDATE());
 
 
 INSERT INTO Lydohuydatve(Mota) VALUES
@@ -1101,31 +1119,32 @@ INSERT INTO Khuyenmai(
     120000, 1, GETDATE()
 );
 
+INSERT INTO Datve(Ma_Chuyenxe, Ma_Khachhang, Ma_Tinhtrang, Ngaydat, Soluong, Giagoc, Giasaukhuyenmai, Ghichu, Tenkhachhang, Sodienthoai, Email) VALUES
+(1, 2, 4, GETDATE(), 1, 275000, 275000, NULL, N'Nguyễn Văn Hải', '0912345678', 'user1@gmail.com'),
+(2, 3, 4, GETDATE(), 2, 550000, 550000, NULL, N'Trần Văn Nam', '0911111111', 'user2@gmail.com'),
+(3, 4, 4, GETDATE(), 1, 275000, 275000, NULL, N'Nguyễn Thị Hương', '0922222222', 'user3@gmail.com'),
+(4, NULL, 4, GETDATE(), 3, 885000, 885000, NULL, N'Huỳnh Thị D', '0934567890', 'thid@example.com'),
+(5, NULL, 4, GETDATE(), 2, 590000, 590000, NULL, N'Phạm Văn E', '0945678901', 'vane@example.com'),
+(6, 5, 4, GETDATE(), 1, 295000, 295000, NULL, N'Lê Minh Tuấn', '0933333333', 'user4@gmail.com'),
+(7, 6, 4, GETDATE(), 1, 300000, 300000, NULL, N'Phạm Thị Mai', '0944444444', 'user5@gmail.com'),
+(8, 2, 4, GETDATE(), 2, 600000, 600000, NULL, N'Nguyễn Văn Hải', '0912345678', 'user1@gmail.com'),
+(9, 4, 4, GETDATE(), 1, 300000, 300000, NULL, N'Nguyễn Thị Hương', '0922222222', 'user3@gmail.com'),
+(10, NULL, 4, GETDATE(), 1, 315000, 315000, NULL, N'Hồ Thị K', '0990123456', 'thik@example.com');
 
-INSERT INTO Thanhtoan(Ma_Phuongthuc, Ngaythanhtoan, Ghichu) VALUES 
-(1, GETDATE(), N'Thanh toán qua VNPAY'),
-(2, GETDATE(), N'Thanh toán qua Momo'),
-(4, GETDATE(), N'Thanh toán qua ZaloPay'),
-(6, GETDATE(), N'Thanh toán qua VietQR'),
-(1, GETDATE(), N'Thanh toán qua VNPAY'),
-(2, GETDATE(), N'Thanh toán qua MoMo'),
-(7, GETDATE(), N'Thanh toán qua thẻ ATM'),
-(4, GETDATE(), N'Thanh toán qua ZaloPay'),
-(5, GETDATE(), N'Thanh toán qua Viettel Money'),
-(8, GETDATE(), N'Thanh toán qua Visa');
+
+INSERT INTO Thanhtoan(Ma_Phuongthuc, Ma_Datve, Ngaythanhtoan, Sotien, Ghichu) VALUES 
+(1, 1,  GETDATE(), 275000, N'Thanh toán qua VNPAY'),
+(2, 2,  GETDATE(), 550000, N'Thanh toán qua Momo'),
+(4, 3,  GETDATE(), 275000, N'Thanh toán qua ZaloPay'),
+(6, 4,  GETDATE(), 885000, N'Thanh toán qua VietQR'),
+(1, 5,  GETDATE(), 590000, N'Thanh toán qua VNPAY'),
+(2, 6,  GETDATE(), 295000, N'Thanh toán qua MoMo'),
+(7, 7,  GETDATE(), 300000, N'Thanh toán qua thẻ ATM'),
+(4, 8,  GETDATE(), 600000, N'Thanh toán qua ZaloPay'),
+(5, 9,  GETDATE(), 300000, N'Thanh toán qua Viettel Money'),
+(8, 10, GETDATE(), 315000, N'Thanh toán qua Visa');
 
 
-INSERT INTO Datve(Ma_Chuyenxe, Ma_Thanhtoan, Ma_Huydatve, Ma_Khachhang, Ma_Tinhtrang, Ngaydat, Soluong, Giagoc, Tongtien, Ghichu, Tenkhachhang, Sodienthoai, Email) VALUES
-(1, 1, NULL, 2, 4, GETDATE(), 1, 275000, 275000, NULL, N'Nguyễn Văn Hải', '0912345678', 'user1@gmail.com'),
-(2, 2, NULL, 3, 4, GETDATE(), 2, 550000, 700000, NULL, N'Trần Văn Nam', '0911111111', 'user2@gmail.com'),
-(3, 3, NULL, 4, 4, GETDATE(), 1, 275000, 275000, NULL, N'Nguyễn Thị Hương', '0922222222', 'user3@gmail.com'),
-(4, 4, NULL, NULL, 4, GETDATE(), 3, 885000, 885000, NULL, N'Huỳnh Thị D', '0934567890', 'thid@example.com'),
-(5, 5, NULL, NULL, 4, GETDATE(), 2, 590000, 590000, NULL, N'Phạm Văn E', '0945678901', 'vane@example.com'),
-(6, 6, NULL, 5, 4, GETDATE(), 1, 295000, 295000, NULL, N'Lê Minh Tuấn', '0933333333', 'user4@gmail.com'),
-(7, 7, NULL, 6, 4, GETDATE(), 1, 300000, 300000, NULL, N'Phạm Thị Mai', '0944444444', 'user5@gmail.com'),
-(8, 8, NULL, 2, 4, GETDATE(), 2, 600000, 600000, NULL, N'Nguyễn Văn Hải', '0912345678', 'user1@gmail.com'),
-(9, 9, NULL, 4, 4, GETDATE(), 1, 300000, 300000, NULL, N'Nguyễn Thị Hương', '0922222222', 'user3@gmail.com'),
-(10, 10, NULL, NULL, 4, GETDATE(), 1, 315000, 315000, NULL, N'Hồ Thị K', '0990123456', 'thik@example.com');
 
 
 INSERT INTO Vexe (Ma_Chuyenxe, Ma_Datve, Ma_Ghe, Giave) VALUES

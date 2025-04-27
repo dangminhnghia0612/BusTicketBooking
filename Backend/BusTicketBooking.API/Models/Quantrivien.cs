@@ -25,6 +25,8 @@ public partial class Quantrivien
 
     public virtual ICollection<Bieungu> Bieungu { get; set; } = new List<Bieungu>();
 
+    public virtual ICollection<Chinhsach> Chinhsach { get; set; } = new List<Chinhsach>();
+
     public virtual ICollection<Huydatve> Huydatve { get; set; } = new List<Huydatve>();
 
     public virtual ICollection<Khuyenmai> Khuyenmai { get; set; } = new List<Khuyenmai>();

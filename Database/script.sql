@@ -34,6 +34,7 @@ BEGIN
     CROSS APPLY OPENJSON(tang.value, '$.cacday') AS day
     CROSS APPLY OPENJSON(day.value, '$.soghe') AS ghe
 END
+GO
 
 CREATE PROC sp_TimChuyenXe
     @TinhDi NVARCHAR(100),
@@ -67,11 +68,13 @@ BEGIN
 	GROUP BY cx.Ma_Chuyenxe, cx.Giodi, cx.Gioden, tx.Khoangthoigian, tx.Giave, bd.Tenbenxe, bden.Tenbenxe, lx.Tenloai
 	HAVING COUNT(CASE WHEN g.Trangthai = 0 THEN 1 END) >= @Soluongve;
 END
-ALTER PROC sp_XoaToken
+GO
+
+CREATE PROC sp_XoaToken
 AS
 BEGIN
     UPDATE Khachhang
-    SET Ghichu = NULL
-    WHERE Ma_Tinhtrang = 1 AND (Ghichu IS NOT NULL) AND DATEDIFF(MINUTE, Ngaytao, GETDATE()) >= 5;
+    SET Token = NULL
+    WHERE Ma_Tinhtrang = 1 AND (Token IS NOT NULL) AND DATEDIFF(MINUTE, Ngaytao, GETDATE()) >= 5;
 END
 

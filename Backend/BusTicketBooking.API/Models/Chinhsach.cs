@@ -7,6 +7,8 @@ public partial class Chinhsach
 {
     public int MaChinhsach { get; set; }
 
+    public int MaQuantrivien { get; set; }
+
     public string? Ten { get; set; }
 
     public string? Mota { get; set; }
@@ -22,4 +24,6 @@ public partial class Chinhsach
     public DateTime? Ngaycapnhat { get; set; }
 
     public virtual ICollection<Huydatve> Huydatve { get; set; } = new List<Huydatve>();
+
+    public virtual Quantrivien MaQuantrivienNavigation { get; set; } = null!;
 }

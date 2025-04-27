@@ -19,6 +19,8 @@ public partial class Khachhang
 
     public string? Hoten { get; set; }
 
+    public string? Token { get; set; }
+
     public bool? Gioitinh { get; set; }
 
     public DateTime? Ngaysinh { get; set; }

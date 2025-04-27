@@ -9,11 +9,15 @@ public partial class Thanhtoan
 
     public int MaPhuongthuc { get; set; }
 
+    public int MaDatve { get; set; }
+
     public DateTime? Ngaythanhtoan { get; set; }
+
+    public decimal? Sotien { get; set; }
 
     public string? Ghichu { get; set; }
 
-    public virtual ICollection<Datve> Datve { get; set; } = new List<Datve>();
+    public virtual Datve MaDatveNavigation { get; set; } = null!;
 
     public virtual Phuongthucthanhtoan MaPhuongthucNavigation { get; set; } = null!;
 }

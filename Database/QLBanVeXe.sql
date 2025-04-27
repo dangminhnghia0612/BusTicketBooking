@@ -1,4 +1,4 @@
-USE master 
+﻿USE master 
 GO
 ALTER DATABASE QLBanVeXe set single_user with rollback immediate -- DISCONNECT FROM ALL SOURCE
 DROP DATABASE IF exists QLBanVeXe
@@ -70,14 +70,12 @@ go
 create table Datve (
    Ma_Datve             int  IDENTITY(1,1)   not null,
    Ma_Chuyenxe          int                  not null,
-   Ma_Thanhtoan         int                  null,
-   Ma_Huydatve          int                  null,
    Ma_Khachhang         int                  null,
    Ma_Tinhtrang         int                  not null,
    Ngaydat              datetime             not null,
    Soluong				int					 not null,
    Giagoc	            decimal              null,
-   Tongtien	            decimal              null,
+   Giasaukhuyenmai      decimal              null,
    Ghichu               nvarchar(100)        null,
    Tenkhachhang         nvarchar(50)         null,
    Sodienthoai			nvarchar(15)         null,
@@ -96,15 +94,6 @@ go
 create nonclustered index Datve_Co_TinhTrangDat_FK on Datve (Ma_TinhTrang ASC)
 go
 
-/*==============================================================*/
-/* Index: Datve_Thanhtoan_FK                                    */
-/*==============================================================*/
-
-
-
-
-create nonclustered index Datve_Thanhtoan_FK on Datve (Ma_Thanhtoan ASC)
-go
 
 /*==============================================================*/
 /* Index: Datve_Chuyenxe_FK                                     */
@@ -126,15 +115,6 @@ go
 create nonclustered index Khachang_Datve_FK on Datve (Ma_Khachhang ASC)
 go
 
-/*==============================================================*/
-/* Index: Huydatve_Datve_FK                                     */
-/*==============================================================*/
-
-
-
-
-create nonclustered index Huydatve_Datve_FK on Datve (Ma_Huydatve ASC)
-go
 
 /*==============================================================*/
 /* Table: Apdungkhuyenmai                                       */
@@ -220,7 +200,7 @@ go
 create table Loaixe (
    Ma_Loaixe            int  IDENTITY(1,1)   not null,
    Tenloai              nvarchar(50)         null,
-   Soghe	            int                  not null,
+   Soluongghe           int                  not null,
    Nhavesinh			bit					 null,
    Sodoghe				nvarchar(max)		 null,
    Anh	                nvarchar(100)        null,
@@ -233,6 +213,7 @@ go
 /*==============================================================*/
 create table Huydatve (
    Ma_Huydatve	        int  IDENTITY(1,1)   not null,
+   Ma_Datve				int					 not null,
    Ma_Lydo	            int                  not null,
    Ma_Quantrivien       int                  null,
    Ma_Chinhsach         int                  not null,
@@ -241,6 +222,16 @@ create table Huydatve (
    Tienhoantra	        decimal              null,
    constraint PK_Huydatve primary key (Ma_Huydatve)
 )
+go
+
+/*==============================================================*/
+/* Index: Datve_Huydatve_FK                                     */
+/*==============================================================*/
+
+
+
+
+create nonclustered index Datve_Huydatve_FK on Huydatve (Ma_Datve ASC)
 go
 
 /*==============================================================*/
@@ -279,6 +270,7 @@ go
 /*==============================================================*/
 create table Chinhsach (
    Ma_Chinhsach             int  IDENTITY(1,1)   not null,
+   Ma_Quantrivien			int					 not null,
    Ten                      nvarchar(50)         null,
    Mota		                nvarchar(100)        null,
    Sogiotruockhoihanh		int                  null,
@@ -291,7 +283,17 @@ create table Chinhsach (
 go
 
 /*==============================================================*/
-/* Table: DISTRICTS                                             */
+/* Index: Chinhsach_Quantrivien_FK                               */
+/*==============================================================*/
+
+
+
+
+create nonclustered index Chinhsach_Quantrivien_FK on Chinhsach (Ma_Quantrivien ASC)
+go
+
+/*==============================================================*/
+/* Table: Quan/Huyen                                            */
 /*==============================================================*/
 create table Quan (
    Ma_Quan			    int			         not null,
@@ -345,7 +347,9 @@ go
 create table Thanhtoan (
    Ma_Thanhtoan         int  IDENTITY(1,1)   not null,
    Ma_Phuongthuc	    int                  not null,
+   Ma_Datve			    int                  not null,
    Ngaythanhtoan        datetime             null,
+   Sotien				decimal				 null,
    Ghichu               nvarchar(100)        null,
    constraint PK_Thanhtoan primary key (Ma_Thanhtoan)
 )
@@ -360,6 +364,16 @@ go
 
 
 create nonclustered index PhuongThucThanhToan_FK on Thanhtoan (Ma_Phuongthuc ASC)
+go
+
+/*==============================================================*/
+/* Index: Thanhtoan_Datve_FK                                     */
+/*==============================================================*/
+
+
+
+
+create nonclustered index Thanhtoan_Datve_FK on Thanhtoan (Ma_Datve ASC)
 go
 
 /*==============================================================*/
@@ -430,7 +444,7 @@ go
 /*==============================================================*/
 create table Tinh (
    Ma_Tinh          int				     not null,
-   CODE             nvarchar(50)         null,
+   Code             nvarchar(50)         null,
    Ten              nvarchar(50)         null,
    constraint PK_Tinh primary key (Ma_Tinh)
 )
@@ -648,6 +662,7 @@ create table Khachhang (
    Matkhau				nvarchar(100)        null,
    Email                nvarchar(50)         null,
    Hoten                nvarchar(100)        null,
+   Token				nvarchar(200)		 null,
    Gioitinh             bit                  null,
    Ngaysinh             datetime             null,
    Diachi               nvarchar(100)        null,
@@ -681,6 +696,10 @@ go
 create nonclustered index Khachhang_Vaitro_FK on Khachhang (Ma_Vaitro ASC)
 go
 
+/*==============================================================*/
+/*						foreign key                             */
+/*==============================================================*/
+
 alter table Quantrivien
    add constraint FK_Quantrivien_Vaitro foreign key (Ma_Vaitro)
       references Vaitro (Ma_Vaitro)
@@ -696,19 +715,10 @@ alter table Datve
       references Tinhtrangdatve (Ma_Tinhtrang)
 go
 
-alter table Datve
-   add constraint FK_Datve_Thanhtoan foreign key (Ma_Thanhtoan)
-      references Thanhtoan (Ma_Thanhtoan)
-go
 
 alter table Datve
    add constraint FK_Datve_Chuyenxe foreign key (Ma_Chuyenxe)
       references Chuyenxe (Ma_Chuyenxe)
-go
-
-alter table Datve
-   add constraint FK_Datve_Huydatve foreign key (Ma_Huydatve)
-      references Huydatve (Ma_Huydatve)
 go
 
 alter table Datve
@@ -751,6 +761,11 @@ alter table Huydatve
       references Chinhsach (Ma_Chinhsach)
 go
 
+alter table Huydatve
+   add constraint FK_Datve_Huyve foreign key (Ma_Datve)
+      references Datve (Ma_Datve)
+go
+
 alter table Quan
    add constraint FK_Quan_Tinh foreign key (Ma_Tinh)
       references Tinh (Ma_Tinh)
@@ -765,6 +780,10 @@ alter table Thanhtoan
    add constraint FK_Phuongthuc_Thanhtoan foreign key (Ma_Phuongthuc)
       references Phuongthucthanhtoan (Ma_Phuongthuc)
 go
+
+alter table Thanhtoan
+	 add constraint FK_Datve_Thanhtoan foreign key (Ma_Datve)
+		references Datve (Ma_Datve)
 
 alter table Khuyenmai
    add constraint FK_TaoKhuyenMai foreign key (Ma_Quantrivien)
@@ -831,3 +850,6 @@ alter table Khachhang
    add constraint FK_Khachhang_Vaitro foreign key (Ma_Vaitro)
       references Vaitro (Ma_Vaitro)
 go
+alter table Chinhsach
+	 add constraint FK_Chinhsach_Quantrivien foreign key (Ma_Quantrivien)
+		references Quantrivien (Ma_Quantrivien)
