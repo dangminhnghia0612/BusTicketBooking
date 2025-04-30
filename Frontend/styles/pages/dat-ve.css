@@ -1,0 +1,115 @@
+/* Custom styles for FUTA Bus Booking */ /* Header gradient background */
+.bg-gradient {
+  background: linear-gradient(to right, #ff7e00, #ff5100);
+  color: white;
+} /* Seat styling */
+#seat-map {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  justify-content: center;
+}
+.floor {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #d9d9d9;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+.floor h6 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.verticalContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+}
+.row-horizontal {
+  display: flex;
+  flex-direction: row; /* Sắp xếp ghế theo chiều dọc */
+  align-items: center;
+  gap: 10px; /* Khoảng cách giữa các ghế */
+}
+.row-vertical {
+  display: flex;
+  flex-direction: column; /* Sắp xếp ghế theo chiều dọc */
+  gap: 10px; /* Khoảng cách giữa các ghế */
+  align-items: center;
+}
+.seat {
+  width: 30px; /* Chiều rộng ghế */
+  height: 50px; /* Chiều cao ghế */
+  border-radius: 5px;
+  padding: 8px 0;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.seat.available {
+  background-color: #e6f7ff;
+  border: 1px solid #91d5ff;
+  color: #1890ff;
+}
+.seat.sold {
+  background-color: #f5f5f5;
+  border: 1px solid #d9d9d9;
+  color: #bfbfbf;
+  cursor: not-allowed;
+}
+.seat.selected {
+  background-color: #fffbe6;
+  border: 1px solid #ffe58f;
+  color: #faad14;
+}
+.seat:hover:not(.sold) {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+} /* Seat legend indicators */
+.seat-legend {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+}
+.seat-indicator {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  margin-right: 5px;
+}
+.seat-indicator.available {
+  background-color: #e6f7ff;
+  border: 1px solid #91d5ff;
+}
+.seat-indicator.sold {
+  background-color: #f5f5f5;
+  border: 1px solid #d9d9d9;
+}
+.seat-indicator.selected {
+  background-color: #fffbe6;
+  border: 1px solid #faad14;
+}
+/* Form styling */
+.form-control:focus {
+  border-color: #ff7e00;
+  box-shadow: 0 0 0 0.25rem rgba(255, 126, 0, 0.25);
+} /* Terms note styling */
+.terms-note {
+  border-left: 3px solid #ff7e00;
+  padding-left: 15px;
+} /* Responsive adjustments */
+@media (max-width: 768px) {
+  .seat {
+    padding: 5px 0;
+    font-size: 0.7rem;
+  }
+  .terms-note {
+    margin-top: 20px;
+  }
+}

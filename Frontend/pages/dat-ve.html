@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nhà xe Minh Nghĩa</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/components/header.css" />
+    <link rel="stylesheet" href="../styles/components/footer.css" />
+    <link rel="stylesheet" href="../styles/components/footer.css" />
+    <link rel="stylesheet" href="../styles/pages/dat-ve.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header></header>
+    <!-- Main Content -->
+    <div class="container bg-light py-4">
+      <h3 class="RouteDetails text-center"></h3>
+      <div class="row">
+        <!-- Left Column - Seat Selection -->
+        <div class="col-md-8">
+          <div class="card mb-4">
+            <div class="card-header bg-white">
+              <div class="d-flex justify-content-between">
+                <h5 class="mb-0">Chọn ghế</h5>
+                <a href="#" class="text-primary">Thông tin xe</a>
+              </div>
+            </div>
+            <div class="card-body">
+              <!-- Seat Legend -->
+              <div class="d-flex justify-content-center mb-3">
+                <div class="seat-legend me-3">
+                  <span class="seat-indicator sold"></span>
+                  <span>Đã bán</span>
+                </div>
+                <div class="seat-legend me-3">
+                  <span class="seat-indicator available"></span>
+                  <span>Còn trống</span>
+                </div>
+                <div class="seat-legend">
+                  <span class="seat-indicator selected"></span>
+                  <span>Đang chọn</span>
+                </div>
+              </div>
+
+              <!-- Seat Selection Grid -->
+              <div id="seat-map"></div>
+            </div>
+          </div>
+
+          <!-- Customer Information -->
+          <div class="card">
+            <div class="card-header bg-white d-flex justify-content-between">
+              <h5 class="mb-0">Thông tin khách hàng</h5>
+              <a href="#" class="text-danger">ĐIỀU KHOẢN & LƯU Ý</a>
+            </div>
+            <div class="card-body">
+              <form>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="fullName" class="form-label">
+                        Họ và tên <span class="text-danger">*</span>
+                      </label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="fullName"
+                          value="Đặng Minh Nghĩa"
+                        />
+                        <span class="input-group-text bg-white">
+                          <i class="fas fa-times-circle text-secondary"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="terms-note">
+                      <p class="small">
+                        (*) Quý khách vui lòng có mặt tại bến xuất phát của xe
+                        trước ít nhất 30 phút giờ xe khởi hành, mang theo thông
+                        báo đã thanh toán về thành công có chứa mã vé được gửi
+                        từ hệ thống FUTA BUS LINES. Vui lòng liên hệ Trung tâm
+                        tổng đài <span class="text-danger">1900 6067</span> để
+                        được hỗ trợ.
+                      </p>
+                      <p class="small">
+                        (*) Nếu quý khách có nhu cầu trung chuyển, vui lòng liên
+                        hệ Tổng đài trung chuyển
+                        <span class="text-danger">1900 6918</span> trước khi đặt
+                        vé. Chúng tôi không đón/trung chuyển tại những điểm xe
+                        trung chuyển không thể tới được.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="phone" class="form-label">
+                        Số điện thoại <span class="text-danger">*</span>
+                      </label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="phone"
+                          value="0905398155"
+                        />
+                        <span class="input-group-text bg-white">
+                          <i class="fas fa-times-circle text-secondary"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="email" class="form-label">
+                        Email <span class="text-danger">*</span>
+                      </label>
+                      <div class="input-group">
+                        <input type="email" class="form-control" id="email" />
+                        <span class="input-group-text bg-white">
+                          <i class="fas fa-times-circle text-secondary"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column - Trip Information -->
+        <div class="col-md-4">
+          <!-- Trip Details -->
+          <div class="card mb-4">
+            <div class="card-header bg-white">
+              <h5 class="mb-0">Thông tin lượt đi</h5>
+            </div>
+            <div class="card-body">
+              <div class="row mb-2">
+                <div class="col-6">
+                  <span class="text-muted">Tuyến xe</span>
+                </div>
+                <div class="col-6 text-end">
+                  <span>Nha Trang - Mien Tay</span>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-6">
+                  <span class="text-muted">Thời gian xuất bến</span>
+                </div>
+                <div class="col-6 text-end">
+                  <span class="text-success">08:00 09/05/2025</span>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-6">
+                  <span class="text-muted">Số lượng ghế</span>
+                </div>
+                <div class="col-6 text-end">
+                  <span>0 Ghế</span>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-6">
+                  <span class="text-muted">Số ghế</span>
+                </div>
+                <div class="col-6 text-end">
+                  <span></span>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-6">
+                  <span class="text-muted">Điểm trả khách</span>
+                </div>
+                <div class="col-6 text-end">
+                  <span></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <span class="text-muted">Tổng tiền lượt đi</span>
+                </div>
+                <div class="col-6 text-end">
+                  <span class="text-success">0đ</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Price Details -->
+          <div class="card">
+            <div class="card-header bg-white">
+              <h5 class="mb-0">
+                Chi tiết giá
+                <i class="fas fa-info-circle text-primary ms-1"></i>
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="row mb-2">
+                <div class="col-6">
+                  <span class="text-muted">Giá vé lượt đi</span>
+                </div>
+                <div class="col-6 text-end">
+                  <span class="text-danger">0đ</span>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-6">
+                  <span class="text-muted">Phí thanh toán</span>
+                </div>
+                <div class="col-6 text-end">
+                  <span class="text-danger">0đ</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <span class="text-muted">Tổng tiền</span>
+                </div>
+                <div class="col-6 text-end">
+                  <span class="text-danger">0đ</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer></footer>
+  </body>
+  <script type="module" src="../scripts/modules/dat-ve.js"></script>
+</html>

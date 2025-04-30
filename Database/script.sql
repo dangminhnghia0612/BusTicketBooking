@@ -78,3 +78,22 @@ BEGIN
     WHERE Ma_Tinhtrang = 1 AND (Token IS NOT NULL) AND DATEDIFF(MINUTE, Ngaytao, GETDATE()) >= 5;
 END
 
+CREATE PROC sp_ThemDatVe
+	@Ma_Chuyenxe int,
+	@Ma_Khachhang int,
+	@Soluong int,
+	@Giagoc decimal,
+	@Giasaukhuyenmai decimal,
+	@Ghichu nvarchar(100),
+	@Tenkhachhang nvarchar(50),
+	@Sodienthoai nvarchar(15),
+	@Email nvarchar(50)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	INSERT INTO Datve(Ma_Chuyenxe, Ma_Khachhang, Ma_Tinhtrang, Ngaydat, Soluong, Giagoc, Giasaukhuyenmai, Ghichu, Tenkhachhang, Sodienthoai, Email) VALUES
+	(@Ma_Chuyenxe, @Ma_Khachhang, 1, GETDATE(), @Soluong, @Giagoc, @Giasaukhuyenmai, @Ghichu, @Tenkhachhang, @Sodienthoai, @Email)
+	SELECT CAST(SCOPE_IDENTITY() AS INT) AS Ma_Datve;
+END
+select * from Datve
+select * from Tinhtrangdatve

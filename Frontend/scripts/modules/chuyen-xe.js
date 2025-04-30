@@ -1,4 +1,4 @@
-import { TimChuyenXe_API } from "../api/chuyenxe.js";
+import { TimChuyenXe_API } from "../api/chuyen-xe-API.js";
 document.addEventListener("DOMContentLoaded", async function () {
   // Lấy tham số từ URL
   const params = new URLSearchParams(window.location.search);
@@ -71,6 +71,24 @@ async function TimChuyenXe_KetQua(departure, destination, date, ticketCount) {
       clone.querySelector(
         ".giave"
       ).textContent = `${chuyenXe.giave.toLocaleString()}đ`;
+
+      // Thêm sự kiện cho nút "Chọn chuyến"
+      const btnBook = clone.querySelector(".btn-book");
+      btnBook.addEventListener("click", () => {
+        // Chuyển hướng đến dat-ve.html với dữ liệu chuyến xe
+        const params = new URLSearchParams({
+          maChuyenXe: chuyenXe.ma_Chuyenxe,
+          giodi: chuyenXe.giodi,
+          bendi: chuyenXe.diemdi,
+          gioden: chuyenXe.gioden,
+          benden: chuyenXe.diemden,
+          giave: chuyenXe.giave,
+          diemdi: departure,
+          diemden: destination,
+          date: date,
+        });
+        window.top.location.href = `dat-ve.html?${params.toString()}`;
+      });
 
       // Thêm phần tử vào kết quả tìm kiếm
       searchResults.appendChild(clone);
