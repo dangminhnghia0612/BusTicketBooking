@@ -44,7 +44,14 @@ namespace BusTicketBooking.API.Controllers
                 {
                     Chuyenxe cx = _context.Chuyenxe.Find(dto.Ma_Chuyenxe); 
                     Ghe g = _context.Ghe.Where(x => x.Soghe == ghe && x.MaXe == cx.MaXe).FirstOrDefault();
-                    g.Trangthai = true;
+                    if (g != null && g.Trangthai == false)
+                    {
+                        g.Trangthai = true;
+                    }
+                    else
+                    {
+                        return BadRequest(new {Message = "Ghế đã có người đặt"});
+                    }
                 }
                 await _context.SaveChangesAsync();
                 return Ok(new
@@ -55,7 +62,7 @@ namespace BusTicketBooking.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Đặt vé thất bại");
+                return BadRequest(new { Message = "Đặt vé thất bại" + ex.Message });
             }
         }
     }

@@ -122,7 +122,9 @@ namespace BusTicketBooking.API.Controllers
                 Token = token,
                 TenKH = khachhang.Hoten,
                 Sdt = khachhang.Sodienthoai,
-                Email = khachhang.Email
+                Email = khachhang.Email,
+                MaKH = khachhang.MaKhachhang,
+                avatarURL = khachhang.Anh
             });
         }
     }

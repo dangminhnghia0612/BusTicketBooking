@@ -71,6 +71,8 @@ function Dangxuat() {
     localStorage.removeItem("email");
     localStorage.removeItem("sdt");
     localStorage.removeItem("token");
+    localStorage.removeItem("maKH");
+    localStorage.removeItem("avatarURL");
     window.location.reload();
   });
 }

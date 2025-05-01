@@ -8,13 +8,8 @@ async function sendDatVeRequest(datVeRequest) {
       },
       body: JSON.stringify(datVeRequest),
     });
-
-    if (response.ok) {
-      const result = await response.json();
-      return result;
-    } else {
-      return null;
-    }
+    const result = await response.json();
+    return result;
   } catch (error) {
     return null;
   }

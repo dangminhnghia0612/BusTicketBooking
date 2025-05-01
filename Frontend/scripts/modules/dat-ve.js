@@ -272,6 +272,8 @@ function Dangxuat() {
     localStorage.removeItem("email");
     localStorage.removeItem("sdt");
     localStorage.removeItem("token");
+    localStorage.removeItem("maKH");
+    localStorage.removeItem("avatarURL");
     window.location.reload();
   });
 }
@@ -339,11 +341,16 @@ async function thanhToan() {
   var giaGoc = parseFloat(params.giave);
   var soLuong = selectedSeatIds.length;
   var tongTien = soLuong * giaGoc;
-  var maKH = await timKhachHang(phone, email);
+  var maKH = localStorage.getItem("maKH");
   if (maKH) {
     maKH = parseInt(maKH);
   } else {
-    maKH = null;
+    maKH = await timKhachHang(phone, email);
+    if (maKH) {
+      maKH = parseInt(maKH);
+    } else {
+      maKH = null;
+    }
   }
 
   const datVeRequest = {
@@ -359,8 +366,14 @@ async function thanhToan() {
     dsGhe: selectedSeatIds,
   };
   const result = await sendDatVeRequest(datVeRequest);
-  if (result) {
+  console.log(result.message);
+  if (result.message === "Đặt vé thành công!") {
     alert("Đặt vé thành công!");
     window.location.href = "../index.html";
+  } else if (result.message === "Ghế đã có người đặt") {
+    alert("Ghế đã có người đặt");
+    window.location.reload();
+  } else {
+    alert(result.message);
   }
 }

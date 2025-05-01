@@ -13,13 +13,14 @@ async function timKhachHang(phone, email) {
       }),
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.Message || "Lỗi khi gọi API");
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else if (response.status === 404) {
+      return null;
+    } else {
+      return null;
     }
-
-    const data = await response.json();
-    return data;
   } catch (error) {
     console.error("Lỗi fetch API:", error);
     return null;

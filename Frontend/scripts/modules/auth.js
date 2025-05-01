@@ -57,6 +57,8 @@ form.addEventListener("submit", async (e) => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("sdt", data.sdt);
       localStorage.setItem("email", data.email);
+      localStorage.setItem("maKH", data.maKH);
+      localStorage.setItem("avatarURL", data.anh);
       window.location.href = "../index.html";
     } else {
       hienThiThongBao(data.message);

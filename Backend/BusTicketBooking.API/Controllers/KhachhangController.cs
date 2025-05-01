@@ -22,6 +22,10 @@ namespace BusTicketBooking.API.Controllers
             {
                 var kh = await _context.Khachhang.Where(x => x.Sodienthoai == dto.Sodienthoai && x.Email == dto.Email)
                                                  .FirstOrDefaultAsync();
+                if (kh == null)
+                {
+                    return NotFound("Không tìm thấy khách hàng");
+                }
                 return Ok(kh.MaKhachhang);
             }
             catch (Exception ex)
