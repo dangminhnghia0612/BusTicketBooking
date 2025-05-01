@@ -1,10 +1,12 @@
 ﻿using BusTicketBooking.API.Data;
 using BusTicketBooking.API.DTOs;
+using BusTicketBooking.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BusTicketBooking.API.Controllers
 {
@@ -18,31 +20,43 @@ namespace BusTicketBooking.API.Controllers
             _context = context;
         }
         [HttpPost]
-        public async Task<IActionResult> ThemDatVe([FromBody] DatveRequestDTO dto)
+        public async Task<IActionResult> DatVe([FromBody] DatveRequestDTO dto)
         {
-            var parameters = new[]
+            try
             {
-        new SqlParameter("@Ma_Chuyenxe", dto.Ma_Chuyenxe),
-        new SqlParameter("@Ma_Khachhang", dto.Ma_Khachhang),
-        new SqlParameter("@Soluong", dto.Soluong),
-        new SqlParameter("@Giagoc", dto.Giagoc),
-        new SqlParameter("@Giasaukhuyenmai", dto.Giasaukhuyenmai),
-        new SqlParameter("@Ghichu", (object?)dto.Ghichu ?? DBNull.Value),
-        new SqlParameter("@Tenkhachhang", dto.Tenkhachhang),
-        new SqlParameter("@Sodienthoai", dto.Sodienthoai),
-        new SqlParameter("@Email", dto.Email),
-    };
+                Datve datve = new Datve()
+                {
+                    MaChuyenxe = dto.Ma_Chuyenxe,
+                    MaKhachhang = dto.Ma_Khachhang,
+                    MaTinhtrang = 1,
+                    Ngaydat = DateTime.Now,
+                    Soluong = dto.Soluong,
+                    Giagoc = dto.Giagoc,
+                    Giasaukhuyenmai = dto.Giasaukhuyenmai,
+                    Ghichu = dto.Ghichu,
+                    Tenkhachhang = dto.Tenkhachhang,
+                    Sodienthoai = dto.Sodienthoai,
+                    Email = dto.Email
+                };
+                _context.Datve.Add(datve);
 
-            var result = await _context.Set<DatveResponseDTO>()
-                .FromSqlRaw("EXEC sp_ThemDatVe @Ma_Chuyenxe, @Ma_Khachhang, @Soluong, @Giagoc, @Giasaukhuyenmai, @Ghichu, @Tenkhachhang, @Sodienthoai, @Email", parameters)
-                .ToListAsync();
-
-            if (result.Count > 0)
-            {
-                return Ok(new { message = "Đặt vé thành công", maDatVe = result[0].Ma_Datve });
+                foreach (var ghe in dto.dsGhe)
+                {
+                    Chuyenxe cx = _context.Chuyenxe.Find(dto.Ma_Chuyenxe); 
+                    Ghe g = _context.Ghe.Where(x => x.Soghe == ghe && x.MaXe == cx.MaXe).FirstOrDefault();
+                    g.Trangthai = true;
+                }
+                await _context.SaveChangesAsync();
+                return Ok(new
+                {
+                    MaDatve = datve.MaDatve,
+                    Message = "Đặt vé thành công!"
+                });
             }
-
-            return BadRequest("Đặt vé thất bại");
+            catch (Exception ex)
+            {
+                return BadRequest("Đặt vé thất bại");
+            }
         }
     }
 }

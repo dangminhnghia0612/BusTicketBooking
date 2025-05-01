@@ -120,7 +120,9 @@ namespace BusTicketBooking.API.Controllers
             {
                 Message = "Đăng nhập thành công.",
                 Token = token,
-                TenKH = khachhang.Hoten
+                TenKH = khachhang.Hoten,
+                Sdt = khachhang.Sodienthoai,
+                Email = khachhang.Email
             });
         }
     }

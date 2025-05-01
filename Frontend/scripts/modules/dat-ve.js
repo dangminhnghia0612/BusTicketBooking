@@ -1,4 +1,10 @@
 import { getParamsFromURL } from "../utils/urlUtil.js";
+import { laySoDoGhe } from "../api/loai-xe-API.js";
+import { layDSGheDaDat } from "../api/ghe-API.js";
+import { ktEmail } from "../utils/emailUtil.js";
+import { ktSDTHopLe, ChuanHoaSDT } from "../utils/phoneUtil.js";
+import { timKhachHang } from "../api/khach-hang-API.js";
+import { sendDatVeRequest } from "../api/dat-ve-API.js";
 
 async function loadComponent(selector, filePath) {
   const container = document.querySelector(selector);
@@ -22,34 +28,24 @@ document.addEventListener("DOMContentLoaded", async function () {
   await loadComponent("header", "../components/header.html");
   await loadComponent("footer", "../components/footer.html");
 
-  const params = getParamsFromURL();
-  document.getElementsByClassName("RouteDetails")[0].textContent =
-    params.diemdi + " - " + params.diemden + " (" + params.date + ")";
+  ktDangNhap();
+  Dangxuat();
 
-  const seatData = [
-    {
-      tang: 1,
-      cacday: [
-        { dayso: 1, soghe: ["A1", "A3", "A5", "A7", "A9"] },
-        { dayso: 2, soghe: ["B1", "B3", "B5", "B7", "B9"] },
-        { dayso: 3, soghe: ["C1", "C3", "C5", "C7", "C9"] },
-        { dayso: 4, soghe: ["A11", "A13", "B11", "C13", "C11"] },
-      ],
-    },
-    {
-      tang: 2,
-      cacday: [
-        { dayso: 1, soghe: ["A2", "A4", "A6", "A8", "A10"] },
-        { dayso: 2, soghe: ["B2", "B4", "B6", "B8", "B10"] },
-        { dayso: 3, soghe: ["C2", "C4", "C6", "C8", "C10"] },
-        { dayso: 4, soghe: ["A12", "A14", "B12", "C14", "C12"] },
-      ],
-    },
-  ];
-  veSoDoGhe(seatData, "seat-map");
+  const params = getParamsFromURL();
+  var maCX = parseInt(params.maChuyenXe);
+  const sodo = await laySoDoGhe(maCX);
+  const dsGheDaDat = await layDSGheDaDat(maCX);
+  veSoDoGhe(sodo, "seat-map", dsGheDaDat);
+
+  autoFillInformation();
+
+  const payButton = document.getElementById("pay-button");
+  payButton.addEventListener("click", function () {
+    thanhToan();
+  });
 });
 
-function veSoDoGhe(seatData, containerId) {
+function veSoDoGhe(sodo, containerId, dsGheDaDat) {
   const seatMapContainer = document.getElementById(containerId);
 
   if (!seatMapContainer) {
@@ -61,7 +57,7 @@ function veSoDoGhe(seatData, containerId) {
   seatMapContainer.innerHTML = "";
 
   // Duyệt qua từng tầng
-  seatData.forEach((floor) => {
+  sodo.forEach((floor) => {
     const floorContainer = document.createElement("div");
     floorContainer.classList.add("floor");
 
@@ -106,15 +102,32 @@ function veSoDoGhe(seatData, containerId) {
           rowContainer.classList.add("row-vertical"); // Sắp xếp dọc cho dãy 1-3
           row.soghe.forEach((seatId) => {
             const seat = document.createElement("button");
-            seat.classList.add("seat", "available");
+            seat.classList.add("seat");
             seat.id = seatId;
             seat.textContent = seatId;
-            seat.addEventListener("click", () => {
-              if (seat.classList.contains("sold")) return; // Không cho chọn ghế đã bán
-
-              seat.classList.toggle("selected");
-              updateSelectedSeats(containerId);
-            });
+            if (dsGheDaDat.includes(seatId)) {
+              seat.classList.add("sold");
+              seat.disabled = true;
+            } else {
+              seat.classList.add("available");
+              seat.addEventListener("click", () => {
+                var selectedSeats = document.querySelectorAll(
+                  `#${containerId} .seat.selected`
+                );
+                if (seat.classList.contains("selected")) {
+                  // Bỏ chọn ghế
+                  seat.classList.remove("selected");
+                  updateSelectedSeats(containerId);
+                } else if (selectedSeats.length < 5) {
+                  // Chọn ghế nếu chưa đạt giới hạn
+                  seat.classList.add("selected");
+                  updateSelectedSeats(containerId);
+                } else {
+                  // Hiển thị thông báo nếu vượt quá giới hạn
+                  alert("Bạn chỉ được chọn tối đa 5 ghế.");
+                }
+              });
+            }
             rowContainer.appendChild(seat);
           });
           verticalContainer.appendChild(rowContainer);
@@ -122,15 +135,32 @@ function veSoDoGhe(seatData, containerId) {
           rowContainer.classList.add("row-horizontal"); // Sắp xếp ngang cho dãy > 3
           row.soghe.forEach((seatId) => {
             const seat = document.createElement("button");
-            seat.classList.add("seat", "available");
+            seat.classList.add("seat");
             seat.id = seatId;
             seat.textContent = seatId;
-            seat.addEventListener("click", () => {
-              if (seat.classList.contains("sold")) return; // Không cho chọn ghế đã bán
-
-              seat.classList.toggle("selected");
-              updateSelectedSeats(containerId);
-            });
+            if (dsGheDaDat.includes(seatId)) {
+              seat.classList.add("sold");
+              seat.disabled = true;
+            } else {
+              seat.classList.add("available");
+              seat.addEventListener("click", () => {
+                var selectedSeats = document.querySelectorAll(
+                  `#${containerId} .seat.selected`
+                );
+                if (seat.classList.contains("selected")) {
+                  // Bỏ chọn ghế
+                  seat.classList.remove("selected");
+                  updateSelectedSeats(containerId);
+                } else if (selectedSeats.length < 5) {
+                  // Chọn ghế nếu chưa đạt giới hạn
+                  seat.classList.add("selected");
+                  updateSelectedSeats(containerId);
+                } else {
+                  // Hiển thị thông báo nếu vượt quá giới hạn
+                  alert("Bạn chỉ được chọn tối đa 5 ghế.");
+                }
+              });
+            }
             rowContainer.appendChild(seat);
           });
           horizontalContainer.appendChild(rowContainer);
@@ -151,16 +181,33 @@ function veSoDoGhe(seatData, containerId) {
 
         row.soghe.forEach((seatId) => {
           const seat = document.createElement("button");
-          seat.classList.add("seat", "available");
+          seat.classList.add("seat");
           seat.id = seatId;
           seat.textContent = seatId;
 
-          seat.addEventListener("click", () => {
-            if (seat.classList.contains("sold")) return; // Không cho chọn ghế đã bán
-
-            seat.classList.toggle("selected");
-            updateSelectedSeats(containerId);
-          });
+          if (dsGheDaDat.includes(seatId)) {
+            seat.classList.add("sold");
+            seat.disabled = true;
+          } else {
+            seat.classList.add("available");
+            seat.addEventListener("click", () => {
+              var selectedSeats = document.querySelectorAll(
+                `#${containerId} .seat.selected`
+              );
+              if (seat.classList.contains("selected")) {
+                // Bỏ chọn ghế
+                seat.classList.remove("selected");
+                updateSelectedSeats(containerId);
+              } else if (selectedSeats.length < 5) {
+                // Chọn ghế nếu chưa đạt giới hạn
+                seat.classList.add("selected");
+                updateSelectedSeats(containerId);
+              } else {
+                // Hiển thị thông báo nếu vượt quá giới hạn
+                alert("Bạn chỉ được chọn tối đa 5 ghế.");
+              }
+            });
+          }
           rowContainer.appendChild(seat);
         });
 
@@ -181,12 +228,139 @@ function updateSelectedSeats(containerId) {
   );
   const selectedSeatIds = Array.from(selectedSeats).map((seat) => seat.id);
 
-  console.log("Ghế đã chọn:", selectedSeatIds);
-
-  // Hiển thị danh sách ghế đã chọn lên giao diện (nếu cần)
+  // Hiển thị danh sách ghế đã chọn lên giao diện
   const selectedSeatsDisplay = document.getElementById("selected-seats");
+  const quantity = document.getElementById("quantity");
+  const totalAmount = document.getElementById("totalAmount");
+  const params = getParamsFromURL();
+  var price = parseInt(params.giave);
+
   if (selectedSeatsDisplay) {
-    selectedSeatsDisplay.textContent =
-      selectedSeatIds.join(", ") || "Chưa chọn ghế nào";
+    selectedSeatsDisplay.textContent = selectedSeatIds.join(", ") || "";
+    quantity.textContent = selectedSeatIds.length + " Ghế" || 0 + " Ghế";
+    var formatTien = (selectedSeatIds.length * price).toLocaleString("vi-VN");
+    totalAmount.textContent = formatTien + "đ" || "0đ";
+  }
+}
+
+function ktDangNhap() {
+  const before = document.getElementsByClassName("before-login")[0];
+  const after = document.getElementsByClassName("after-login")[0];
+  const userName = document.getElementById("user-name");
+  const userAvatar = document.getElementById("user-avatar");
+
+  const customerName = localStorage.getItem("hotenKH");
+  const customerAvatar = localStorage.getItem("avatarURL");
+
+  if (customerName) {
+    before.style.display = "none";
+    after.style.display = "block";
+    userName.textContent = customerName;
+    if (customerAvatar) {
+      userAvatar.src = customerAvatar;
+    } else {
+      userAvatar.style.display = "none";
+    }
+  }
+}
+
+function Dangxuat() {
+  const logoutButton = document.getElementById("logout");
+  logoutButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    localStorage.removeItem("hotenKH");
+    localStorage.removeItem("email");
+    localStorage.removeItem("sdt");
+    localStorage.removeItem("token");
+    window.location.reload();
+  });
+}
+
+function autoFillInformation() {
+  const params = getParamsFromURL();
+  document.getElementsByClassName("RouteDetails")[0].textContent =
+    params.diemdi + " - " + params.diemden + " (" + params.date + ")";
+  document.getElementById("time").textContent =
+    new Date(params.giodi).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+    }) +
+    " " +
+    params.date;
+  document.getElementById("route").textContent =
+    params.bendi + " - " + params.benden;
+
+  const hotenKH = localStorage.getItem("hotenKH");
+  const email = localStorage.getItem("email");
+  const sodienthoai = localStorage.getItem("sdt");
+
+  if (hotenKH) {
+    document.getElementById("fullName").value = hotenKH;
+  }
+  if (email) {
+    document.getElementById("email").value = email;
+  }
+  if (sodienthoai) {
+    document.getElementById("phone").value = sodienthoai;
+  }
+}
+
+async function thanhToan() {
+  // Lấy thông tin từ các trường input
+  var fullName = document.getElementById("fullName").value;
+  var phone = document.getElementById("phone").value.trim();
+  phone = ChuanHoaSDT(phone);
+  var email = document.getElementById("email").value.trim();
+
+  // Lấy danh sách ghế đã chọn
+  const selectedSeats = document.querySelectorAll("#seat-map .seat.selected");
+  const selectedSeatIds = Array.from(selectedSeats).map((seat) => seat.id);
+
+  // Kiểm tra các điều kiện
+  if (!fullName || !phone || !email) {
+    alert("Vui lòng nhập đủ thông tin.");
+    return;
+  }
+  if (!ktSDTHopLe(phone)) {
+    alert("Số điện thoại không hợp lệ.");
+    return;
+  }
+  if (!ktEmail(email)) {
+    alert("Email không hợp lệ.");
+    return;
+  }
+  if (selectedSeatIds.length === 0) {
+    alert("Vui lòng chọn ít nhất một ghế trước khi thanh toán.");
+    return;
+  }
+  const params = getParamsFromURL();
+  var maChuyenXe = parseInt(params.maChuyenXe);
+  var giaGoc = parseFloat(params.giave);
+  var soLuong = selectedSeatIds.length;
+  var tongTien = soLuong * giaGoc;
+  var maKH = await timKhachHang(phone, email);
+  if (maKH) {
+    maKH = parseInt(maKH);
+  } else {
+    maKH = null;
+  }
+
+  const datVeRequest = {
+    Ma_Chuyenxe: maChuyenXe,
+    Ma_Khachhang: maKH,
+    Soluong: soLuong,
+    Giagoc: tongTien,
+    Giasaukhuyenmai: tongTien,
+    Ghichu: null,
+    Tenkhachhang: fullName,
+    Sodienthoai: phone,
+    Email: email,
+    dsGhe: selectedSeatIds,
+  };
+  const result = await sendDatVeRequest(datVeRequest);
+  if (result) {
+    alert("Đặt vé thành công!");
+    window.location.href = "../index.html";
   }
 }

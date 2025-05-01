@@ -55,7 +55,9 @@ form.addEventListener("submit", async (e) => {
     if (data.message === "Đăng nhập thành công.") {
       localStorage.setItem("hotenKH", data.tenKH);
       localStorage.setItem("token", data.token);
-      window.location.href = "/index.html";
+      localStorage.setItem("sdt", data.sdt);
+      localStorage.setItem("email", data.email);
+      window.location.href = "../index.html";
     } else {
       hienThiThongBao(data.message);
     }

@@ -103,7 +103,19 @@
 .terms-note {
   border-left: 3px solid #ff7e00;
   padding-left: 15px;
-} /* Responsive adjustments */
+}
+#pay-button {
+  background-color: #f36f21; /* Màu cam */
+  border-color: #f36f21; /* Màu viền cam */
+  color: #fff; /* Màu chữ trắng */
+}
+
+/* Thay đổi màu khi hover */
+#pay-button:hover {
+  background-color: #d65a1a; /* Màu cam đậm hơn khi hover */
+  border-color: #d65a1a;
+}
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .seat {
     padding: 5px 0;

@@ -11,5 +11,6 @@
         public string Tenkhachhang { get; set; }
         public string Sodienthoai { get; set; }
         public string Email { get; set; }
+        public List<string> dsGhe { get; set; }
     }
 }

@@ -68,7 +68,9 @@ function Dangxuat() {
   logoutButton.addEventListener("click", function (e) {
     e.preventDefault();
     localStorage.removeItem("hotenKH");
-    localStorage.removeItem("avatarURL");
+    localStorage.removeItem("email");
+    localStorage.removeItem("sdt");
+    localStorage.removeItem("token");
     window.location.reload();
   });
 }
