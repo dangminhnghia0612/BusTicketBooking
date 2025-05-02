@@ -47,6 +47,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IVnPayService, VnPayService>();
 
 // Thêm CORS
 builder.Services.AddCors(options =>
@@ -58,6 +59,8 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader(); // Cho phép mọi header
     });
 });
+
+
 
 var app = builder.Build();
 

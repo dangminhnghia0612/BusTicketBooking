@@ -348,6 +348,7 @@ create table Thanhtoan (
    Ma_Thanhtoan         int  IDENTITY(1,1)   not null,
    Ma_Phuongthuc	    int                  not null,
    Ma_Datve			    int                  not null,
+   Ma_Giaodich			nvarchar(50)	     null,
    Ngaythanhtoan        datetime             null,
    Sotien				decimal				 null,
    Ghichu               nvarchar(100)        null,

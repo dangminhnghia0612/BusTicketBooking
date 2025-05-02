@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thanh Toán Thất Bại</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <style>
+      body {
+        background-color: #f8f9fa;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .failed-container {
+        max-width: 600px;
+        margin: 100px auto;
+      }
+      .failed-icon {
+        font-size: 80px;
+        color: #dc3545;
+      }
+      .failed-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+      .failed-header {
+        background-color: #dc3545;
+        color: white;
+        border-radius: 15px 15px 0 0;
+      }
+      .btn-retry {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        padding: 10px 25px;
+        font-weight: 600;
+        margin-right: 10px;
+      }
+      .btn-retry:hover {
+        background-color: #c82333;
+        border-color: #c82333;
+      }
+      .btn-contact {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        padding: 10px 25px;
+        font-weight: 600;
+      }
+      .btn-contact:hover {
+        background-color: #5a6268;
+        border-color: #5a6268;
+      }
+      .error-details {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 20px;
+      }
+      .error-code {
+        font-family: monospace;
+        background-color: #f1f1f1;
+        padding: 5px 10px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container failed-container">
+      <div class="card failed-card">
+        <div class="card-header text-center py-4 failed-header">
+          <h3 class="mb-0">Thanh Toán Thất Bại</h3>
+        </div>
+        <div class="card-body text-center py-5">
+          <div class="mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="80"
+              height="80"
+              fill="currentColor"
+              class="bi bi-x-circle-fill failed-icon"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"
+              />
+            </svg>
+          </div>
+          <h4 class="mb-3">Rất tiếc, giao dịch của bạn không thành công!</h4>
+          <p class="text-muted mb-4">
+            Đã xảy ra lỗi trong quá trình xử lý thanh toán của bạn. Vui lòng
+            kiểm tra thông tin thanh toán và thử lại.
+          </p>
+
+          <div class="error-details">
+            <p class="mb-2">
+              Lỗi: <span class="error-code">PAYMENT_DECLINED</span>
+            </p>
+            <p class="mb-0">
+              Ngân hàng phát hành thẻ của bạn đã từ chối giao dịch này. Vui lòng
+              kiểm tra số dư tài khoản hoặc liên hệ với ngân hàng của bạn để
+              biết thêm thông tin.
+            </p>
+          </div>
+
+          <div class="mt-4">
+            <a href="checkout.html" class="btn btn-danger btn-retry">Thử Lại</a>
+            <a href="contact.html" class="btn btn-secondary btn-contact"
+              >Liên Hệ Hỗ Trợ</a
+            >
+          </div>
+        </div>
+        <div class="card-footer text-center py-3">
+          <div class="row">
+            <div class="col-md-6 mb-3 mb-md-0">
+              <small class="d-block text-muted">Cần trợ giúp?</small>
+              <small
+                ><a href="tel:+84123456789">Hotline: 0123 456 789</a></small
+              >
+            </div>
+            <div class="col-md-6">
+              <small class="d-block text-muted">Gửi email cho chúng tôi</small>
+              <small
+                ><a href="mailto:support@example.com"
+                  >support@example.com</a
+                ></small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

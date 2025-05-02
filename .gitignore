@@ -609,3 +609,5 @@ Webpack/*
 Backend/BusTicketBooking.API/.vs/BusTicketBooking.API/v17/DocumentLayout.backup.json
 Backend/BusTicketBooking.API/.vs/BusTicketBooking.API/v17/.suo
 *.bin
+Frontend/certificate/localhost.pem
+Frontend/certificate/localhost.key

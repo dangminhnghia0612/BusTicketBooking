@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thanh Toán Thành Công</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <style>
+      body {
+        background-color: #f8f9fa;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .success-container {
+        max-width: 600px;
+        margin: 100px auto;
+      }
+      .success-icon {
+        font-size: 80px;
+        color: #28a745;
+      }
+      .success-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+      .success-header {
+        background-color: #28a745;
+        color: white;
+        border-radius: 15px 15px 0 0;
+      }
+      .btn-return {
+        background-color: #28a745;
+        border-color: #28a745;
+        padding: 10px 25px;
+        font-weight: 600;
+      }
+      .btn-return:hover {
+        background-color: #218838;
+        border-color: #218838;
+      }
+      .transaction-details {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 20px;
+      }
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e9ecef;
+      }
+      .detail-row:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container success-container">
+      <div class="card success-card">
+        <div class="card-header text-center py-4 success-header">
+          <h3 class="mb-0">Thanh Toán Thành Công</h3>
+        </div>
+        <div class="card-body text-center py-5">
+          <div class="mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="80"
+              height="80"
+              fill="currentColor"
+              class="bi bi-check-circle-fill success-icon"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+              />
+            </svg>
+          </div>
+          <h4 class="mb-3">Giao dịch của bạn đã được xử lý thành công!</h4>
+          <p class="text-muted mb-4">
+            Cảm ơn bạn đã mua hàng. Chúng tôi đã gửi email xác nhận đến địa chỉ
+            email của bạn.
+          </p>
+
+          <div class="transaction-details">
+            <div class="detail-row">
+              <span>Mã đơn hàng:</span>
+              <span class="fw-bold">#ORD123456789</span>
+            </div>
+            <div class="detail-row">
+              <span>Ngày thanh toán:</span>
+              <span>02/05/2025</span>
+            </div>
+            <div class="detail-row">
+              <span>Phương thức thanh toán:</span>
+              <span>Thẻ tín dụng</span>
+            </div>
+            <div class="detail-row">
+              <span>Tổng tiền:</span>
+              <span class="fw-bold">1.250.000 VNĐ</span>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <a href="index.html" class="btn btn-success btn-return"
+              >Quay Lại Trang Chủ</a
+            >
+          </div>
+        </div>
+        <div class="card-footer text-center py-3 text-muted">
+          <small
+            >Nếu bạn có bất kỳ câu hỏi nào, vui lòng liên hệ
+            <a href="mailto:support@example.com">support@example.com</a></small
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

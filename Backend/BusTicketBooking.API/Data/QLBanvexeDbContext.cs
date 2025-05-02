@@ -437,6 +437,9 @@ public partial class QLBanvexeDbContext : DbContext
             entity.Property(e => e.MaThanhtoan).HasColumnName("Ma_Thanhtoan");
             entity.Property(e => e.Ghichu).HasMaxLength(100);
             entity.Property(e => e.MaDatve).HasColumnName("Ma_Datve");
+            entity.Property(e => e.MaGiaodich)
+                .HasMaxLength(50)
+                .HasColumnName("Ma_Giaodich");
             entity.Property(e => e.MaPhuongthuc).HasColumnName("Ma_Phuongthuc");
             entity.Property(e => e.Ngaythanhtoan).HasColumnType("datetime");
             entity.Property(e => e.Sotien).HasColumnType("decimal(18, 0)");

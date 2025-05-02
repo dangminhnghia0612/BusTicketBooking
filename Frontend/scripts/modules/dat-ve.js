@@ -5,6 +5,7 @@ import { ktEmail } from "../utils/emailUtil.js";
 import { ktSDTHopLe, ChuanHoaSDT } from "../utils/phoneUtil.js";
 import { timKhachHang } from "../api/khach-hang-API.js";
 import { sendDatVeRequest } from "../api/dat-ve-API.js";
+import { thanhToanVnpay } from "../api/thanh-toan-API.js";
 
 async function loadComponent(selector, filePath) {
   const container = document.querySelector(selector);
@@ -368,8 +369,9 @@ async function thanhToan() {
   const result = await sendDatVeRequest(datVeRequest);
   console.log(result.message);
   if (result.message === "Đặt vé thành công!") {
-    alert("Đặt vé thành công!");
-    window.location.href = "../index.html";
+    alert("Đặt vé thành công. Vui lòng thanh toán!");
+    console.log(selectedSeatIds);
+    await thanhToanVnpay(fullName, tongTien, result.maDatve, selectedSeatIds);
   } else if (result.message === "Ghế đã có người đặt") {
     alert("Ghế đã có người đặt");
     window.location.reload();

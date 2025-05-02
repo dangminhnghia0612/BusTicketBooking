@@ -39,11 +39,15 @@ namespace BusTicketBooking.API.Controllers
                     Email = dto.Email
                 };
                 _context.Datve.Add(datve);
-
+                Chuyenxe cx = await _context.Chuyenxe.FindAsync(dto.Ma_Chuyenxe);
+                if (cx == null)
+                {
+                    return BadRequest(new { Message = "Chuyến xe không tồn tại" });
+                }
                 foreach (var ghe in dto.dsGhe)
                 {
-                    Chuyenxe cx = _context.Chuyenxe.Find(dto.Ma_Chuyenxe); 
-                    Ghe g = _context.Ghe.Where(x => x.Soghe == ghe && x.MaXe == cx.MaXe).FirstOrDefault();
+
+                    Ghe g = await _context.Ghe.Where(x => x.Soghe == ghe && x.MaXe == cx.MaXe).FirstOrDefaultAsync();
                     if (g != null && g.Trangthai == false)
                     {
                         g.Trangthai = true;

@@ -17,6 +17,8 @@ public partial class Thanhtoan
 
     public string? Ghichu { get; set; }
 
+    public string? MaGiaodich { get; set; }
+
     public virtual Datve MaDatveNavigation { get; set; } = null!;
 
     public virtual Phuongthucthanhtoan MaPhuongthucNavigation { get; set; } = null!;
