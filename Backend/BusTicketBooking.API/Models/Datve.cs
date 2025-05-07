@@ -7,8 +7,6 @@ public partial class Datve
 {
     public int MaDatve { get; set; }
 
-    public int MaChuyenxe { get; set; }
-
     public int? MaKhachhang { get; set; }
 
     public int MaTinhtrang { get; set; }
@@ -32,8 +30,6 @@ public partial class Datve
     public virtual ICollection<Apdungkhuyenmai> Apdungkhuyenmai { get; set; } = new List<Apdungkhuyenmai>();
 
     public virtual ICollection<Huydatve> Huydatve { get; set; } = new List<Huydatve>();
-
-    public virtual Chuyenxe MaChuyenxeNavigation { get; set; } = null!;
 
     public virtual Khachhang? MaKhachhangNavigation { get; set; }
 

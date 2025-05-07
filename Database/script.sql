@@ -1,7 +1,7 @@
 ﻿USE QLBanVeXe
 GO
 
-CREATE TRIGGER ThemGheTuDong
+CREATE TRIGGER tg_ThemGheTuDong
 ON Xe
 AFTER INSERT
 AS
@@ -22,7 +22,6 @@ BEGIN
         @Sodoghe = Sodoghe
     FROM Loaixe
     WHERE Ma_Loaixe = @Ma_Loaixe
-
     -- Insert ghế từ layout
     INSERT INTO Ghe(Ma_Xe, Soghe, Tang, Day)
     SELECT 
@@ -33,6 +32,27 @@ BEGIN
     FROM OPENJSON(@Sodoghe) AS tang
     CROSS APPLY OPENJSON(tang.value, '$.cacday') AS day
     CROSS APPLY OPENJSON(day.value, '$.soghe') AS ghe
+END
+GO
+
+
+CREATE TRIGGER tg_Chuyenxe_ThemChitietghe
+ON Chuyenxe
+AFTER INSERT
+AS
+BEGIN
+    INSERT INTO Chitietghe (Ma_Chuyenxe, Ma_Ghe, Trangthai)
+    SELECT 
+        i.Ma_Chuyenxe,
+        g.Ma_Ghe,
+        0
+    FROM inserted i
+    JOIN Xe x ON i.Ma_Xe = x.Ma_Xe
+    JOIN Ghe g ON x.Ma_Xe = g.Ma_Xe
+    WHERE NOT EXISTS (
+        SELECT 1 FROM Chitietghe ctg 
+        WHERE ctg.Ma_Chuyenxe = i.Ma_Chuyenxe AND ctg.Ma_Ghe = g.Ma_Ghe
+    )
 END
 GO
 
@@ -52,7 +72,7 @@ BEGIN
 		  bd.Tenbenxe as Diemdi,
 		  bden.Tenbenxe as Diemden,
 		  lx.Tenloai,
-		  COUNT(CASE WHEN g.Trangthai = 0 THEN 1 END) AS SoGheConTrong
+		  COUNT(CASE WHEN ctg.Trangthai = 0 THEN 1 END) AS SoGheConTrong
 	FROM Chuyenxe cx
 	JOIN Tuyenxe tx ON cx.Ma_Tuyenxe = tx.Ma_Tuyenxe
 	JOIN Benxe bd ON tx.Ma_Diemdi = bd.Ma_Benxe
@@ -64,16 +84,18 @@ BEGIN
 	JOIN Xe xe ON cx.Ma_Xe = xe.Ma_Xe
 	JOIN Loaixe lx on lx.Ma_Loaixe = Xe.Ma_Loaixe
 	JOIN Ghe g ON g.Ma_Xe = xe.Ma_Xe
+	JOIN Chitietghe ctg on ctg.Ma_Chuyenxe = cx.Ma_Chuyenxe and ctg.Ma_Ghe = g.Ma_Ghe
 	WHERE td.Ten = @TinhDi AND tden.Ten = @TinhDen AND CAST(cx.Giodi AS DATE) = @NgayDi
 	GROUP BY cx.Ma_Chuyenxe, cx.Giodi, cx.Gioden, tx.Khoangthoigian, tx.Giave, bd.Tenbenxe, bden.Tenbenxe, lx.Tenloai
-	HAVING COUNT(CASE WHEN g.Trangthai = 0 THEN 1 END) >= @Soluongve;
+	HAVING COUNT(CASE WHEN ctg.Trangthai = 0 THEN 1 END) >= @Soluongve
+	ORDER BY cx.Giodi;
 END
 GO
 
-CREATE PROC sp_XoaToken
+CREATE PROC sp_XoaKhachHang
 AS
 BEGIN
-    UPDATE Khachhang
-    SET Token = NULL
+    DELETE FROM Khachhang
     WHERE Ma_Tinhtrang = 1 AND (Token IS NOT NULL) AND DATEDIFF(MINUTE, Ngaytao, GETDATE()) >= 5;
 END
+GO

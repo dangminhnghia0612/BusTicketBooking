@@ -15,9 +15,7 @@ public partial class Ghe
 
     public int? Day { get; set; }
 
-    public bool? Trangthai { get; set; }
+    public virtual ICollection<Chitietghe> Chitietghe { get; set; } = new List<Chitietghe>();
 
     public virtual Xe MaXeNavigation { get; set; } = null!;
-
-    public virtual ICollection<Vexe> Vexe { get; set; } = new List<Vexe>();
 }

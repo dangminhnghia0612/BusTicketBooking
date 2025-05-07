@@ -26,7 +26,7 @@ namespace BusTicketBooking.API.Controllers
             {
                 Datve datve = new Datve()
                 {
-                    MaChuyenxe = dto.Ma_Chuyenxe,
+                    //MaChuyenxe = dto.Ma_Chuyenxe,
                     MaKhachhang = dto.Ma_Khachhang,
                     MaTinhtrang = 1,
                     Ngaydat = DateTime.Now,

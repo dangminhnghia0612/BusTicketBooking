@@ -24,6 +24,8 @@ public partial class QLBanvexeDbContext : DbContext
 
     public virtual DbSet<Chinhsach> Chinhsach { get; set; }
 
+    public virtual DbSet<Chitietghe> Chitietghe { get; set; }
+
     public virtual DbSet<Chuyenxe> Chuyenxe { get; set; }
 
     public virtual DbSet<Datve> Datve { get; set; }
@@ -157,9 +159,37 @@ public partial class QLBanvexeDbContext : DbContext
                 .HasConstraintName("FK_Chinhsach_Quantrivien");
         });
 
+        modelBuilder.Entity<Chitietghe>(entity =>
+        {
+            entity.HasKey(e => e.MaChitietghe);
+
+            entity.HasIndex(e => e.MaChuyenxe, "Chuyenxe_Chitietghe_FK");
+
+            entity.HasIndex(e => e.MaGhe, "Ghe_Chitietghe_FK");
+
+            entity.HasIndex(e => new { e.MaChuyenxe, e.MaGhe }, "UQ_Chitietghe").IsUnique();
+
+            entity.Property(e => e.MaChitietghe).HasColumnName("Ma_Chitietghe");
+            entity.Property(e => e.MaChuyenxe).HasColumnName("Ma_Chuyenxe");
+            entity.Property(e => e.MaGhe).HasColumnName("Ma_Ghe");
+            entity.Property(e => e.Trangthai).HasDefaultValue(false);
+
+            entity.HasOne(d => d.MaChuyenxeNavigation).WithMany(p => p.Chitietghe)
+                .HasForeignKey(d => d.MaChuyenxe)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Chitietghe_Chuyenxe");
+
+            entity.HasOne(d => d.MaGheNavigation).WithMany(p => p.Chitietghe)
+                .HasForeignKey(d => d.MaGhe)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Chitietghe_Ghe");
+        });
+
         modelBuilder.Entity<Chuyenxe>(entity =>
         {
             entity.HasKey(e => e.MaChuyenxe);
+
+            entity.ToTable(tb => tb.HasTrigger("tg_Chuyenxe_ThemChitietghe"));
 
             entity.HasIndex(e => e.MaTuyenxe, "Chuyenxe_Tuyenxe_FK");
 
@@ -186,8 +216,6 @@ public partial class QLBanvexeDbContext : DbContext
         {
             entity.HasKey(e => e.MaDatve);
 
-            entity.HasIndex(e => e.MaChuyenxe, "Datve_Chuyenxe_FK");
-
             entity.HasIndex(e => e.MaTinhtrang, "Datve_Co_TinhTrangDat_FK");
 
             entity.HasIndex(e => e.MaKhachhang, "Khachang_Datve_FK");
@@ -197,17 +225,11 @@ public partial class QLBanvexeDbContext : DbContext
             entity.Property(e => e.Ghichu).HasMaxLength(100);
             entity.Property(e => e.Giagoc).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.Giasaukhuyenmai).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.MaChuyenxe).HasColumnName("Ma_Chuyenxe");
             entity.Property(e => e.MaKhachhang).HasColumnName("Ma_Khachhang");
             entity.Property(e => e.MaTinhtrang).HasColumnName("Ma_Tinhtrang");
             entity.Property(e => e.Ngaydat).HasColumnType("datetime");
             entity.Property(e => e.Sodienthoai).HasMaxLength(15);
             entity.Property(e => e.Tenkhachhang).HasMaxLength(50);
-
-            entity.HasOne(d => d.MaChuyenxeNavigation).WithMany(p => p.Datve)
-                .HasForeignKey(d => d.MaChuyenxe)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Datve_Chuyenxe");
 
             entity.HasOne(d => d.MaKhachhangNavigation).WithMany(p => p.Datve)
                 .HasForeignKey(d => d.MaKhachhang)
@@ -228,7 +250,6 @@ public partial class QLBanvexeDbContext : DbContext
             entity.Property(e => e.MaGhe).HasColumnName("Ma_Ghe");
             entity.Property(e => e.MaXe).HasColumnName("Ma_Xe");
             entity.Property(e => e.Soghe).HasMaxLength(10);
-            entity.Property(e => e.Trangthai).HasDefaultValue(false);
 
             entity.HasOne(d => d.MaXeNavigation).WithMany(p => p.Ghe)
                 .HasForeignKey(d => d.MaXe)
@@ -560,39 +581,31 @@ public partial class QLBanvexeDbContext : DbContext
         {
             entity.HasKey(e => e.MaVexe);
 
-            entity.HasIndex(e => e.MaChuyenxe, "Chuyenxe_Vexe_FK");
+            entity.HasIndex(e => e.MaChitietghe, "Vexe_Chitietghe_FK");
 
             entity.HasIndex(e => e.MaDatve, "Vexe_Datve_FK");
 
-            entity.HasIndex(e => e.MaGhe, "Vexe_Ghe_FK");
-
             entity.Property(e => e.MaVexe).HasColumnName("Ma_Vexe");
             entity.Property(e => e.Giave).HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.MaChuyenxe).HasColumnName("Ma_Chuyenxe");
+            entity.Property(e => e.MaChitietghe).HasColumnName("Ma_Chitietghe");
             entity.Property(e => e.MaDatve).HasColumnName("Ma_Datve");
-            entity.Property(e => e.MaGhe).HasColumnName("Ma_Ghe");
 
-            entity.HasOne(d => d.MaChuyenxeNavigation).WithMany(p => p.Vexe)
-                .HasForeignKey(d => d.MaChuyenxe)
+            entity.HasOne(d => d.MaChitietgheNavigation).WithMany(p => p.Vexe)
+                .HasForeignKey(d => d.MaChitietghe)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Vexe_Chuyenxe");
+                .HasConstraintName("FK_Vexe_Chitietghe");
 
             entity.HasOne(d => d.MaDatveNavigation).WithMany(p => p.Vexe)
                 .HasForeignKey(d => d.MaDatve)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Datvexe");
-
-            entity.HasOne(d => d.MaGheNavigation).WithMany(p => p.Vexe)
-                .HasForeignKey(d => d.MaGhe)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Vexe_Ghe");
         });
 
         modelBuilder.Entity<Xe>(entity =>
         {
             entity.HasKey(e => e.MaXe);
 
-            entity.ToTable(tb => tb.HasTrigger("ThemGheTuDong"));
+            entity.ToTable(tb => tb.HasTrigger("tg_ThemGheTuDong"));
 
             entity.HasIndex(e => e.MaLoaixe, "Xe_Loaixe_FK");
 

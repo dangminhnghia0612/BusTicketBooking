@@ -28,7 +28,8 @@ async function guiKetQuaVnpayVeBackend() {
 
     const result = await res.json();
     if (result.code === "00")
-      window.location.href = "../components/payment-success.html";
+      window.location.href =
+        window.location.href = `../components/payment-success.html?maGiaoDich=${transactionNo}&ngayThanhToan=${payDate}&soTien=${amount}`;
     else window.location.href = "../components/payment-failed.html";
     console.log(result.code);
   } catch (error) {

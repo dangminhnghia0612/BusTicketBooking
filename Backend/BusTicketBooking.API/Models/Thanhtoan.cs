@@ -11,13 +11,13 @@ public partial class Thanhtoan
 
     public int MaDatve { get; set; }
 
+    public string? MaGiaodich { get; set; }
+
     public DateTime? Ngaythanhtoan { get; set; }
 
     public decimal? Sotien { get; set; }
 
     public string? Ghichu { get; set; }
-
-    public string? MaGiaodich { get; set; }
 
     public virtual Datve MaDatveNavigation { get; set; } = null!;
 

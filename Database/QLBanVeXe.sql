@@ -69,7 +69,7 @@ go
 /*==============================================================*/
 create table Datve (
    Ma_Datve             int  IDENTITY(1,1)   not null,
-   Ma_Chuyenxe          int                  not null,
+   --Ma_Chuyenxe          int                  not null,
    Ma_Khachhang         int                  null,
    Ma_Tinhtrang         int                  not null,
    Ngaydat              datetime             not null,
@@ -102,8 +102,8 @@ go
 
 
 
-create nonclustered index Datve_Chuyenxe_FK on Datve (Ma_Chuyenxe ASC)
-go
+--create nonclustered index Datve_Chuyenxe_FK on Datve (Ma_Chuyenxe ASC)
+--go
 
 /*==============================================================*/
 /* Index: Khachang_Datve_FK                                     */
@@ -477,8 +477,8 @@ go
 /*==============================================================*/
 create table Tuyenxe (
    Ma_Tuyenxe           int  IDENTITY(1,1)   not null,
-   Ma_Diemden			int                  not null,
    Ma_Diemdi			int                  not null,
+   Ma_Diemden			int                  not null,
    Khoangthoigian       int                  null,
    Khoangcach           decimal              null,
    Giave                decimal              null,
@@ -516,7 +516,7 @@ create table Ghe (
    Soghe	            nvarchar(10)         null,
    Tang					int					 null,
    Day					int					 null,
-   Trangthai	        bit   default 0      null,
+   --Trangthai	        bit   default 0      null,
    constraint PK_Ghe primary key (Ma_Ghe)
 )
 go
@@ -581,22 +581,23 @@ go
 /*==============================================================*/
 create table Vexe (
    Ma_Vexe	            int  IDENTITY(1,1)   not null,
-   Ma_Chuyenxe          int                  not null,
+   --Ma_Chuyenxe          int                  not null,
    Ma_Datve             int                  not null,
-   Ma_Ghe               int					 not null,
+   Ma_Chitietghe        int                  not null,
+   --Ma_Ghe               int					 not null,
    Giave                decimal              null,
    constraint PK_Vexe primary key (Ma_Vexe)
 )
 go
 
 /*==============================================================*/
-/* Index: Vexe_Ghe_FK	                                        */
+/* Index: Vexe_Chitietghe_FK	                                */
 /*==============================================================*/
 
 
 
 
-create nonclustered index Vexe_Ghe_FK on Vexe (Ma_Ghe ASC)
+create nonclustered index Vexe_Chitietghe_FK on Vexe (Ma_Chitietghe ASC)
 go
 
 /*==============================================================*/
@@ -607,16 +608,6 @@ go
 
 
 create nonclustered index Vexe_Datve_FK on Vexe (Ma_Datve ASC)
-go
-
-/*==============================================================*/
-/* Index: Chuyenxe_Vexe_FK                                      */
-/*==============================================================*/
-
-
-
-
-create nonclustered index Chuyenxe_Vexe_FK on Vexe (Ma_Chuyenxe ASC)
 go
 
 /*==============================================================*/
@@ -650,6 +641,39 @@ go
 
 
 create nonclustered index Chuyenxe_Xe_FK on Chuyenxe (Ma_Xe ASC)
+go
+
+/*==============================================================*/
+/* Table: Chitietghe                                            */
+/*==============================================================*/
+create table Chitietghe (
+   Ma_Chitietghe	 int IDENTITY(1,1)		 not null,
+   Ma_Chuyenxe		 int					 not null,
+   Ma_Ghe			 int					 not null,
+   Trangthai		 BIT					 DEFAULT 0,
+   constraint PK_Chitietghe primary key (Ma_Chitietghe),
+   constraint UQ_Chitietghe unique (Ma_Chuyenxe, Ma_Ghe)
+)
+go
+
+/*==============================================================*/
+/* Index: Chuyenxe_Chitietghe_FK                                */
+/*==============================================================*/
+
+
+
+
+create nonclustered index Chuyenxe_Chitietghe_FK on Chitietghe (Ma_Chuyenxe ASC)
+go
+
+/*==============================================================*/
+/* Index: Ghe_Chitietghe_FK			                            */
+/*==============================================================*/
+
+
+
+
+create nonclustered index Ghe_Chitietghe_FK on Chitietghe (Ma_Ghe ASC)
 go
 
 /*==============================================================*/
@@ -717,10 +741,10 @@ alter table Datve
 go
 
 
-alter table Datve
-   add constraint FK_Datve_Chuyenxe foreign key (Ma_Chuyenxe)
-      references Chuyenxe (Ma_Chuyenxe)
-go
+--alter table Datve
+--   add constraint FK_Datve_Chuyenxe foreign key (Ma_Chuyenxe)
+--      references Chuyenxe (Ma_Chuyenxe)
+--go
 
 alter table Datve
    add constraint FK_Datve_Khachhang foreign key (Ma_Khachhang)
@@ -823,14 +847,10 @@ alter table Vexe
 go
 
 alter table Vexe
-   add constraint FK_Vexe_Ghe foreign key (Ma_Ghe)
-      references Ghe (Ma_Ghe)
+   add constraint FK_Vexe_Chitietghe foreign key (Ma_Chitietghe)
+      references Chitietghe (Ma_Chitietghe)
 go
 
-alter table Vexe
-   add constraint FK_Vexe_Chuyenxe foreign key (Ma_Chuyenxe)
-      references Chuyenxe (Ma_Chuyenxe)
-go
 
 alter table Chuyenxe
    add constraint FK_Chuyenxe_Tuyenxe foreign key (Ma_Tuyenxe)
@@ -851,6 +871,17 @@ alter table Khachhang
    add constraint FK_Khachhang_Vaitro foreign key (Ma_Vaitro)
       references Vaitro (Ma_Vaitro)
 go
+
 alter table Chinhsach
 	 add constraint FK_Chinhsach_Quantrivien foreign key (Ma_Quantrivien)
 		references Quantrivien (Ma_Quantrivien)
+
+alter table Chitietghe
+   add constraint FK_Chitietghe_Chuyenxe foreign key (Ma_Chuyenxe)
+      references Chuyenxe (Ma_Chuyenxe)
+go
+
+alter table Chitietghe
+   add constraint FK_Chitietghe_Ghe foreign key (Ma_Ghe)
+      references Ghe (Ma_Ghe)
+go

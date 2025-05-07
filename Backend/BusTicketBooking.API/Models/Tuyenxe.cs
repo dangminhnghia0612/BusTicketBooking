@@ -7,9 +7,9 @@ public partial class Tuyenxe
 {
     public int MaTuyenxe { get; set; }
 
-    public int MaDiemden { get; set; }
-
     public int MaDiemdi { get; set; }
+
+    public int MaDiemden { get; set; }
 
     public int? Khoangthoigian { get; set; }
 

@@ -26,12 +26,14 @@ IF exists (SELECT * FROM Vexe)						DBCC CHECKIDENT (Vexe, RESEED, 0)
 IF exists (SELECT * FROM Chuyenxe)					DBCC CHECKIDENT (Chuyenxe, RESEED, 0)
 IF exists (SELECT * FROM Khachhang)					DBCC CHECKIDENT (Khachhang, RESEED, 0)
 IF exists (SELECT * FROM Vaitro)					DBCC CHECKIDENT (Vaitro, RESEED, 0)
+IF exists (SELECT * FROM Chitietghe)				DBCC CHECKIDENT (Chitietghe, RESEED, 0)
 
 -- DELETE DATA FROM TABLES
 DELETE FROM Vexe
 DELETE FROM Apdungkhuyenmai
 DELETE FROM Huydatve
 DELETE FROM Thanhtoan
+DELETE FROM Chitietghe
 DELETE FROM Datve
 DELETE FROM Chuyenxe
 DELETE FROM Tuyenxe
@@ -217,7 +219,6 @@ INSERT INTO Tinhtrangdatve(Ten) VALUES
 (N'Hủy'),
 (N'Thành công');
 
-select * from Chinhsach
 INSERT INTO Chinhsach(Ma_Quantrivien, Ten, Mota, Sogiotruockhoihanh, Phantram, Kichhoat, Ngaytao, Ngaycapnhat) VALUES
 (1, N'Hủy trước 4 giờ', N'Hoàn 90% tiền vé', 4, 90.00, 1, GETDATE(), GETDATE()),
 (1, N'Hủy sau 4 giờ', N'Không thể hủy', 4, 0.00, 1, GETDATE(), GETDATE());
@@ -1024,7 +1025,6 @@ INSERT INTO Benxe(Ma_Quan, Tenbenxe, Diachi, Sodienthoai) VALUES
 (13, N'Bến xe Mỹ Đình', N'20 Phạm Hùng, P.Mỹ Đình 2', '19001825 nhánh 1'),
 (545, N'Bến xe Bãi Cháy', N'17 Đường 279, P. Bãi Cháy', '0203 3846 410'),
 (264, N'Bến xe Hà Giang', N'Đường 9/5, P.Nguyễn Trãi', '0914 868 737');
-select * from Benxe
 
 INSERT INTO Tuyenxe(Ma_Diemdi, Ma_Diemden, Khoangthoigian, Khoangcach, Giave) VALUES
 (2, 5, 8, 350, 275000.00),
@@ -1032,28 +1032,28 @@ INSERT INTO Tuyenxe(Ma_Diemdi, Ma_Diemden, Khoangthoigian, Khoangcach, Giave) VA
 (2, 6, 9, 400, 300000.00),
 (3, 6, 10, 400, 315000.00),
 (3, 8, 24, 1200, 600000.00),
-(3, 6, 20, 1045, 480000.00);
+(3, 9, 20, 1045, 480000.00);
 
 
 INSERT INTO Chuyenxe(Ma_Tuyenxe, Ma_Xe, Giodi, Gioden) VALUES
-(1, 1, '2025-04-25 08:00:00', '2025-04-25 16:00:00'),
-(1, 2, '2025-04-25 09:00:00', '2025-04-25 17:00:00'),
-(1, 3, '2025-04-25 10:00:00', '2025-04-25 18:00:00'),
-(2, 4, '2025-04-25 11:00:00', '2025-04-25 20:00:00'),
-(2, 5, '2025-04-25 12:00:00', '2025-04-25 11:00:00'),
-(2, 6, '2025-04-25 13:00:00', '2025-04-25 12:00:00'),
-(3, 7, '2025-04-25 14:00:00', '2025-04-25 23:00:00'),
-(3, 8, '2025-04-25 15:00:00', '2025-04-26 00:00:00'),
-(3, 9, '2025-04-25 16:00:00', '2025-04-26 01:00:00'),
-(4, 10, '2025-04-25 17:00:00', '2025-04-26 03:00:00'),
-(4, 1, '2025-04-30 18:00:00', '2025-05-01 04:00:00'),
-(4, 2, '2025-04-30 19:00:00', '2025-05-01 05:00:00'),
-(5, 3, '2025-04-30 20:00:00', '2025-05-01 20:00:00'),
-(5, 4, '2025-04-30 21:00:00', '2025-05-01 21:00:00'),
-(5, 5, '2025-04-30 21:00:00', '2025-05-01 21:00:00'),
-(6, 6, '2025-04-30 21:00:00', '2025-05-01 17:00:00'),
-(6, 7, '2025-04-30 21:00:00', '2025-05-01 17:00:00'),
-(6, 8, '2025-04-30 22:00:00', '2025-05-01 18:00:00');
+(1, 1, '2025-05-06 08:00:00', '2025-05-06 16:00:00'),
+(1, 2, '2025-05-06 09:00:00', '2025-05-06 17:00:00'),
+(1, 3, '2025-05-06 10:00:00', '2025-05-06 18:00:00'),
+(2, 4, '2025-05-06 11:00:00', '2025-05-06 20:00:00'),
+(2, 5, '2025-05-06 12:00:00', '2025-05-06 11:00:00'),
+(2, 6, '2025-05-06 13:00:00', '2025-05-06 12:00:00'),
+(3, 7, '2025-05-06 14:00:00', '2025-05-06 23:00:00'),
+(3, 8, '2025-05-06 15:00:00', '2025-05-07 00:00:00'),
+(3, 9, '2025-05-06 16:00:00', '2025-05-07 01:00:00'),
+(4, 10, '2025-05-06 17:00:00', '2025-05-07 03:00:00'),
+(4, 1, '2025-05-08 18:00:00', '2025-05-09 04:00:00'),
+(4, 2, '2025-05-08 19:00:00', '2025-05-09 05:00:00'),
+(5, 3, '2025-05-08 20:00:00', '2025-05-09 20:00:00'),
+(5, 4, '2025-05-08 21:00:00', '2025-05-09 21:00:00'),
+(5, 5, '2025-05-08 21:00:00', '2025-05-09 21:00:00'),
+(6, 6, '2025-05-08 21:00:00', '2025-05-09 17:00:00'),
+(6, 7, '2025-05-08 21:00:00', '2025-05-09 17:00:00'),
+(6, 8, '2025-05-08 22:00:00', '2025-05-01 18:00:00');
 
 -- 1. Khuyến mãi giảm giá cố định
 INSERT INTO Khuyenmai(
@@ -1119,50 +1119,8 @@ INSERT INTO Khuyenmai(
     120000, 1, GETDATE()
 );
 
-INSERT INTO Datve(Ma_Chuyenxe, Ma_Khachhang, Ma_Tinhtrang, Ngaydat, Soluong, Giagoc, Giasaukhuyenmai, Ghichu, Tenkhachhang, Sodienthoai, Email) VALUES
-(1, 2, 4, GETDATE(), 1, 275000, 275000, NULL, N'Nguyễn Văn Hải', '0912345678', 'user1@gmail.com'),
-(2, 3, 4, GETDATE(), 2, 550000, 550000, NULL, N'Trần Văn Nam', '0911111111', 'user2@gmail.com'),
-(3, 4, 4, GETDATE(), 1, 275000, 275000, NULL, N'Nguyễn Thị Hương', '0922222222', 'user3@gmail.com'),
-(4, NULL, 4, GETDATE(), 3, 885000, 885000, NULL, N'Huỳnh Thị D', '0934567890', 'thid@example.com'),
-(5, NULL, 4, GETDATE(), 2, 590000, 590000, NULL, N'Phạm Văn E', '0945678901', 'vane@example.com'),
-(6, 5, 4, GETDATE(), 1, 295000, 295000, NULL, N'Lê Minh Tuấn', '0933333333', 'user4@gmail.com'),
-(7, 6, 4, GETDATE(), 1, 300000, 300000, NULL, N'Phạm Thị Mai', '0944444444', 'user5@gmail.com'),
-(8, 2, 4, GETDATE(), 2, 600000, 600000, NULL, N'Nguyễn Văn Hải', '0912345678', 'user1@gmail.com'),
-(9, 4, 4, GETDATE(), 1, 300000, 300000, NULL, N'Nguyễn Thị Hương', '0922222222', 'user3@gmail.com'),
-(10, NULL, 4, GETDATE(), 1, 315000, 315000, NULL, N'Hồ Thị K', '0990123456', 'thik@example.com');
 
 
-INSERT INTO Thanhtoan(Ma_Phuongthuc, Ma_Datve, Ngaythanhtoan, Sotien, Ghichu) VALUES 
-(1, 1,  GETDATE(), 275000, N'Thanh toán qua VNPAY'),
-(2, 2,  GETDATE(), 550000, N'Thanh toán qua Momo'),
-(4, 3,  GETDATE(), 275000, N'Thanh toán qua ZaloPay'),
-(6, 4,  GETDATE(), 885000, N'Thanh toán qua VietQR'),
-(1, 5,  GETDATE(), 590000, N'Thanh toán qua VNPAY'),
-(2, 6,  GETDATE(), 295000, N'Thanh toán qua MoMo'),
-(7, 7,  GETDATE(), 300000, N'Thanh toán qua thẻ ATM'),
-(4, 8,  GETDATE(), 600000, N'Thanh toán qua ZaloPay'),
-(5, 9,  GETDATE(), 300000, N'Thanh toán qua Viettel Money'),
-(8, 10, GETDATE(), 315000, N'Thanh toán qua Visa');
-
-
-
-
-INSERT INTO Vexe (Ma_Chuyenxe, Ma_Datve, Ma_Ghe, Giave) VALUES
-(1, 1, 1, 275000),
-(2, 2, 41, 275000),
-(2, 2, 42, 275000),
-(3, 3, 86, 275000),
-(4, 4, 121,295000),
-(4, 4, 127,295000),
-(4, 4, 132,295000),
-(5, 5, 157,295000),
-(5, 5, 163,295000),
-(6, 6, 192, 295000),
-(7, 7, 225, 300000),
-(8, 8, 255, 300000),
-(8, 8, 261, 300000),
-(9, 9, 268, 300000),
-(10, 10, 300, 315000 );
 
 SELECT * FROM Vaitro
 SELECT * FROM Apdungkhuyenmai
@@ -1190,3 +1148,4 @@ SELECT * FROM Phuongthucthanhtoan
 SELECT * FROM Khuyenmai
 SELECT * FROM Loaikhuyenmai
 SELECT * FROM Quantrivien
+SELECT * FROM Chitietghe

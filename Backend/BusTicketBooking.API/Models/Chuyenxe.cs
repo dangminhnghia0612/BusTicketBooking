@@ -15,11 +15,9 @@ public partial class Chuyenxe
 
     public DateTime? Gioden { get; set; }
 
-    public virtual ICollection<Datve> Datve { get; set; } = new List<Datve>();
+    public virtual ICollection<Chitietghe> Chitietghe { get; set; } = new List<Chitietghe>();
 
     public virtual Tuyenxe MaTuyenxeNavigation { get; set; } = null!;
 
     public virtual Xe MaXeNavigation { get; set; } = null!;
-
-    public virtual ICollection<Vexe> Vexe { get; set; } = new List<Vexe>();
 }

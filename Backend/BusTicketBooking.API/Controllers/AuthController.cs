@@ -88,8 +88,7 @@ namespace BusTicketBooking.API.Controllers
                 return BadRequest(new { Message = "Token không hợp lệ hoặc đã hết hạn." });
             }
 
-            khachhang.MaTinhtrang = 2;
-            khachhang.Token = null;
+            khachhang.MaTinhtrang = 2; 
 
             await _context.SaveChangesAsync();
 
