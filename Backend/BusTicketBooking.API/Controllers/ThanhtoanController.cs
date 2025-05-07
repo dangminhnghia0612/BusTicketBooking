@@ -39,31 +39,30 @@ namespace BusTicketBooking.API.Controllers
             {
                 return BadRequest(new { message = "Thanh toán không thành công!" });
             }
-            string mathanhtoan = Request.Query["vnp_TxnRef"];
-            decimal amount = decimal.Parse(Request.Query["vnp_Amount"]) / 100;
-            string ghichu = Request.Query["vnp_OrderInfo"];
-            string magiaodich = Request.Query["vnp_TransactionNo"];
-            var payDateString = Request.Query["vnp_PayDate"];
-            var ngaythanhtoan = DateTime.ParseExact(payDateString, "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
-            var maDatVe = Request.Query["Ma_Datve"];
             return Ok(new { success = true, message = "Thanh toán thành công và đã lưu vào CSDL" });
         }
         [HttpPost("XulyVnPay")]
         public async Task<IActionResult> XulyVnPay([FromBody] VnPayResponseDTO dto)
         {
             Datve dv = await _context.Datve.FindAsync(dto.MaDatve);
-            var cx = await _context.Chuyenxe.Where(x => x.MaChuyenxe == dv.MaChuyenxe).FirstOrDefaultAsync();
-            var gheCanCapNhat = await _context.Ghe.Where(g => g.MaXe == cx.MaXe && dto.dsGhe.Contains(g.Soghe)).ToListAsync();
+            //var cx = await _context.Chuyenxe.Where(x => x.MaChuyenxe == dv.MaChuyenxe).FirstOrDefaultAsync();
+            //var gheCanCapNhat = await _context.Ghe.Where(g => g.MaXe == cx.MaXe && dto.dsGhe.Contains(g.Soghe)).ToListAsync();
+            var dsVeXe = await _context.Vexe.Where(x => x.MaDatve == dto.MaDatve).ToListAsync();
+
+            //Hủy thanh toán
             if (!dto.TrangThaiGiaoDich.Equals("00"))
             {
 
                 //thay đổi tình trạng đặt vé sang hủy
                 dv.MaTinhtrang = 3;
-                _context.Datve.Update(dv);
-                //cập nhật trạng thái ghế sang 0
-                foreach (var ghe in gheCanCapNhat)
+                //_context.Datve.Update(dv);
+
+                //cập nhật trạng thái ghế sang 0 và xóa vé xe
+                foreach (var vexe in dsVeXe)
                 {
-                    ghe.Trangthai = false;
+                    var ctg = await _context.Chitietghe.FindAsync(vexe.MaChitietghe);
+                    ctg.Trangthai = false;
+                    _context.Vexe.Remove(vexe);
                 }
                 await _context.SaveChangesAsync();
                 return BadRequest(new { code = dto.TrangThaiGiaoDich });
@@ -85,19 +84,19 @@ namespace BusTicketBooking.API.Controllers
             };
             _context.Thanhtoan.Add(tt);
 
-            //Thêm vé
-            foreach (var ghe in gheCanCapNhat)
-            {
-                var tuyenxe = await _context.Tuyenxe.Where(t => t.MaTuyenxe == cx.MaTuyenxe).FirstOrDefaultAsync(); 
-                Vexe vx = new Vexe()
-                {
-                    MaChuyenxe = dv.MaChuyenxe,
-                    MaDatve = dv.MaDatve,
-                    MaGhe = ghe.MaGhe,
-                    Giave = tuyenxe.Giave
-                };
-                _context.Vexe.Add(vx);
-            }
+            ////Thêm vé
+            //foreach (var ghe in gheCanCapNhat)
+            //{
+            //    var tuyenxe = await _context.Tuyenxe.Where(t => t.MaTuyenxe == cx.MaTuyenxe).FirstOrDefaultAsync(); 
+            //    Vexe vx = new Vexe()
+            //    {
+            //        MaChuyenxe = dv.MaChuyenxe,
+            //        MaDatve = dv.MaDatve,
+            //        MaGhe = ghe.MaGhe,
+            //        Giave = tuyenxe.Giave
+            //    };
+            //    _context.Vexe.Add(vx);
+            //}
             await _context.SaveChangesAsync();
             return Ok(new { code = dto.TrangThaiGiaoDich });
         }

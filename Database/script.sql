@@ -99,3 +99,34 @@ BEGIN
     WHERE Ma_Tinhtrang = 1 AND (Token IS NOT NULL) AND DATEDIFF(MINUTE, Ngaytao, GETDATE()) >= 5;
 END
 GO
+
+CREATE PROCEDURE sp_HetHanThanhToan
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+	-- Lấy danh sách Ma_Datve cần xử lý
+    DECLARE @DanhSach TABLE (MaDatve INT);
+
+    INSERT INTO @DanhSach (MaDatve)
+    SELECT Ma_Datve
+    FROM Datve
+    WHERE Ma_Tinhtrang = 1 AND DATEDIFF(MINUTE, Ngaydat, GETDATE()) > 16;
+
+    -- Cập nhật tình trạng từ 1 => 2
+    UPDATE Datve
+    SET Ma_Tinhtrang = 2
+    WHERE Ma_Datve IN (SELECT MaDatve FROM @DanhSach);
+
+    -- Cập nhật Chitietghe.Trangthai = 0 với các vé bị xóa
+    UPDATE Chitietghe
+    SET Trangthai = 0
+    FROM Chitietghe ctg
+    JOIN Vexe vx ON vx.Ma_Chitietghe = ctg.Ma_Chitietghe
+    JOIN @DanhSach d ON d.MaDatve = vx.Ma_Datve;
+
+    -- Xóa vé tương ứng
+    DELETE FROM Vexe
+    WHERE Ma_Datve IN (SELECT MaDatve FROM @DanhSach);
+END
+GO

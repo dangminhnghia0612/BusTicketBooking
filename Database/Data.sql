@@ -59,25 +59,6 @@ DELETE FROM Loaixe
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 INSERT INTO Vaitro(Ten, Mota) VALUES
 ('Admin',N'Quản trị viên'),      
 ('User', N'Khách hàng');

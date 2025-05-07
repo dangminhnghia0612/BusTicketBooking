@@ -1,7 +1,7 @@
 async function layDSGheDaDat(maChuyenxe) {
   try {
     const response = await fetch(
-      "https://localhost:7054/api/Ghe/layDSGheDaDat",
+      "https://localhost:7054/api/Chitietghe/layDSGheDaDat",
       {
         method: "POST",
         headers: {

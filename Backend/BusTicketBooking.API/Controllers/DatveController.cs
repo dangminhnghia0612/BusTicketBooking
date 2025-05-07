@@ -39,7 +39,10 @@ namespace BusTicketBooking.API.Controllers
                     Email = dto.Email
                 };
                 _context.Datve.Add(datve);
+                await _context.SaveChangesAsync();
+
                 Chuyenxe cx = await _context.Chuyenxe.FindAsync(dto.Ma_Chuyenxe);
+                Tuyenxe tx = await _context.Tuyenxe.Where(x => x.MaTuyenxe == cx.MaTuyenxe).FirstOrDefaultAsync();
                 if (cx == null)
                 {
                     return BadRequest(new { Message = "Chuyến xe không tồn tại" });
@@ -48,15 +51,28 @@ namespace BusTicketBooking.API.Controllers
                 {
 
                     Ghe g = await _context.Ghe.Where(x => x.Soghe == ghe && x.MaXe == cx.MaXe).FirstOrDefaultAsync();
-                    if (g != null && g.Trangthai == false)
+                    if (g != null)
                     {
-                        g.Trangthai = true;
-                    }
-                    else
-                    {
-                        return BadRequest(new {Message = "Ghế đã có người đặt"});
+                        Chitietghe ctg = await _context.Chitietghe.Where(x => x.MaGhe == g.MaGhe && x.MaChuyenxe == dto.Ma_Chuyenxe).FirstOrDefaultAsync();
+                        if (ctg != null && ctg.Trangthai == false)
+                        {
+                            ctg.Trangthai = true;
+                            Vexe vx = new Vexe()
+                            {
+                                MaDatve = datve.MaDatve,
+                                MaChitietghe = ctg.MaChitietghe,
+                                Giave = tx.Giave
+                            };
+                            _context.Vexe.Add(vx);
+
+                        }
+                        else
+                        {
+                            return BadRequest(new { Message = "Ghế đã có người đặt" });
+                        }
                     }
                 }
+
                 await _context.SaveChangesAsync();
                 return Ok(new
                 {

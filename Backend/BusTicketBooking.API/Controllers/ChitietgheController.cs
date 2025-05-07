@@ -7,10 +7,10 @@ namespace BusTicketBooking.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GheController : ControllerBase
+    public class ChitietgheController : ControllerBase
     {
         private readonly QLBanvexeDbContext _context;
-        public GheController(QLBanvexeDbContext context)
+        public ChitietgheController(QLBanvexeDbContext context)
         {
             _context = context;
         }
@@ -19,13 +19,10 @@ namespace BusTicketBooking.API.Controllers
         {
             try
             {
-                var chuyenxe = await _context.Chuyenxe.FindAsync(machuyenxe);
-                if (chuyenxe == null)
-                {
-                    return NotFound("Không tìm thấy chuyến xe");
-                }
-                var dsGheDaDat = await _context.Ghe.Where(g => g.MaXe == chuyenxe.MaXe && g.Trangthai == true)
-                                                   .Select(g => g.Soghe).ToListAsync();
+                var dsGheDaDat = await _context.Chitietghe.Where(x => x.MaChuyenxe == machuyenxe && x.Trangthai == true)
+                                                          .Include(x => x.MaGheNavigation)
+                                                          .Select(x => x.MaGheNavigation.Soghe)
+                                                          .ToListAsync();
                 return Ok(dsGheDaDat);
             }
             catch (Exception ex)
