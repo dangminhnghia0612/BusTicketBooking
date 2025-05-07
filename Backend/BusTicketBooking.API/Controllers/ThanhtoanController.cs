@@ -17,10 +17,12 @@ namespace BusTicketBooking.API.Controllers
     {
         private readonly IVnPayService _vnPayService;
         private readonly QLBanvexeDbContext _context;
-        public ThanhtoanController(IVnPayService vnPayService, QLBanvexeDbContext context)
+        private readonly IEmailService _emailService;
+        public ThanhtoanController(IVnPayService vnPayService, QLBanvexeDbContext context, IEmailService emailService)
         {
             _vnPayService = vnPayService;
             _context = context;
+            _emailService = emailService;
         }
         [HttpPost]
         public IActionResult CreatePaymentUrlVnpay([FromBody] PaymentInformationModel model)
@@ -45,8 +47,6 @@ namespace BusTicketBooking.API.Controllers
         public async Task<IActionResult> XulyVnPay([FromBody] VnPayResponseDTO dto)
         {
             Datve dv = await _context.Datve.FindAsync(dto.MaDatve);
-            //var cx = await _context.Chuyenxe.Where(x => x.MaChuyenxe == dv.MaChuyenxe).FirstOrDefaultAsync();
-            //var gheCanCapNhat = await _context.Ghe.Where(g => g.MaXe == cx.MaXe && dto.dsGhe.Contains(g.Soghe)).ToListAsync();
             var dsVeXe = await _context.Vexe.Where(x => x.MaDatve == dto.MaDatve).ToListAsync();
 
             //Hủy thanh toán
@@ -55,7 +55,6 @@ namespace BusTicketBooking.API.Controllers
 
                 //thay đổi tình trạng đặt vé sang hủy
                 dv.MaTinhtrang = 3;
-                //_context.Datve.Update(dv);
 
                 //cập nhật trạng thái ghế sang 0 và xóa vé xe
                 foreach (var vexe in dsVeXe)
@@ -70,8 +69,7 @@ namespace BusTicketBooking.API.Controllers
             //Thành công
             dv.MaTinhtrang = 4;
             //Thêm dữ liệu vào bảng Thanhtoan
-            var payDateString = dto.Ngaythanhtoan;
-            var ngaythanhtoan = DateTime.ParseExact(payDateString, "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+            var ngaythanhtoan = DateTime.ParseExact(dto.Ngaythanhtoan, "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
             decimal sotien = decimal.Parse(dto.Sotien) / 100;
             Thanhtoan tt = new Thanhtoan()
             {
@@ -84,19 +82,49 @@ namespace BusTicketBooking.API.Controllers
             };
             _context.Thanhtoan.Add(tt);
 
-            ////Thêm vé
-            //foreach (var ghe in gheCanCapNhat)
-            //{
-            //    var tuyenxe = await _context.Tuyenxe.Where(t => t.MaTuyenxe == cx.MaTuyenxe).FirstOrDefaultAsync(); 
-            //    Vexe vx = new Vexe()
-            //    {
-            //        MaChuyenxe = dv.MaChuyenxe,
-            //        MaDatve = dv.MaDatve,
-            //        MaGhe = ghe.MaGhe,
-            //        Giave = tuyenxe.Giave
-            //    };
-            //    _context.Vexe.Add(vx);
-            //}
+            var vx = await _context.Vexe.Where(x => x.MaDatve == dto.MaDatve)
+                                        .Include(x => x.MaChitietgheNavigation)
+                                            .ThenInclude(ctg => ctg.MaChuyenxeNavigation)
+                                                .ThenInclude(cx => cx.MaXeNavigation)
+                                        .Include(x => x.MaChitietgheNavigation)
+                                             .ThenInclude(ctg => ctg.MaChuyenxeNavigation)
+                                                .ThenInclude(cx => cx.MaTuyenxeNavigation)
+                                                    .ThenInclude(tx => tx.MaDiemdiNavigation)
+                                        .Include(x => x.MaChitietgheNavigation)
+                                             .ThenInclude(ctg => ctg.MaChuyenxeNavigation)
+                                                .ThenInclude(cx => cx.MaTuyenxeNavigation)
+                                                    .ThenInclude(tx => tx.MaDiemdenNavigation)
+                                         .FirstOrDefaultAsync();
+            DateTime ngaygiodi = vx.MaChitietgheNavigation.MaChuyenxeNavigation.Giodi.Value;
+            string ngaydi = ngaygiodi.ToString("dd/MM/yyyy");
+            string giodi = ngaygiodi.ToString("HH:mm");
+            string dsGhe = string.Join(", ", dto.dsGhe);
+            //gửi email
+            string templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "email_ticket_template.html");
+            string htmlBody = System.IO.File.ReadAllText(templatePath);
+            htmlBody = htmlBody
+                                .Replace("{{Hoten}}", dv.Tenkhachhang)
+                                .Replace("{{Mave}}", dv.MaDatve.ToString())
+                                .Replace("{{Ngaydat}}", dv.Ngaydat.ToString("dd/MM/yyyy HH:mm:ss"))
+                                .Replace("{{Tenphuongthuc}}", "VnPay")
+                                //.Replace("{{QrCodeUrl}}", "https://example.com/qrcode.png")
+                                .Replace("{{Email}}", dv.Email)
+                                .Replace("{{Sodienthoai}}", dv.Sodienthoai)
+                                .Replace("{{Diemdi}}", vx.MaChitietgheNavigation.MaChuyenxeNavigation.MaTuyenxeNavigation.MaDiemdiNavigation.Tenbenxe)
+                                .Replace("{{Diemden}}", vx.MaChitietgheNavigation.MaChuyenxeNavigation.MaTuyenxeNavigation.MaDiemdenNavigation.Tenbenxe)
+                                .Replace("{{Giodi}}", giodi)
+                                .Replace("{{Ngaydi}}", ngaydi)
+                                .Replace("{{dsGhe}}", dsGhe)
+                                .Replace("{{Bienso}}", vx.MaChitietgheNavigation.MaChuyenxeNavigation.MaXeNavigation.Bienso)
+                                //.Replace("{{PickupLocation}}", "VP Đà Lạt, 01 Tô Hiến Thành, P.3, TP.Đà Lạt, Lâm Đồng")
+                                .Replace("{{Giave}}", vx.Giave.ToString())
+                                .Replace("{{Soluongve}}", dsVeXe.Count.ToString())
+                                .Replace("{{Tongtien}}", dv.Giagoc.ToString());
+                                //.Replace("{{Discount}}", "0")
+                                //.Replace("{{FinalTotal}}", "580,000")
+                                //.Replace("{{CheckinTime}}", "15:20 04/03/2024");
+
+            await _emailService.GuiEmailAsync(dv.Email, "Nhà xe Minh Nghĩa - Xác nhận vé", htmlBody);
             await _context.SaveChangesAsync();
             return Ok(new { code = dto.TrangThaiGiaoDich });
         }

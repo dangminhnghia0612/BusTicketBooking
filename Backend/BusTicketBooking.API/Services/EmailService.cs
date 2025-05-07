@@ -23,7 +23,7 @@ namespace BusTicketBooking.API.Services
             var mailMessage = new MailMessage
             {
                 From = new MailAddress(_configuration["Smtp:From"]),
-                Subject = "Nhà xe Minh Nghĩa - Xác thực tài khoản đăng ký",
+                Subject = subject,
                 Body = body,
                 IsBodyHtml = true,
             };
