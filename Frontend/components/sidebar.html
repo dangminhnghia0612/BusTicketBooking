@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="sidebar bg-white p-3" id="sidebar">
+      <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
+        <i class="bi bi-bus-front fs-4 text-primary me-2"></i>
+        <h5 class="mb-0">BusTicket Admin</h5>
+      </div>
+
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a
+            href="/pages/Admin/bang-dieu-khien.html"
+            class="nav-link"
+            id="nav-dashboard"
+          >
+            <i class="bi bi-graph-up"></i> Thống kê
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            href="/pages/Admin/quan-ly-nguoi-dung.html"
+            class="nav-link"
+            id="nav-users"
+          >
+            <i class="bi bi-people"></i> Quản lý người dùng
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            href="/pages/Admin/quan-ly-xe.html"
+            class="nav-link"
+            id="nav-vehicles"
+          >
+            <i class="bi bi-truck"></i> Quản lý xe và loại xe
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="routes.html" class="nav-link" id="nav-routes">
+            <i class="bi bi-map"></i> Quản lý tuyến xe
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="trips.html" class="nav-link" id="nav-trips">
+            <i class="bi bi-calendar-event"></i> Quản lý chuyến xe
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="bookings.html" class="nav-link" id="nav-bookings">
+            <i class="bi bi-ticket-perforated"></i> Quản lý đặt vé
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="promotions.html" class="nav-link" id="nav-promotions">
+            <i class="bi bi-gift"></i> Quản lý khuyến mãi
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            href="#"
+            class="nav-link d-flex justify-content-between align-items-center"
+            data-bs-toggle="collapse"
+            data-bs-target="#contentSubmenu"
+          >
+            <span
+              ><i class="bi bi-file-earmark-text"></i> Quản lý nội dung</span
+            >
+            <i class="bi bi-chevron-down"></i>
+          </a>
+          <div class="collapse" id="contentSubmenu">
+            <ul class="nav flex-column submenu">
+              <li class="nav-item">
+                <a
+                  href="content-news.html"
+                  class="nav-link"
+                  id="nav-content-news"
+                >
+                  <i class="bi bi-newspaper"></i> Quản lý tin tức
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="content-banners.html"
+                  class="nav-link"
+                  id="nav-content-banners"
+                >
+                  <i class="bi bi-image"></i> Quản lý biểu ngữ
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="content-company.html"
+                  class="nav-link"
+                  id="nav-content-company"
+                >
+                  <i class="bi bi-building"></i> Quản lý thông tin nhà xe
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+
+      <!-- <div class="mt-auto pt-3 border-top">
+        <div class="d-flex align-items-center">
+          <div
+            class="bg-primary rounded-circle d-flex align-items-center justify-content-center"
+            style="width: 40px; height: 40px"
+          >
+            <i class="bi bi-person-fill text-white"></i>
+          </div>
+          <div class="ms-3">
+            <h6 class="mb-0">Admin</h6>
+            <small class="text-muted">admin@example.com</small>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </body>
+</html>

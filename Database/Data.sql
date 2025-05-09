@@ -81,11 +81,7 @@ INSERT INTO Khachhang(Ma_Vaitro, Ma_Tinhtrang, Sodienthoai, Matkhau, Email, Hote
 (2, 3, '+84965874123', '$2b$10$U3aVZRl4mhWYPoDcy7eGxu.fF4H4sYvqgK2DrXhDYMKZUZKys3H9m', 'banneduser@gmail.com', N'Hoàng Văn E', NULL, 1, '1978-07-10', N'654 Đường 3/2, Q.10, TP.HCM', N'Kinh doanh', NULL, N'Vi phạm điều khoản sử dụng', GETDATE(), GETDATE(), GETDATE());
 
 INSERT INTO Quantrivien(Ma_Vaitro, Tendangnhap, Matkhau, Sodienthoai, Hoten, Anh, Ngaytao, Ngaycapnhat) VALUES
-(1, 'admin1', '123', '0901234567', N'Đặng Minh Nghĩa', NULL, GETDATE(), GETDATE()),
-(1, 'admin2', '123', '0902234567', N'Minh Nghĩa', NULL, GETDATE(), GETDATE()),
-(1, 'admin3', '123', '0903234567', N'Nghĩa Minh', NULL, GETDATE(), GETDATE()),
-(1, 'admin4', '123', '0904234567', N'Minh Nghĩa Đặng', NULL, GETDATE(), GETDATE()),
-(1, 'admin5', '123', '0905234567', N'Nghĩa', NULL, GETDATE(), GETDATE());
+(1, 'admin', '$2a$11$9e6oydpab.0SaL/hwqEUvOBsqfNrEWKun6Dw5iAgQUNPLT90eV22G', '+84901234567', N'Đặng Minh Nghĩa', NULL, GETDATE(), GETDATE());
 
 
 INSERT INTO Thongtinnhaxe(Ma_Quantrivien, Ten, Mota, Ngaytao, Ngaycapnhat) VALUES
@@ -1017,24 +1013,24 @@ INSERT INTO Tuyenxe(Ma_Diemdi, Ma_Diemden, Khoangthoigian, Khoangcach, Giave) VA
 
 
 INSERT INTO Chuyenxe(Ma_Tuyenxe, Ma_Xe, Giodi, Gioden) VALUES
-(1, 1, '2025-05-06 08:00:00', '2025-05-06 16:00:00'),
-(1, 2, '2025-05-06 09:00:00', '2025-05-06 17:00:00'),
-(1, 3, '2025-05-06 10:00:00', '2025-05-06 18:00:00'),
-(2, 4, '2025-05-06 11:00:00', '2025-05-06 20:00:00'),
-(2, 5, '2025-05-06 12:00:00', '2025-05-06 11:00:00'),
-(2, 6, '2025-05-06 13:00:00', '2025-05-06 12:00:00'),
-(3, 7, '2025-05-06 14:00:00', '2025-05-06 23:00:00'),
-(3, 8, '2025-05-06 15:00:00', '2025-05-07 00:00:00'),
-(3, 9, '2025-05-06 16:00:00', '2025-05-07 01:00:00'),
-(4, 10, '2025-05-06 17:00:00', '2025-05-07 03:00:00'),
-(4, 1, '2025-05-08 18:00:00', '2025-05-09 04:00:00'),
-(4, 2, '2025-05-08 19:00:00', '2025-05-09 05:00:00'),
-(5, 3, '2025-05-08 20:00:00', '2025-05-09 20:00:00'),
-(5, 4, '2025-05-08 21:00:00', '2025-05-09 21:00:00'),
-(5, 5, '2025-05-08 21:00:00', '2025-05-09 21:00:00'),
-(6, 6, '2025-05-08 21:00:00', '2025-05-09 17:00:00'),
-(6, 7, '2025-05-08 21:00:00', '2025-05-09 17:00:00'),
-(6, 8, '2025-05-08 22:00:00', '2025-05-01 18:00:00');
+(1, 1, '2025-05-08 08:00:00', '2025-05-08 16:00:00'),
+(1, 2, '2025-05-08 09:00:00', '2025-05-08 17:00:00'),
+(1, 3, '2025-05-08 10:00:00', '2025-05-08 18:00:00'),
+(2, 4, '2025-05-08 11:00:00', '2025-05-08 20:00:00'),
+(2, 5, '2025-05-08 12:00:00', '2025-05-08 11:00:00'),
+(2, 6, '2025-05-08 13:00:00', '2025-05-08 12:00:00'),
+(3, 7, '2025-05-08 14:00:00', '2025-05-08 23:00:00'),
+(3, 8, '2025-05-08 15:00:00', '2025-05-09 00:00:00'),
+(3, 9, '2025-05-08 16:00:00', '2025-05-09 01:00:00'),
+(4, 10, '2025-05-08 17:00:00', '2025-05-09 03:00:00'),
+(4, 1, '2025-05-10 18:00:00', '2025-05-11 04:00:00'),
+(4, 2, '2025-05-10 19:00:00', '2025-05-11 05:00:00'),
+(5, 3, '2025-05-10 20:00:00', '2025-05-11 20:00:00'),
+(5, 4, '2025-05-10 21:00:00', '2025-05-11 21:00:00'),
+(5, 5, '2025-05-10 21:00:00', '2025-05-11 21:00:00'),
+(6, 6, '2025-05-10 21:00:00', '2025-05-11 17:00:00'),
+(6, 7, '2025-05-10 21:00:00', '2025-05-11 17:00:00'),
+(6, 8, '2025-05-10 22:00:00', '2025-05-11 18:00:00');
 
 -- 1. Khuyến mãi giảm giá cố định
 INSERT INTO Khuyenmai(
@@ -1055,7 +1051,7 @@ INSERT INTO Khuyenmai(
     Ngaybatdau, Ngayketthuc, Giatritoithieu, 
     Giamgiatoida, Duockichhoat, Ngaytao) VALUES 
 (
-    2, 2, N'Giảm 15% tối đa 100k',
+    2, 1, N'Giảm 15% tối đa 100k',
     N'Áp dụng cho khách hàng thân thiết', 15, 'VIP15',
     '2025-07-01', '2025-08-01', 0,
     100000, 1, GETDATE()
@@ -1068,7 +1064,7 @@ INSERT INTO Khuyenmai(
     Ngaybatdau, Ngayketthuc, Giatritoithieu, 
     Giamgiatoida, Duockichhoat, Ngaytao) VALUES 
 (
-    2, 3, N'Black Friday Sale 30%',
+    2, 1, N'Black Friday Sale 30%',
     N'Chương trình khuyến mãi lớn nhất năm', 30, 'BLACKFRIDAY',
     '2025-11-24', '2025-11-26', 0,
     150000, 1, GETDATE()
@@ -1081,7 +1077,7 @@ INSERT INTO Khuyenmai(
     Ngaybatdau, Ngayketthuc, Giatritoithieu, 
     Giamgiatoida, Duockichhoat, Ngaytao) VALUES 
 (
-    1, 4, N'Giảm 30k vé đêm',
+    1, 1, N'Giảm 30k vé đêm',
     N'Áp dụng cho các chuyến từ 22h-5h', 30000, 'DEM30',
     '2025-12-01', '2025-12-31', 150000,
     30000, 1, GETDATE()
@@ -1094,7 +1090,7 @@ INSERT INTO Khuyenmai(
     Ngaybatdau, Ngayketthuc, Giatritoithieu, 
     Giamgiatoida, Duockichhoat, Ngaytao) VALUES 
 (
-    2, 5, N'Năm mới 2026 - Giảm 20%',
+    2, 1, N'Năm mới 2026 - Giảm 20%',
     N'Chào đón năm mới 2026', 20, 'NEWYEAR26',
     '2026-01-01', '2026-01-05', 300000,
     120000, 1, GETDATE()

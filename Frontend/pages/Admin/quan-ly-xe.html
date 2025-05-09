@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý xe và loại xe - Quản Trị Hệ Thống Bán Vé Xe</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../styles/pages/Admin/bang-dieu-khien.css"
+    />
+  </head>
+  <body>
+    <div class="d-flex">
+      <!-- Sidebar Component -->
+      <div id="sidebar-container"></div>
+
+      <!-- Main Content -->
+      <div class="content-wrapper flex-grow-1">
+        <!-- Header Component -->
+        <div id="header-container"></div>
+
+        <!-- Page Content -->
+        <div class="container-fluid pb-5">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4>Quản lý xe và loại xe</h4>
+            <div>
+              <button
+                class="btn btn-outline-primary me-2"
+                id="btnThemLoaiXe"
+                style="display: none"
+              >
+                <i class="bi bi-plus-lg me-1"></i> Thêm loại xe
+              </button>
+              <button class="btn btn-outline-primary me-2" id="btnThemXe">
+                <i class="bi bi-plus-lg me-1"></i> Thêm xe
+              </button>
+            </div>
+          </div>
+
+          <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+              <a
+                id="link-xe"
+                class="nav-link active"
+                href="#vehicles-tab"
+                data-bs-toggle="tab"
+                >Danh sách xe</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                id="link-loaixe"
+                class="nav-link"
+                href="#vehicle-types-tab"
+                data-bs-toggle="tab"
+                >Loại xe</a
+              >
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="vehicles-tab">
+              <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                  <div class="row g-3">
+                    <div class="col-12 col-md-4">
+                      <div class="input-group">
+                        <span class="input-group-text bg-light"
+                          ><i class="bi bi-search"></i
+                        ></span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Tìm kiếm xe..."
+                        />
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                      <select class="form-select">
+                        <option selected>Loại xe</option>
+                        <option>Giường nằm</option>
+                        <option>Limousine</option>
+                        <option>Ghế ngồi</option>
+                      </select>
+                    </div>
+                    <div class="col-12 col-md-3">
+                      <select class="form-select">
+                        <option selected>Trạng thái</option>
+                        <option>Đang hoạt động</option>
+                        <option>Đang bảo trì</option>
+                        <option>Không hoạt động</option>
+                      </select>
+                    </div>
+                    <div class="col-12 col-md-2">
+                      <button class="btn btn-primary w-100">Lọc</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card border-0 shadow-sm">
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                      <thead class="table-light">
+                        <tr>
+                          <th>ID</th>
+                          <th>Biển số xe</th>
+                          <th>Loại xe</th>
+                          <th>Số ghế</th>
+                          <th>Tài xế</th>
+                          <th>Trạng thái</th>
+                          <th>Thao tác</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>29B-12345</td>
+                          <td>Giường nằm</td>
+                          <td>40</td>
+                          <td>Nguyễn Văn A</td>
+                          <td>
+                            <span class="badge bg-success">Đang hoạt động</span>
+                          </td>
+                          <td>
+                            <button class="btn btn-sm btn-outline-primary me-1">
+                              <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>2</td>
+                          <td>30B-67890</td>
+                          <td>Limousine</td>
+                          <td>22</td>
+                          <td>Trần Văn B</td>
+                          <td>
+                            <span class="badge bg-warning text-dark"
+                              >Đang bảo trì</span
+                            >
+                          </td>
+                          <td>
+                            <button class="btn btn-sm btn-outline-primary me-1">
+                              <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>3</td>
+                          <td>31B-54321</td>
+                          <td>Ghế ngồi</td>
+                          <td>45</td>
+                          <td>Lê Văn C</td>
+                          <td>
+                            <span class="badge bg-success">Đang hoạt động</span>
+                          </td>
+                          <td>
+                            <button class="btn btn-sm btn-outline-primary me-1">
+                              <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>4</td>
+                          <td>32B-98765</td>
+                          <td>Giường nằm</td>
+                          <td>40</td>
+                          <td>Phạm Văn D</td>
+                          <td>
+                            <span class="badge bg-danger">Không hoạt động</span>
+                          </td>
+                          <td>
+                            <button class="btn btn-sm btn-outline-primary me-1">
+                              <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="card-footer bg-white">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <p class="mb-0 text-muted">Hiển thị 1-4 của 20 xe</p>
+                    <nav>
+                      <ul class="pagination pagination-sm mb-0">
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#">Trước</a>
+                        </li>
+                        <li class="page-item active">
+                          <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#">3</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#">Sau</a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="vehicle-types-tab">
+              <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body">
+                  <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                      <div class="input-group">
+                        <span class="input-group-text bg-light"
+                          ><i class="bi bi-search"></i
+                        ></span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Tìm kiếm loại xe..."
+                        />
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                      <select class="form-select">
+                        <option selected>Trạng thái</option>
+                        <option>Đang sử dụng</option>
+                        <option>Không sử dụng</option>
+                      </select>
+                    </div>
+                    <div class="col-12 col-md-2">
+                      <button class="btn btn-primary w-100">Lọc</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card border-0 shadow-sm">
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                      <thead class="table-light">
+                        <tr>
+                          <th>ID</th>
+                          <th>Tên loại xe</th>
+                          <th>Mô tả</th>
+                          <th>Số ghế</th>
+                          <th>Giá cơ bản</th>
+                          <th>Trạng thái</th>
+                          <th>Thao tác</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>Giường nằm</td>
+                          <td>Xe giường nằm cao cấp</td>
+                          <td>40</td>
+                          <td>300,000 VND</td>
+                          <td>
+                            <span class="badge bg-success">Đang sử dụng</span>
+                          </td>
+                          <td>
+                            <button class="btn btn-sm btn-outline-primary me-1">
+                              <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>2</td>
+                          <td>Limousine</td>
+                          <td>Xe limousine VIP</td>
+                          <td>22</td>
+                          <td>450,000 VND</td>
+                          <td>
+                            <span class="badge bg-success">Đang sử dụng</span>
+                          </td>
+                          <td>
+                            <button class="btn btn-sm btn-outline-primary me-1">
+                              <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>3</td>
+                          <td>Ghế ngồi</td>
+                          <td>Xe ghế ngồi tiêu chuẩn</td>
+                          <td>45</td>
+                          <td>200,000 VND</td>
+                          <td>
+                            <span class="badge bg-success">Đang sử dụng</span>
+                          </td>
+                          <td>
+                            <button class="btn btn-sm btn-outline-primary me-1">
+                              <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="card-footer bg-white">
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <p class="mb-0 text-muted">Hiển thị 1-3 của 3 loại xe</p>
+                    <nav>
+                      <ul class="pagination pagination-sm mb-0">
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#">Trước</a>
+                        </li>
+                        <li class="page-item active">
+                          <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#">Sau</a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Component -->
+        <div id="footer-container"></div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../scripts/modules/Admin/bang-dieu-khien.js"></script>
+    <script src="../../scripts/modules/Admin/quan-ly-xe.js"></script>
+  </body>
+</html>

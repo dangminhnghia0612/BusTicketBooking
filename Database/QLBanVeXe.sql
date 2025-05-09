@@ -9,15 +9,14 @@ USE QLBanVeXe
 GO
 
 
-
 /*==============================================================*/
 /* Table: Quantrivien                                           */
 /*==============================================================*/
 create table Quantrivien (
    Ma_Quantrivien       int  IDENTITY(1,1)   not null,
    Ma_Vaitro            int                  not null,
-   Tendangnhap          nvarchar(30)         not null,
-   Matkhau              nvarchar(50)         null,
+   Tendangnhap          nvarchar(50)         not null,
+   Matkhau              nvarchar(255)         null,
    Sodienthoai          nvarchar(15)         not null,
    Hoten                nvarchar(50)         null,
    Anh                  nvarchar(100)        null,
@@ -684,7 +683,7 @@ create table Khachhang (
    Ma_Tinhtrang         int                  not null,
    Ma_Vaitro            int                  not null,
    Sodienthoai          nvarchar(15)         not null,
-   Matkhau				nvarchar(100)        null,
+   Matkhau				nvarchar(255)        null,
    Email                nvarchar(50)         null,
    Hoten                nvarchar(100)        null,
    Token				nvarchar(200)		 null,

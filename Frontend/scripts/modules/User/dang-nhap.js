@@ -1,4 +1,4 @@
-import { dangNhap, dangKy } from "../api/auth-API.js";
+import { dangNhap, dangKy } from "../../api/auth-API.js";
 
 const form = document.getElementById("auth-form");
 const formTitle = document.getElementById("form-title");
@@ -59,7 +59,7 @@ form.addEventListener("submit", async (e) => {
       localStorage.setItem("email", data.email);
       localStorage.setItem("maKH", data.maKH);
       localStorage.setItem("avatarURL", data.anh);
-      window.location.href = "../index.html";
+      window.location.href = "../../index.html";
     } else {
       hienThiThongBao(data.message);
     }

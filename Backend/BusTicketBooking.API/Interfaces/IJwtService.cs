@@ -5,5 +5,6 @@ namespace BusTicketBooking.API.Interfaces
     public interface IJwtService
     {
         string TaoToken(Khachhang khachhang);
+        string TaoTokenQuantrivien(Quantrivien quantrivien);
     }
 }

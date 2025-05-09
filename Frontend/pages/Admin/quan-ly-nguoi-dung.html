@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý người dùng - Quản Trị Hệ Thống Bán Vé Xe</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../styles/pages/Admin/bang-dieu-khien.css"
+    />
+  </head>
+  <body>
+    <div class="d-flex">
+      <!-- Sidebar Component -->
+      <div id="sidebar-container"></div>
+
+      <!-- Main Content -->
+      <div class="content-wrapper flex-grow-1">
+        <!-- Header Component -->
+        <div id="header-container"></div>
+
+        <!-- Page Content -->
+        <div class="container-fluid pb-5">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4>Quản lý người dùng</h4>
+            <button class="btn btn-primary">
+              <i class="bi bi-plus-lg me-1"></i> Thêm người dùng
+            </button>
+          </div>
+
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-12 col-md-4">
+                  <div class="input-group">
+                    <span class="input-group-text bg-light"
+                      ><i class="bi bi-search"></i
+                    ></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Tìm kiếm người dùng..."
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-3">
+                  <select class="form-select">
+                    <option selected>Vai trò</option>
+                    <option>Quản trị viên</option>
+                    <option>Nhân viên</option>
+                    <option>Khách hàng</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-3">
+                  <select class="form-select">
+                    <option selected>Trạng thái</option>
+                    <option>Hoạt động</option>
+                    <option>Không hoạt động</option>
+                    <option>Đã khóa</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-2">
+                  <button class="btn btn-primary w-100">Lọc</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th>
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="checkAll"
+                          />
+                        </div>
+                      </th>
+                      <th>Tên người dùng</th>
+                      <th>Email</th>
+                      <th>Số điện thoại</th>
+                      <th>Vai trò</th>
+                      <th>Trạng thái</th>
+                      <th>Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" />
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div
+                            class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-2"
+                            style="width: 40px; height: 40px"
+                          >
+                            <span class="text-white fw-bold">NV</span>
+                          </div>
+                          <div>
+                            <p class="mb-0 fw-medium">Nguyễn Văn A</p>
+                            <small class="text-muted">ID: #12345</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>nguyenvana@example.com</td>
+                      <td>0912345678</td>
+                      <td>
+                        <span class="badge bg-primary">Quản trị viên</span>
+                      </td>
+                      <td><span class="badge bg-success">Hoạt động</span></td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-primary me-1">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" />
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div
+                            class="bg-info rounded-circle d-flex align-items-center justify-content-center me-2"
+                            style="width: 40px; height: 40px"
+                          >
+                            <span class="text-white fw-bold">TT</span>
+                          </div>
+                          <div>
+                            <p class="mb-0 fw-medium">Trần Thị B</p>
+                            <small class="text-muted">ID: #12346</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>tranthib@example.com</td>
+                      <td>0923456789</td>
+                      <td>
+                        <span class="badge bg-info text-dark">Nhân viên</span>
+                      </td>
+                      <td><span class="badge bg-success">Hoạt động</span></td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-primary me-1">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" />
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div
+                            class="bg-warning rounded-circle d-flex align-items-center justify-content-center me-2"
+                            style="width: 40px; height: 40px"
+                          >
+                            <span class="text-white fw-bold">LV</span>
+                          </div>
+                          <div>
+                            <p class="mb-0 fw-medium">Lê Văn C</p>
+                            <small class="text-muted">ID: #12347</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>levanc@example.com</td>
+                      <td>0934567890</td>
+                      <td>
+                        <span class="badge bg-secondary">Khách hàng</span>
+                      </td>
+                      <td>
+                        <span class="badge bg-warning text-dark"
+                          >Chưa xác thực</span
+                        >
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-primary me-1">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" />
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <div
+                            class="bg-danger rounded-circle d-flex align-items-center justify-content-center me-2"
+                            style="width: 40px; height: 40px"
+                          >
+                            <span class="text-white fw-bold">PT</span>
+                          </div>
+                          <div>
+                            <p class="mb-0 fw-medium">Phạm Thị D</p>
+                            <small class="text-muted">ID: #12348</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>phamthid@example.com</td>
+                      <td>0945678901</td>
+                      <td>
+                        <span class="badge bg-secondary">Khách hàng</span>
+                      </td>
+                      <td><span class="badge bg-danger">Đã khóa</span></td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-primary me-1">
+                          <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer bg-white">
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0 text-muted">Hiển thị 1-4 của 25 người dùng</p>
+                <nav>
+                  <ul class="pagination pagination-sm mb-0">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#">Trước</a>
+                    </li>
+                    <li class="page-item active">
+                      <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">Sau</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Component -->
+        <div id="footer-container"></div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../scripts/modules/Admin/bang-dieu-khien.js"></script>
+  </body>
+</html>

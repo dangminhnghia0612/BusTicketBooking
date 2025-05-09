@@ -146,7 +146,7 @@ function timChuyenXe(searchButtonId, iframeContainerId, resultIframeId) {
       return;
     }
 
-    const url = `./pages/tim-chuyen-xe.html?departure=${encodeURIComponent(
+    const url = `./pages/User/tim-chuyen-xe.html?departure=${encodeURIComponent(
       departure
     )}&destination=${encodeURIComponent(
       destination

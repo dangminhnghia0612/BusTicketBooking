@@ -82,22 +82,32 @@ namespace BusTicketBooking.API.Controllers
             };
             _context.Thanhtoan.Add(tt);
 
-            var vx = await _context.Vexe.Where(x => x.MaDatve == dto.MaDatve)
-                                        .Include(x => x.MaChitietgheNavigation)
-                                            .ThenInclude(ctg => ctg.MaChuyenxeNavigation)
-                                                .ThenInclude(cx => cx.MaXeNavigation)
-                                        .Include(x => x.MaChitietgheNavigation)
-                                             .ThenInclude(ctg => ctg.MaChuyenxeNavigation)
-                                                .ThenInclude(cx => cx.MaTuyenxeNavigation)
-                                                    .ThenInclude(tx => tx.MaDiemdiNavigation)
-                                        .Include(x => x.MaChitietgheNavigation)
-                                             .ThenInclude(ctg => ctg.MaChuyenxeNavigation)
-                                                .ThenInclude(cx => cx.MaTuyenxeNavigation)
-                                                    .ThenInclude(tx => tx.MaDiemdenNavigation)
-                                         .FirstOrDefaultAsync();
-            DateTime ngaygiodi = vx.MaChitietgheNavigation.MaChuyenxeNavigation.Giodi.Value;
-            string ngaydi = ngaygiodi.ToString("dd/MM/yyyy");
-            string giodi = ngaygiodi.ToString("HH:mm");
+            //var vx = await _context.Vexe.Where(v => v.MaDatve == dto.MaDatve)
+            //                            .Include(v => v.MaChitietgheNavigation)
+            //                                .ThenInclude(ctg => ctg.MaChuyenxeNavigation)
+            //                                    .ThenInclude(cx => cx.MaXeNavigation)
+            //                            .Include(x => x.MaChitietgheNavigation)
+            //                                 .ThenInclude(ctg => ctg.MaChuyenxeNavigation)
+            //                                    .ThenInclude(cx => cx.MaTuyenxeNavigation)
+            //                                        .ThenInclude(tx => tx.MaDiemdiNavigation)
+            //                            .Include(x => x.MaChitietgheNavigation)
+            //                                 .ThenInclude(ctg => ctg.MaChuyenxeNavigation)
+            //                                    .ThenInclude(cx => cx.MaTuyenxeNavigation)
+            //                                        .ThenInclude(tx => tx.MaDiemdenNavigation)
+            //                             .FirstOrDefaultAsync();
+            //DateTime ngaygiodi = vx.MaChitietgheNavigation.MaChuyenxeNavigation.Giodi.Value;
+            var vx = await _context.Vexe.AsNoTracking().Where(v => v.MaDatve == dto.MaDatve)
+                                                       .Select(v => new
+                                                       {
+                                                           Giave = v.Giave,
+                                                           Ngaygiodi = v.MaChitietgheNavigation.MaChuyenxeNavigation.Giodi,
+                                                           Benxedi = v.MaChitietgheNavigation.MaChuyenxeNavigation.MaTuyenxeNavigation.MaDiemdiNavigation.Tenbenxe,
+                                                           Benxeden = v.MaChitietgheNavigation.MaChuyenxeNavigation.MaTuyenxeNavigation.MaDiemdenNavigation.Tenbenxe,
+                                                           Bienso = v.MaChitietgheNavigation.MaChuyenxeNavigation.MaXeNavigation.Bienso
+                                                       }).FirstOrDefaultAsync();
+
+            string ngaydi = vx.Ngaygiodi.Value.ToString("dd/MM/yyyy");
+            string giodi = vx.Ngaygiodi.Value.ToString("HH:mm");
             string dsGhe = string.Join(", ", dto.dsGhe);
             //gửi email
             string templatePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates", "email_ticket_template.html");
@@ -110,12 +120,12 @@ namespace BusTicketBooking.API.Controllers
                                 //.Replace("{{QrCodeUrl}}", "https://example.com/qrcode.png")
                                 .Replace("{{Email}}", dv.Email)
                                 .Replace("{{Sodienthoai}}", dv.Sodienthoai)
-                                .Replace("{{Diemdi}}", vx.MaChitietgheNavigation.MaChuyenxeNavigation.MaTuyenxeNavigation.MaDiemdiNavigation.Tenbenxe)
-                                .Replace("{{Diemden}}", vx.MaChitietgheNavigation.MaChuyenxeNavigation.MaTuyenxeNavigation.MaDiemdenNavigation.Tenbenxe)
+                                .Replace("{{Diemdi}}", vx.Benxedi)
+                                .Replace("{{Diemden}}", vx.Benxeden)
                                 .Replace("{{Giodi}}", giodi)
                                 .Replace("{{Ngaydi}}", ngaydi)
                                 .Replace("{{dsGhe}}", dsGhe)
-                                .Replace("{{Bienso}}", vx.MaChitietgheNavigation.MaChuyenxeNavigation.MaXeNavigation.Bienso)
+                                .Replace("{{Bienso}}", vx.Bienso)
                                 //.Replace("{{PickupLocation}}", "VP Đà Lạt, 01 Tô Hiến Thành, P.3, TP.Đà Lạt, Lâm Đồng")
                                 .Replace("{{Giave}}", vx.Giave.ToString())
                                 .Replace("{{Soluongve}}", dsVeXe.Count.ToString())

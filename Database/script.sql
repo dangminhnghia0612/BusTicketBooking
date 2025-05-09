@@ -11,18 +11,18 @@ BEGIN
     DECLARE @Ma_Loaixe INT
     DECLARE @Sodoghe NVARCHAR(MAX)
 
-    -- Giả sử chỉ insert 1 bus tại 1 thời điểm
+   
     SELECT 
         @Ma_Xe = Ma_Xe,
         @Ma_Loaixe = Ma_Loaixe
     FROM INSERTED
 
-    -- Lấy layout JSON từ BUS_TYPE
+    
     SELECT 
         @Sodoghe = Sodoghe
     FROM Loaixe
     WHERE Ma_Loaixe = @Ma_Loaixe
-    -- Insert ghế từ layout
+    
     INSERT INTO Ghe(Ma_Xe, Soghe, Tang, Day)
     SELECT 
         @Ma_Xe,
@@ -105,7 +105,6 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-	-- Lấy danh sách Ma_Datve cần xử lý
     DECLARE @DanhSach TABLE (MaDatve INT);
 
     INSERT INTO @DanhSach (MaDatve)
@@ -113,19 +112,16 @@ BEGIN
     FROM Datve
     WHERE Ma_Tinhtrang = 1 AND DATEDIFF(MINUTE, Ngaydat, GETDATE()) > 16;
 
-    -- Cập nhật tình trạng từ 1 => 2
     UPDATE Datve
     SET Ma_Tinhtrang = 2
     WHERE Ma_Datve IN (SELECT MaDatve FROM @DanhSach);
 
-    -- Cập nhật Chitietghe.Trangthai = 0 với các vé bị xóa
     UPDATE Chitietghe
     SET Trangthai = 0
     FROM Chitietghe ctg
     JOIN Vexe vx ON vx.Ma_Chitietghe = ctg.Ma_Chitietghe
     JOIN @DanhSach d ON d.MaDatve = vx.Ma_Datve;
 
-    -- Xóa vé tương ứng
     DELETE FROM Vexe
     WHERE Ma_Datve IN (SELECT MaDatve FROM @DanhSach);
 END

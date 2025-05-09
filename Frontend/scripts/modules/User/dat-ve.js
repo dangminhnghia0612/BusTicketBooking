@@ -1,11 +1,11 @@
-import { getParamsFromURL } from "../utils/urlUtil.js";
-import { laySoDoGhe } from "../api/loai-xe-API.js";
-import { layDSGheDaDat } from "../api/ghe-API.js";
-import { ktEmail } from "../utils/emailUtil.js";
-import { ktSDTHopLe, ChuanHoaSDT } from "../utils/phoneUtil.js";
-import { timKhachHang } from "../api/khach-hang-API.js";
-import { sendDatVeRequest } from "../api/dat-ve-API.js";
-import { thanhToanVnpay } from "../api/thanh-toan-API.js";
+import { getParamsFromURL } from "../../utils/urlUtil.js";
+import { laySoDoGhe } from "../../api/loai-xe-API.js";
+import { layDSGheDaDat } from "../../api/ghe-API.js";
+import { ktEmail } from "../../utils/emailUtil.js";
+import { ktSDTHopLe, ChuanHoaSDT } from "../../utils/phoneUtil.js";
+import { timKhachHang } from "../../api/khach-hang-API.js";
+import { sendDatVeRequest } from "../../api/dat-ve-API.js";
+import { thanhToanVnpay } from "../../api/thanh-toan-API.js";
 
 async function loadComponent(selector, filePath) {
   const container = document.querySelector(selector);
@@ -26,8 +26,8 @@ async function loadComponent(selector, filePath) {
 
 // Tải header và footer
 document.addEventListener("DOMContentLoaded", async function () {
-  await loadComponent("header", "../components/header.html");
-  await loadComponent("footer", "../components/footer.html");
+  await loadComponent("header", "../../components/header.html");
+  await loadComponent("footer", "../../components/footer.html");
 
   ktDangNhap();
   Dangxuat();
@@ -370,7 +370,6 @@ async function thanhToan() {
   console.log(result.message);
   if (result.message === "Đặt vé thành công!") {
     alert("Đặt vé thành công. Vui lòng thanh toán!");
-    console.log(selectedSeatIds);
     await thanhToanVnpay(fullName, tongTien, result.maDatve, selectedSeatIds);
   } else if (result.message === "Ghế đã có người đặt") {
     alert("Ghế đã có người đặt");

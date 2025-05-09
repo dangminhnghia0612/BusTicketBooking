@@ -54,9 +54,10 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.AllowAnyOrigin() // Cho phép mọi nguồn (frontend)
+        policy.WithOrigins("http://127.0.0.1:5500", "https://127.0.0.1:5501")
               .AllowAnyMethod() // Cho phép mọi phương thức (GET, POST, PUT, DELETE)
-              .AllowAnyHeader(); // Cho phép mọi header
+              .AllowAnyHeader() // Cho phép mọi header
+              .AllowCredentials(); // Cho phép gửi thông tin xác thực (cookies, Authorization header...)
     });
 });
 

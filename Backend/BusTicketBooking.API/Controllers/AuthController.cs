@@ -114,6 +114,8 @@ namespace BusTicketBooking.API.Controllers
 
             // Tạo JWT token
             var token = _jwtService.TaoToken(khachhang);
+            khachhang.Dangnhapcuoi = DateTime.Now;
+            await _context.SaveChangesAsync();
 
             return Ok(new
             {
