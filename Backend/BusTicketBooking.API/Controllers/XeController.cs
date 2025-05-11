@@ -1,4 +1,6 @@
 ﻿using BusTicketBooking.API.Data;
+using BusTicketBooking.API.DTOs;
+using BusTicketBooking.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +28,8 @@ namespace BusTicketBooking.API.Controllers
                                                 Maxe = x.MaXe,
                                                 Bienso = x.Bienso,
                                                 Tenloai = x.MaLoaixeNavigation.Tenloai,
-                                                Soghe = x.MaLoaixeNavigation.Soluongghe
+                                                Soghe = x.MaLoaixeNavigation.Soluongghe,
+                                                Tenxe = x.Ten
                                             })
                                             .ToListAsync();
                 return Ok(dsXe);
@@ -64,6 +67,60 @@ namespace BusTicketBooking.API.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { message = "Xảy ra lỗi khi xóa xe " + ex.Message });
+            }
+        }
+        [HttpPost("ThemXe")]
+        public async Task<IActionResult> themXe([FromBody] XeRequestDTO dto)
+        {
+            try
+            {
+                var existingXe = await _context.Xe.AnyAsync(x => x.Bienso == dto.Bienso);
+                if (existingXe)
+                {
+                    return BadRequest(new { message = "Biển số xe đã tồn tại" });
+                }
+                var xe = new Xe
+                {
+                    MaLoaixe = dto.MaLoaixe,
+                    Bienso = dto.Bienso,
+                    Ten = dto.Ten
+                };
+                _context.Xe.Add(xe);
+                await _context.SaveChangesAsync();
+                return Ok(new { message = "Thêm thành công" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Xảy ra lỗi khi thêm xe " + ex.Message });
+            }
+        }
+        [HttpPut("{maxe}")]
+        public async Task<IActionResult> suaXe(int maxe, [FromBody] XeRequestDTO dto)
+        {
+            try
+            {
+                var existingBienso = await _context.Xe.AnyAsync(x => x.Bienso == dto.Bienso && x.MaXe != maxe);
+                if (existingBienso)
+                {
+                    
+                    return BadRequest(new { message = "Biển số xe đã tồn tại." });
+                }
+
+                var xe = await _context.Xe.FindAsync(maxe);
+                if (xe == null)
+                {
+                    return NotFound(new { message = "Xe không tồn tại." });
+                }
+                xe.MaLoaixe = dto.MaLoaixe;
+                xe.Bienso = dto.Bienso;
+                xe.Ten = dto.Ten;
+
+                await _context.SaveChangesAsync();
+                return Ok(new { message = "Sửa thành công" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = "Xảy ra lỗi khi sửa xe " + ex.Message });
             }
         }
     }
