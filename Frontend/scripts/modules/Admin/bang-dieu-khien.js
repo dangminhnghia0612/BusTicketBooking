@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
           window.location.href = "./dang-nhap.html";
         });
       })
-      .catch((error) => console.error("Error loading header:", error));
+      .catch((error) => console.error("Lỗi tải header:", error));
   }
 
   // Load footer
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((html) => {
         footerContainer.innerHTML = html;
       })
-      .catch((error) => console.error("Error loading footer:", error));
+      .catch((error) => console.error("Lỗi tải footer:", error));
   }
 });
 
@@ -70,25 +70,24 @@ function setActiveNavItem() {
     activeNavId = "nav-users";
   } else if (currentPage === "quan-ly-xe.html") {
     activeNavId = "nav-vehicles";
-  } else if (currentPage === "routes.html") {
+  } else if (currentPage === "quan-ly-tuyen-xe.html") {
     activeNavId = "nav-routes";
-  } else if (currentPage === "trips.html") {
+  } else if (currentPage === "quan-ly-chuyen-xe.html") {
     activeNavId = "nav-trips";
-  } else if (currentPage === "bookings.html") {
+  } else if (currentPage === "quan-ly-dat-ve.html") {
     activeNavId = "nav-bookings";
-  } else if (currentPage === "promotions.html") {
+  } else if (currentPage === "quan-ly-khuyen-mai.html") {
     activeNavId = "nav-promotions";
-  } else if (currentPage === "content-news.html") {
+  } else if (currentPage === "quan-ly-tin-tuc.html") {
     activeNavId = "nav-content-news";
     document.getElementById("contentSubmenu").classList.add("show");
-  } else if (currentPage === "content-banners.html") {
+  } else if (currentPage === "quan-ly-bieu-ngu.html") {
     activeNavId = "nav-content-banners";
     document.getElementById("contentSubmenu").classList.add("show");
-  } else if (currentPage === "content-company.html") {
+  } else if (currentPage === "quan-ly-thong-tin.html") {
     activeNavId = "nav-content-company";
     document.getElementById("contentSubmenu").classList.add("show");
   }
-
   const activeNavItem = document.getElementById(activeNavId);
   if (activeNavItem) {
     activeNavItem.classList.add("active");

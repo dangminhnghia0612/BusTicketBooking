@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Trị Hệ Thống Bán Vé Xe</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../styles/pages/Admin/bang-dieu-khien.css"
+    />
+  </head>
+  <body>
+    <div class="d-flex">
+      <!-- Sidebar Component -->
+      <div id="sidebar-container"></div>
+
+      <!-- Main Content -->
+      <div class="content-wrapper flex-grow-1">
+        <!-- Header Component -->
+        <div id="header-container"></div>
+
+        <!-- Page Content -->
+        <div class="container-fluid pb-5">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4>Quản lý tuyến xe</h4>
+            <div>
+              <button class="btn btn-outline-primary me-2" id="btnThemTuyenXe">
+                <i class="bi bi-plus-lg me-1"></i> Thêm
+              </button>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-12 col-md-5">
+                  <select class="form-select">
+                    <option selected disabled>Điểm đi</option>
+                    <option>TP. Hồ Chí Minh</option>
+                    <option>Khánh Hòa</option>
+                    <option>Lâm Đồng</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-5">
+                  <select class="form-select">
+                    <option selected disabled>Điểm đến</option>
+                    <option>TP. Hồ Chí Minh</option>
+                    <option>Khánh Hòa</option>
+                    <option>Lâm Đồng</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-2">
+                  <button id="btnTimTuyenXe" class="btn btn-primary w-100">
+                    Tìm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0" id="tableTuyenXe">
+                  <thead class="table-light">
+                    <tr>
+                      <th>ID</th>
+                      <th>Tuyến xe</th>
+                      <th>Bến đi</th>
+                      <th>Bến đến</th>
+                      <th>Khoảng thời gian</th>
+                      <th>Khoảng cách</th>
+                      <th>Giá vé</th>
+                      <th>Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+            <!-- <div class="card-footer bg-white">
+              <div
+                class="d-flex justify-content-between align-items-center"
+              >
+                <p class="mb-0 text-muted">Hiển thị 1-4 của 20 xe</p>
+                <nav>
+                  <ul class="pagination pagination-sm mb-0">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#">Trước</a>
+                    </li>
+                    <li class="page-item active">
+                      <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">Sau</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <!-- Modal Thêm Tuyến Xe -->
+        <div
+          class="modal fade"
+          id="modalTuyenXe"
+          tabindex="-1"
+          aria-labelledby="tieudeModalTuyenXe"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="tieudeModalTuyenXe">
+                  Thêm tuyến xe mới
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form id="formTuyenXe">
+                  <!-- Chọn Tỉnh đi -->
+                  <div class="mb-3">
+                    <label for="tinhBendi" class="form-label">Tỉnh đi</label>
+                    <select class="form-select" id="tinhBendi" required>
+                      <option value="" selected>Chọn tỉnh</option>
+                    </select>
+                  </div>
+
+                  <!-- Chọn Bến đi -->
+                  <div class="mb-3">
+                    <label for="bendi" class="form-label">Bến đi</label>
+                    <select class="form-select" id="bendi" disabled required>
+                      <option value="" selected>Chọn bến đi</option>
+                    </select>
+                  </div>
+
+                  <!-- Chọn Tỉnh (Bến đến) -->
+                  <div class="mb-3">
+                    <label for="tinhBenden" class="form-label">Tỉnh đến</label>
+                    <select class="form-select" id="tinhBenden" required>
+                      <option value="" selected>Chọn tỉnh</option>
+                      <!-- Tỉnh sẽ được load từ API -->
+                    </select>
+                  </div>
+                  <!-- Chọn Bến đến -->
+                  <div class="mb-3">
+                    <label for="benden" class="form-label">Bến đến</label>
+                    <select class="form-select" id="benden" disabled required>
+                      <option value="" selected>Chọn bến đến</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="khoangthoigian" class="form-label"
+                      >Khoảng thời gian (Giờ)</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="khoangthoigian"
+                      placeholder="VD: 8"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="khoangcach" class="form-label"
+                      >Khoảng cách (km)</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="khoangcach"
+                      placeholder="VD: 300"
+                      required
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="giave" class="form-label">Giá vé (VNĐ)</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="giave"
+                      placeholder="VD: 200000"
+                      required
+                    />
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Hủy
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="btnLuuTuyenXe"
+                >
+                  Lưu
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Footer Component -->
+        <div id="footer-container"></div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../scripts/modules/Admin/bang-dieu-khien.js"></script>
+    <script
+      type="module"
+      src="../../scripts/modules/Admin/quan-ly-tuyen-xe.js"
+    ></script>
+  </body>
+</html>
