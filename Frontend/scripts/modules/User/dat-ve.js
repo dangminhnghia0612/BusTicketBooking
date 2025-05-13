@@ -35,6 +35,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   const params = getParamsFromURL();
   var maCX = parseInt(params.maChuyenXe);
   const sodo = await laySoDoGhe(maCX);
+  if ("message" in sodo) {
+    alert(sodo.message);
+    window.location.href = "../../index.html";
+  }
   const dsGheDaDat = await layDSGheDaDat(maCX);
   veSoDoGhe(sodo, "seat-map", dsGheDaDat);
 

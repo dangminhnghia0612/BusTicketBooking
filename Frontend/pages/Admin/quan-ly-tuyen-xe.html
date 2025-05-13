@@ -137,36 +137,59 @@
               </div>
               <div class="modal-body">
                 <form id="formTuyenXe">
-                  <!-- Chọn Tỉnh đi -->
-                  <div class="mb-3">
-                    <label for="tinhBendi" class="form-label">Tỉnh đi</label>
-                    <select class="form-select" id="tinhBendi" required>
-                      <option value="" selected>Chọn tỉnh</option>
-                    </select>
+                  <div class="row">
+                    <!-- Chọn Tỉnh đi -->
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="tinhBendi" class="form-label"
+                          >Tỉnh đi</label
+                        >
+                        <select class="form-select" id="tinhBendi" required>
+                          <option value="" selected>Chọn tỉnh</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- Chọn Bến đi -->
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="bendi" class="form-label">Bến đi</label>
+                        <select
+                          class="form-select"
+                          id="bendi"
+                          disabled
+                          required
+                        >
+                          <option value="" selected>Chọn bến đi</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
-
-                  <!-- Chọn Bến đi -->
-                  <div class="mb-3">
-                    <label for="bendi" class="form-label">Bến đi</label>
-                    <select class="form-select" id="bendi" disabled required>
-                      <option value="" selected>Chọn bến đi</option>
-                    </select>
-                  </div>
-
-                  <!-- Chọn Tỉnh (Bến đến) -->
-                  <div class="mb-3">
-                    <label for="tinhBenden" class="form-label">Tỉnh đến</label>
-                    <select class="form-select" id="tinhBenden" required>
-                      <option value="" selected>Chọn tỉnh</option>
-                      <!-- Tỉnh sẽ được load từ API -->
-                    </select>
-                  </div>
-                  <!-- Chọn Bến đến -->
-                  <div class="mb-3">
-                    <label for="benden" class="form-label">Bến đến</label>
-                    <select class="form-select" id="benden" disabled required>
-                      <option value="" selected>Chọn bến đến</option>
-                    </select>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <!-- Chọn Tỉnh (Bến đến) -->
+                      <div class="mb-3">
+                        <label for="tinhBenden" class="form-label"
+                          >Tỉnh đến</label
+                        >
+                        <select class="form-select" id="tinhBenden" required>
+                          <option value="" selected>Chọn tỉnh</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <!-- Chọn Bến đến -->
+                      <div class="mb-3">
+                        <label for="benden" class="form-label">Bến đến</label>
+                        <select
+                          class="form-select"
+                          id="benden"
+                          disabled
+                          required
+                        >
+                          <option value="" selected>Chọn bến đến</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
                   <div class="mb-3">
                     <label for="khoangthoigian" class="form-label"

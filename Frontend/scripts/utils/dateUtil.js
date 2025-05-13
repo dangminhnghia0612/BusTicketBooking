@@ -14,3 +14,20 @@ export function setDefaultDate(inputSelector) {
   const formattedDate = `${yyyy}-${mm}-${dd}`;
   ngayDiInput.value = formattedDate;
 }
+
+export function dinhDangNgay(ngayStr) {
+  var date = new Date(ngayStr);
+  var day = String(date.getDate()).padStart(2, "0");
+  var month = String(date.getMonth() + 1).padStart(2, "0");
+  var year = date.getFullYear();
+  var formattedDate = `${day}/${month}/${year}`;
+  return formattedDate;
+}
+
+export function dinhDangGio(ngayStr) {
+  var date = new Date(ngayStr);
+  var hours = String(date.getHours()).padStart(2, "0");
+  var minutes = String(date.getMinutes()).padStart(2, "0");
+  var formattedTime = `${hours}:${minutes}`;
+  return formattedTime;
+}

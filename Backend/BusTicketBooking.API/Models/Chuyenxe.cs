@@ -17,6 +17,8 @@ public partial class Chuyenxe
 
     public virtual ICollection<Chitietghe> Chitietghe { get; set; } = new List<Chitietghe>();
 
+    public virtual ICollection<Datve> Datve { get; set; } = new List<Datve>();
+
     public virtual Tuyenxe MaTuyenxeNavigation { get; set; } = null!;
 
     public virtual Xe MaXeNavigation { get; set; } = null!;

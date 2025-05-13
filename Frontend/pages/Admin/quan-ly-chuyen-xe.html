@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản Trị Hệ Thống Bán Vé Xe</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../styles/pages/Admin/bang-dieu-khien.css"
+    />
+  </head>
+  <body>
+    <div class="d-flex">
+      <!-- Sidebar Component -->
+      <div id="sidebar-container"></div>
+
+      <!-- Main Content -->
+      <div class="content-wrapper flex-grow-1">
+        <!-- Header Component -->
+        <div id="header-container"></div>
+
+        <!-- Page Content -->
+        <div class="container-fluid pb-5">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4>Quản lý chuyến xe</h4>
+            <button
+              id="btnThemChuyenXe"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#addTripModal"
+            >
+              <i class="bi bi-plus-lg me-1"></i> Thêm chuyến xe
+            </button>
+          </div>
+
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-12 col-md-4">
+                  <select class="form-select" id="routeFilter">
+                    <option selected value="">Tất cả tuyến xe</option>
+                    <option>Hà Nội - Hồ Chí Minh</option>
+                    <option>Hồ Chí Minh - Đà Lạt</option>
+                    <option>Hà Nội - Hải Phòng</option>
+                    <option>Đà Nẵng - Hồ Chí Minh</option>
+                    <option>Hà Nội - Sapa</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-4">
+                  <input
+                    type="datetime-local"
+                    class="form-control"
+                    id="dateFilter"
+                    placeholder="Chọn ngày"
+                    data-flatpickr
+                  />
+                </div>
+                <!-- <div class="col-12 col-md-2">
+                  <select class="form-select" id="statusFilter">
+                    <option selected value="">Tất cả trạng thái</option>
+                    <option>Sắp khởi hành</option>
+                    <option>Đang chạy</option>
+                    <option>Đã hoàn thành</option>
+                    <option>Đã hủy</option>
+                  </select>
+                </div> -->
+                <div class="col-12 col-md-2">
+                  <button class="btn btn-primary w-100">Lọc</button>
+                </div>
+                <div class="col-12 col-md-2">
+                  <button class="btn btn-outline-secondary w-100">
+                    Đặt lại
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thống kê nhanh -->
+          <!-- <div class="row g-4 mb-4">
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="card border-0 shadow-sm card-stats">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <p class="text-muted mb-1">Tổng chuyến hôm nay</p>
+                      <h4 class="mb-0">48</h4>
+                      <small class="text-success">
+                        <i class="bi bi-arrow-up"></i> 8% so với hôm qua
+                      </small>
+                    </div>
+                    <div class="bg-primary bg-opacity-10 p-3 rounded">
+                      <i class="bi bi-calendar-event text-primary fs-4"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="card border-0 shadow-sm card-stats">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <p class="text-muted mb-1">Đang chạy</p>
+                      <h4 class="mb-0">12</h4>
+                      <small class="text-muted"> Cập nhật 5 phút trước </small>
+                    </div>
+                    <div class="bg-success bg-opacity-10 p-3 rounded">
+                      <i class="bi bi-truck text-success fs-4"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="card border-0 shadow-sm card-stats">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <p class="text-muted mb-1">Tỷ lệ đặt vé</p>
+                      <h4 class="mb-0">85%</h4>
+                      <small class="text-success">
+                        <i class="bi bi-arrow-up"></i> 5% so với tuần trước
+                      </small>
+                    </div>
+                    <div class="bg-warning bg-opacity-10 p-3 rounded">
+                      <i class="bi bi-ticket-perforated text-warning fs-4"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+              <div class="card border-0 shadow-sm card-stats">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <p class="text-muted mb-1">Chuyến bị hủy</p>
+                      <h4 class="mb-0">2</h4>
+                      <small class="text-success">
+                        <i class="bi bi-arrow-down"></i> 50% so với tuần trước
+                      </small>
+                    </div>
+                    <div class="bg-danger bg-opacity-10 p-3 rounded">
+                      <i class="bi bi-x-circle text-danger fs-4"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0" id="tableChuyenXe">
+                  <thead class="table-light">
+                    <tr>
+                      <th>ID</th>
+                      <th>Tuyến xe</th>
+                      <th>Thời gian khởi hành</th>
+                      <th>Thời gian đến dự kiến</th>
+                      <th>Xe</th>
+                      <!-- <th>Ghế trống</th> -->
+                      <th>Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <!-- <td><strong>#TR1001</strong></td>
+                      <td>Hà Nội - Hồ Chí Minh</td>
+                      <td>
+                        <div>
+                          <p class="mb-0 fw-medium">15/05/2025</p>
+                          <small class="text-muted">20:00</small>
+                        </div>
+                      </td>
+                      <td>29B-12345 (Giường nằm)</td> -->
+                      <!-- <td>
+                        <div class="dropdown">
+                          <button
+                            class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                          >
+                            Thao tác
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a
+                                class="dropdown-item"
+                                href="#"
+                                data-bs-toggle="modal"
+                                data-bs-target="#editTripModal"
+                                ><i class="bi bi-pencil me-2"></i>Chỉnh sửa</a
+                              >
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="#"
+                                ><i class="bi bi-ticket-perforated me-2"></i
+                                >Quản lý vé</a
+                              >
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="#"
+                                ><i class="bi bi-x-circle me-2"></i>Hủy
+                                chuyến</a
+                              >
+                            </li>
+                          </ul>
+                        </div>
+                      </td> -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- <div class="card-footer bg-white">
+              <div class="d-flex justify-content-between align-items-center">
+                <p class="mb-0 text-muted">Hiển thị 1-5 của 48 chuyến xe</p>
+                <nav>
+                  <ul class="pagination pagination-sm mb-0">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#">Trước</a>
+                    </li>
+                    <li class="page-item active">
+                      <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">Sau</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div> -->
+          </div>
+
+          <!-- Thống kê chuyến xe -->
+          <!-- <div class="row g-4 mt-4">
+            <div class="col-12 col-lg-8">
+              <div class="card border-0 shadow-sm">
+                <div
+                  class="card-header bg-white d-flex justify-content-between align-items-center"
+                >
+                  <h5 class="mb-0">Số lượng chuyến xe theo ngày</h5>
+                  <div class="btn-group">
+                    <button class="btn btn-sm btn-outline-secondary active">
+                      7 ngày
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary">
+                      30 ngày
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <canvas id="tripsChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-4">
+              <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white">
+                  <h5 class="mb-0">Phân bố trạng thái chuyến xe</h5>
+                </div>
+                <div class="card-body">
+                  <div class="chart-container">
+                    <canvas id="tripStatusChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+        <!-- Modal Thêm chuyến xe -->
+        <div
+          class="modal fade"
+          id="modalChuyenXe"
+          tabindex="-1"
+          aria-labelledby="tieudeModalChuyenXe"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="tieudeModalChuyenXe">
+                  Thêm chuyến xe mới
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form id="formChuyenXe">
+                  <!-- Chọn Tỉnh đi -->
+                  <div class="row">
+                    <!-- Chọn Tỉnh đi -->
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="tinhBendi" class="form-label"
+                          >Tỉnh đi</label
+                        >
+                        <select
+                          class="form-select"
+                          id="tinhdi"
+                          required
+                        ></select>
+                      </div>
+                    </div>
+
+                    <!-- Chọn Tỉnh đến -->
+                    <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="tinhBenden" class="form-label"
+                          >Tỉnh đến</label
+                        >
+                        <select
+                          class="form-select"
+                          id="tinhden"
+                          required
+                        ></select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="tuyenxe" class="form-label">Tuyến xe</label>
+                    <select class="form-select" id="tuyenxe" required></select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="xe" class="form-label">Xe</label>
+                    <select class="form-select" id="xe" required></select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="giodi" class="form-label"
+                      >Thời gian khởi hành</label
+                    >
+                    <input
+                      type="datetime-local"
+                      class="form-control"
+                      id="giodi"
+                      required
+                    />
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Hủy
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="btnLuuChuyenXe"
+                >
+                  Lưu
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Footer Component -->
+        <div id="footer-container"></div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../scripts/modules/Admin/bang-dieu-khien.js"></script>
+    <script
+      type="module"
+      src="../../scripts/modules/Admin/quan-ly-chuyen-xe.js"
+    ></script>
+  </body>
+</html>

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Crypto.Digests;
 
 namespace BusTicketBooking.API.Controllers
 {
@@ -19,6 +20,11 @@ namespace BusTicketBooking.API.Controllers
         {
             try
             {
+                var cx = await _context.Chuyenxe.AnyAsync(t => t.MaChuyenxe == machuyenxe);
+                if (!cx)
+                {
+                    return BadRequest(new { message = "Chuyến xe không tồn tại." });
+                }
                 var dsGheDaDat = await _context.Chitietghe.Where(x => x.MaChuyenxe == machuyenxe && x.Trangthai == true)
                                                           .Include(x => x.MaGheNavigation)
                                                           .Select(x => x.MaGheNavigation.Soghe)
@@ -27,7 +33,7 @@ namespace BusTicketBooking.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { Message = "Xảy ra lỗi khi lấy ds ghế.", Error = ex.Message });
+                return BadRequest(new { message = "Xảy ra lỗi khi lấy ds ghế.", Error = ex.Message });
             }
         }
     }

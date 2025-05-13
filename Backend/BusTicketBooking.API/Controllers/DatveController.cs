@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Crypto.Digests;
 using System.Data;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -24,9 +25,16 @@ namespace BusTicketBooking.API.Controllers
         {
             try
             {
+                var cx = await _context.Chuyenxe.Include(x => x.MaTuyenxeNavigation)
+                                .FirstOrDefaultAsync(x => x.MaChuyenxe == dto.Ma_Chuyenxe);
+
+                if (cx == null)
+                {
+                    return BadRequest(new { Message = "Chuyến xe không tồn tại" });
+                }
                 Datve datve = new Datve()
                 {
-                    //MaChuyenxe = dto.Ma_Chuyenxe,
+                    MaChuyenxe = dto.Ma_Chuyenxe,
                     MaKhachhang = dto.Ma_Khachhang,
                     MaTinhtrang = 1,
                     Ngaydat = DateTime.Now,
@@ -41,12 +49,7 @@ namespace BusTicketBooking.API.Controllers
                 _context.Datve.Add(datve);
                 await _context.SaveChangesAsync();
 
-                Chuyenxe cx = await _context.Chuyenxe.FindAsync(dto.Ma_Chuyenxe);
-                Tuyenxe tx = await _context.Tuyenxe.Where(x => x.MaTuyenxe == cx.MaTuyenxe).FirstOrDefaultAsync();
-                if (cx == null)
-                {
-                    return BadRequest(new { Message = "Chuyến xe không tồn tại" });
-                }
+
                 foreach (var ghe in dto.dsGhe)
                 {
 
@@ -61,7 +64,7 @@ namespace BusTicketBooking.API.Controllers
                             {
                                 MaDatve = datve.MaDatve,
                                 MaChitietghe = ctg.MaChitietghe,
-                                Giave = tx.Giave
+                                Giave = cx.MaTuyenxeNavigation.Giave
                             };
                             _context.Vexe.Add(vx);
 

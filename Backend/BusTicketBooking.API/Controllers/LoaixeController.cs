@@ -20,6 +20,7 @@ namespace BusTicketBooking.API.Controllers
         {
             try
             {
+
                 var dsLoaiXe = await _context.Loaixe.AsNoTracking()
                                             .Select(lx => new
                                             {
@@ -41,11 +42,16 @@ namespace BusTicketBooking.API.Controllers
         {
             try
             {
+                var cx = await _context.Chuyenxe.AnyAsync(x => x.MaChuyenxe == machuyenxe);
+                if (!cx)
+                {
+                    return BadRequest(new { message = "Chuyến xe đã bị hủy khỏi hệ thống" });
+                }
                 var sodo = await _context.Chuyenxe.Where(cx => cx.MaChuyenxe == machuyenxe)
                                             .Select(cx => cx.MaXeNavigation.MaLoaixeNavigation.Sodoghe)
                                             .FirstOrDefaultAsync();
                 if (sodo == null)
-                    return NotFound("Không tìm thấy sơ đồ ghế cho chuyến xe này");
+                    return NotFound(new { Message = "Không tìm thấy sơ đồ ghế cho chuyến xe này" });
                 var chuanHoa = sodo.Replace("\r", "").Replace("\n", "").Replace("\t", "");
                 return Ok(new { sodoghe = chuanHoa });
             }

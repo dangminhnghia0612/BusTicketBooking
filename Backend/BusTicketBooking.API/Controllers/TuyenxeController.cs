@@ -71,6 +71,31 @@ namespace BusTicketBooking.API.Controllers
                 return BadRequest(new { Message = "Xảy ra lỗi khi tìm tuyến xe.", Error = ex.Message });
             }
         }
+        [HttpGet("tim-tuyen-xe")]
+        public async Task<IActionResult> timTuyenXeBangMaTinh([FromQuery] int maTinhDi, [FromQuery] int maTinhden)
+        {
+            try
+            {
+                var dsTuyenxe = await _context.Tuyenxe.AsNoTracking()
+                    .Where(t => t.MaDiemdiNavigation.MaQuanNavigation.MaTinh == maTinhDi && t.MaDiemdenNavigation.MaQuanNavigation.MaTinh == maTinhden)
+                    .Select(t => new
+                    {
+                        Matuyen = t.MaTuyenxe,
+                        Bendi = t.MaDiemdiNavigation.Tenbenxe,
+                        Benden = t.MaDiemdenNavigation.Tenbenxe
+                    })
+                    .ToListAsync();
+                if (dsTuyenxe.Count == 0)
+                {
+                    return NotFound(new { message = "Không tìm thấy tuyến xe nào" });
+                }
+                return Ok(dsTuyenxe);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = "Xảy ra lỗi khi tìm tuyến xe.", Error = ex.Message });
+            }
+        }
         [HttpDelete("{matuyenxe}")]
         public async Task<IActionResult> xoaXe(int matuyenxe)
         {

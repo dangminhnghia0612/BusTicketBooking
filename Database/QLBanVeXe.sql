@@ -27,7 +27,7 @@ create table Quantrivien (
 go
 
 /*==============================================================*/
-/* Index: ADMIN_ROLE_FK                                         */
+/* Index: Quantrivien_Vaitro_FK                                         */
 /*==============================================================*/
 
 
@@ -68,7 +68,7 @@ go
 /*==============================================================*/
 create table Datve (
    Ma_Datve             int  IDENTITY(1,1)   not null,
-   --Ma_Chuyenxe          int                  not null,
+   Ma_Chuyenxe          int                  not null,
    Ma_Khachhang         int                  null,
    Ma_Tinhtrang         int                  not null,
    Ngaydat              datetime             not null,
@@ -101,8 +101,8 @@ go
 
 
 
---create nonclustered index Datve_Chuyenxe_FK on Datve (Ma_Chuyenxe ASC)
---go
+create nonclustered index Datve_Chuyenxe_FK on Datve (Ma_Chuyenxe ASC)
+go
 
 /*==============================================================*/
 /* Index: Khachang_Datve_FK                                     */
@@ -148,11 +148,22 @@ create nonclustered index Khuyenmai_ApdungKM_FK on Apdungkhuyenmai (Ma_Khuyenmai
 go
 
 /*==============================================================*/
+/* Table: TrangThaiXe                                           */
+/*==============================================================*/
+--create table Trangthaixe (
+--   Ma_Trangthai         int  IDENTITY(1,1)   not null,
+--   Ten                  nvarchar(50)         not null,
+--   constraint PK_Ma_Trangthaixe primary key (Ma_Trangthai)
+--)
+--go
+
+/*==============================================================*/
 /* Table: Xe                                                    */
 /*==============================================================*/
 create table Xe (
    Ma_Xe                int  IDENTITY(1,1)   not null,
    Ma_Loaixe            int                  not null,
+   --Ma_Trangthai         int                  not null,
    Bienso               nvarchar(20)         not null,
    Ten                  nvarchar(50)         null,
    constraint PK_Xe primary key (Ma_Xe)
@@ -168,6 +179,16 @@ go
 
 create nonclustered index Xe_Loaixe_FK on Xe (Ma_Loaixe ASC)
 go
+
+/*==============================================================*/
+/* Index: Xe_Trangthai_FK                                          */
+/*==============================================================*/
+
+
+
+
+--create nonclustered index Xe_Trangthai_FK on Xe (Ma_Trangthai ASC)
+--go
 
 /*==============================================================*/
 /* Table: Thongtinnhaxe                                         */
@@ -550,7 +571,7 @@ go
 
 
 
-create nonclustered index Benxe_Quan_FK on Benxe (Ma_Benxe ASC)
+create nonclustered index Benxe_Quan_FK on Benxe (Ma_Quan ASC)
 go
 
 /*==============================================================*/
@@ -740,10 +761,10 @@ alter table Datve
 go
 
 
---alter table Datve
---   add constraint FK_Datve_Chuyenxe foreign key (Ma_Chuyenxe)
---      references Chuyenxe (Ma_Chuyenxe)
---go
+alter table Datve
+   add constraint FK_Datve_Chuyenxe foreign key (Ma_Chuyenxe)
+      references Chuyenxe (Ma_Chuyenxe)
+go
 
 alter table Datve
    add constraint FK_Datve_Khachhang foreign key (Ma_Khachhang)
@@ -764,6 +785,11 @@ alter table Xe
    add constraint FK_Xe_Loaixe foreign key (Ma_Loaixe)
       references Loaixe (Ma_Loaixe)
 go
+
+--alter table Xe
+--   add constraint FK_Xe_Trangthai foreign key (Ma_Trangthai)
+--      references Trangthaixe (Ma_Trangthai)
+--go
 
 alter table Thongtinnhaxe
    add constraint FK_Thongtinnhaxe_Quantrivien foreign key (Ma_Quantrivien)

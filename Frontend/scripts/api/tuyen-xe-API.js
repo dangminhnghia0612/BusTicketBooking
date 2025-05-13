@@ -108,3 +108,20 @@ export async function timTuyenXe(matuyen) {
     console.error("Lỗi khi tìm tuyến xe:", error);
   }
 }
+export async function timTuyenXeBangMaTinh(maTinhDi, maTinhDen) {
+  try {
+    const response = await fetch(
+      `https://localhost:7054/api/Tuyenxe/tim-tuyen-xe?maTinhDi=${maTinhDi}&maTinhDen=${maTinhDen}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Lỗi khi tìm tuyến xe:", error);
+  }
+}

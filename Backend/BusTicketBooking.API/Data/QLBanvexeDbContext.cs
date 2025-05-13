@@ -106,7 +106,7 @@ public partial class QLBanvexeDbContext : DbContext
         {
             entity.HasKey(e => e.MaBenxe);
 
-            entity.HasIndex(e => e.MaBenxe, "Benxe_Quan_FK");
+            entity.HasIndex(e => e.MaQuan, "Benxe_Quan_FK");
 
             entity.Property(e => e.MaBenxe).HasColumnName("Ma_Benxe");
             entity.Property(e => e.Diachi).HasMaxLength(100);
@@ -216,6 +216,8 @@ public partial class QLBanvexeDbContext : DbContext
         {
             entity.HasKey(e => e.MaDatve);
 
+            entity.HasIndex(e => e.MaChuyenxe, "Datve_Chuyenxe_FK");
+
             entity.HasIndex(e => e.MaTinhtrang, "Datve_Co_TinhTrangDat_FK");
 
             entity.HasIndex(e => e.MaKhachhang, "Khachang_Datve_FK");
@@ -225,11 +227,17 @@ public partial class QLBanvexeDbContext : DbContext
             entity.Property(e => e.Ghichu).HasMaxLength(100);
             entity.Property(e => e.Giagoc).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.Giasaukhuyenmai).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.MaChuyenxe).HasColumnName("Ma_Chuyenxe");
             entity.Property(e => e.MaKhachhang).HasColumnName("Ma_Khachhang");
             entity.Property(e => e.MaTinhtrang).HasColumnName("Ma_Tinhtrang");
             entity.Property(e => e.Ngaydat).HasColumnType("datetime");
             entity.Property(e => e.Sodienthoai).HasMaxLength(15);
             entity.Property(e => e.Tenkhachhang).HasMaxLength(50);
+
+            entity.HasOne(d => d.MaChuyenxeNavigation).WithMany(p => p.Datve)
+                .HasForeignKey(d => d.MaChuyenxe)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Datve_Chuyenxe");
 
             entity.HasOne(d => d.MaKhachhangNavigation).WithMany(p => p.Datve)
                 .HasForeignKey(d => d.MaKhachhang)
@@ -317,7 +325,7 @@ public partial class QLBanvexeDbContext : DbContext
             entity.Property(e => e.Hoten).HasMaxLength(100);
             entity.Property(e => e.MaTinhtrang).HasColumnName("Ma_Tinhtrang");
             entity.Property(e => e.MaVaitro).HasColumnName("Ma_Vaitro");
-            entity.Property(e => e.Matkhau).HasMaxLength(100);
+            entity.Property(e => e.Matkhau).HasMaxLength(255);
             entity.Property(e => e.Ngaycapnhat).HasColumnType("datetime");
             entity.Property(e => e.Ngaysinh).HasColumnType("datetime");
             entity.Property(e => e.Ngaytao).HasColumnType("datetime");
@@ -435,11 +443,11 @@ public partial class QLBanvexeDbContext : DbContext
             entity.Property(e => e.Anh).HasMaxLength(100);
             entity.Property(e => e.Hoten).HasMaxLength(50);
             entity.Property(e => e.MaVaitro).HasColumnName("Ma_Vaitro");
-            entity.Property(e => e.Matkhau).HasMaxLength(50);
+            entity.Property(e => e.Matkhau).HasMaxLength(255);
             entity.Property(e => e.Ngaycapnhat).HasColumnType("datetime");
             entity.Property(e => e.Ngaytao).HasColumnType("datetime");
             entity.Property(e => e.Sodienthoai).HasMaxLength(15);
-            entity.Property(e => e.Tendangnhap).HasMaxLength(30);
+            entity.Property(e => e.Tendangnhap).HasMaxLength(50);
 
             entity.HasOne(d => d.MaVaitroNavigation).WithMany(p => p.Quantrivien)
                 .HasForeignKey(d => d.MaVaitro)

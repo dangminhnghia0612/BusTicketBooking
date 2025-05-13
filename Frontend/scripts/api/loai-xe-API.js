@@ -12,8 +12,7 @@ export async function laySoDoGhe(maChuyenxe) {
     );
     if (!response.ok) {
       const error = await response.json();
-      console.error("Lỗi khi gọi API:", error);
-      return null;
+      return error;
     }
 
     const result = await response.json();

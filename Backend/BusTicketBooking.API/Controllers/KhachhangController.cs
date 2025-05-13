@@ -24,7 +24,7 @@ namespace BusTicketBooking.API.Controllers
                                                  .FirstOrDefaultAsync();
                 if (kh == null)
                 {
-                    return NotFound("Không tìm thấy khách hàng");
+                    return NotFound(new { Message = "Không tìm thấy khách hàng" });
                 }
                 return Ok(kh.MaKhachhang);
             }
