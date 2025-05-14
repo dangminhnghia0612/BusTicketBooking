@@ -88,5 +88,36 @@ namespace BusTicketBooking.API.Controllers
                 return BadRequest(new { Message = "Đặt vé thất bại" + ex.Message });
             }
         }
+        [HttpGet("lay-ds-datve-cho-kh/{maKH}")]
+        public async Task<IActionResult> layDSDatVeBangMaKhachHang(int maKH)
+        {
+            try
+            {
+                var khachhang = await _context.Khachhang.AnyAsync(kh => kh.MaKhachhang == maKH);
+                if (!khachhang)
+                {
+                    return BadRequest(new { Message = "Khách hàng không tồn tại" });
+                }
+                var dsDatVe = await _context.Datve.AsNoTracking()
+                                            .Where(x => x.MaKhachhang == maKH)
+                                            .Select(x => new
+                                            {
+                                                Madatve = x.MaDatve,
+                                                Soluong = x.Soluong,
+                                                Bendi = x.MaChuyenxeNavigation.MaTuyenxeNavigation.MaDiemdiNavigation.Tenbenxe,
+                                                Benden = x.MaChuyenxeNavigation.MaTuyenxeNavigation.MaDiemdenNavigation.Tenbenxe,
+                                                Ngaydi = x.MaChuyenxeNavigation.Giodi,
+                                                Sotien = x.Giasaukhuyenmai,
+                                                Pttt = x.Thanhtoan.Where(tt => tt.MaDatve == x.MaDatve).Select(tt => tt.MaPhuongthucNavigation.Ten).FirstOrDefault(),
+                                                Trangthai = x.MaTinhtrangNavigation.Ten,
+                                            })
+                                            .ToListAsync();
+                return Ok(dsDatVe);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = "Xảy ra lỗi khi lấy ds đặt vé.", Error = ex.Message });
+            }
+        }
     }
 }

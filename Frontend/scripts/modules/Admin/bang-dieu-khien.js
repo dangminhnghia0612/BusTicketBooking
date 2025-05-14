@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Load sidebar
   const sidebarContainer = document.getElementById("sidebar-container");
   if (sidebarContainer) {
-    fetch("../../components/sidebar.html")
+    fetch("../../components/sidebarAdmin.html")
       .then((response) => response.text())
       .then((html) => {
         sidebarContainer.innerHTML = html;

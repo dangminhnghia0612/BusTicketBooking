@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hệ thống Bán vé Xe</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      .sidebar {
+        background-color: white;
+        min-height: 100vh;
+        border-right: 1px solid #eee;
+        max-width: 1000px;
+        margin: 30px auto;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+      }
+      .nav-items {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .nav-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .nav-item.active {
+        background-color: #fff2ee;
+      }
+
+      .nav-item.active .icon-circle {
+        background-color: #ff6b35;
+      }
+
+      .icon-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        color: #495057;
+      }
+      @media (max-width: 768px) {
+        .sidebar {
+          min-height: auto;
+          border-right: none;
+          border-bottom: 1px solid #eee;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar p-4 shadow-sm">
+      <div class="nav-items">
+        <div class="nav-item active">
+          <div class="icon-circle">
+            <i class="fas fa-user"></i>
+          </div>
+          <a
+            href="/pages/User/thong-tin-tai-khoan/thong-tin-chung.html"
+            class="nav-link"
+            id="nav-thong-tin-tai-khoan"
+            >Thông tin tài khoản</a
+          >
+        </div>
+
+        <div class="nav-item">
+          <div class="icon-circle">
+            <i class="fas fa-history"></i>
+          </div>
+          <a
+            href="/pages/User/thong-tin-tai-khoan/lich-su-dat-ve.html"
+            class="nav-link"
+            id="nav-lich-su-mua-ve"
+            >Lịch sử đặt vé</a
+          >
+        </div>
+
+        <div class="nav-item">
+          <div class="icon-circle">
+            <i class="fas fa-key"></i>
+          </div>
+          <a
+            href="/pages/User/thong-tin-tai-khoan/dat-lai-mat-khau.html"
+            class="nav-link"
+            id="nav-dat-lai-mat-khau"
+            >Đặt lại mật khẩu</a
+          >
+        </div>
+
+        <div class="nav-item">
+          <div class="icon-circle">
+            <i class="fas fa-sign-out-alt"></i>
+          </div>
+          <a href="#" class="nav-link" id="btnDangXuat">Đăng xuất</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

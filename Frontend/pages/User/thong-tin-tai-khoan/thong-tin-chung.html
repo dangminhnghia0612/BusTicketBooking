@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nhà xe Minh Nghĩa</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../../styles/components/footer.css" />
+    <link rel="stylesheet" href="../../../styles/components/header.css" />
+    <link
+      rel="stylesheet"
+      href="../../../styles/pages/User/thong-tin-chung.css"
+    />
+  </head>
+  <body>
+    <header id="header-container"></header>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar Component -->
+        <div class="col-md-3" id="sidebar-container"></div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+          <div class="container account-container">
+            <h1 class="mb-2">Thông tin tài khoản</h1>
+            <p class="text-muted mb-4">
+              Quản lý thông tin hồ sơ để bảo mật tài khoản
+            </p>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="profile-img-container">
+                  <img
+                    src="/assets/images/avatar.png"
+                    alt="Avatar"
+                    class="profile-img"
+                  />
+                  <div>
+                    <button class="choose-img-btn">Chọn ảnh</button>
+                  </div>
+                  <!-- <p class="file-info">
+                    Dung lượng file tối đa 1 MB<br />Định dạng:.JPEG, .PNG
+                  </p> -->
+                </div>
+              </div>
+
+              <div class="col-md-8">
+                <form>
+                  <div class="form-field">
+                    <label class="form-label">Họ và tên</label>
+                    <span class="colon">:</span>
+                    <input
+                      id="hoten"
+                      type="text"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-label">Số điện thoại</label>
+                    <span class="colon">:</span>
+                    <input id="sdt" type="tel" class="form-control" required />
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-label">Giới tính</label>
+                    <span class="colon">:</span>
+                    <select class="form-select" id="gioitinh">
+                      <option value="true">Nam</option>
+                      <option value="false">Nữ</option>
+                    </select>
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-label">Email</label>
+                    <span class="colon">:</span>
+                    <input
+                      id="email"
+                      type="email"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-label">Ngày sinh</label>
+                    <span class="colon">:</span>
+                    <input id="ngaysinh" type="date" class="form-control" />
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-label">Địa chỉ</label>
+                    <span class="colon">:</span>
+                    <input id="diachi" type="text" class="form-control" />
+                  </div>
+
+                  <div class="form-field">
+                    <label class="form-label">Nghề nghiệp</label>
+                    <span class="colon">:</span>
+                    <input
+                      id="nghenghiep"
+                      type="text"
+                      class="form-control"
+                      value="Sinh viên"
+                    />
+                  </div>
+
+                  <div class="btn-container">
+                    <button type="submit" class="update-btn" id="btnCapNhat">
+                      Cập nhật
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="footer-container"></footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script
+      type="module"
+      src="../../../scripts/modules/User/thong-tin-chung.js"
+    ></script>
+  </body>
+</html>

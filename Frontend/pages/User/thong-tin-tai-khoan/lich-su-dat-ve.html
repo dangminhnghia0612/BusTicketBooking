@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nhà xe Minh Nghĩa</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../../styles/components/footer.css" />
+    <link rel="stylesheet" href="../../../styles/components/header.css" />
+    <link
+      rel="stylesheet"
+      href="../../../styles/pages/User/thong-tin-chung.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+      }
+      .container {
+        max-width: 1200px;
+        padding: 20px;
+      }
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .book-ticket-btn {
+        background-color: #f47953;
+        text-decoration: none;
+        border: none;
+        color: white;
+        padding: 10px 30px;
+        border-radius: 25px;
+        font-weight: 500;
+      }
+      .book-ticket-btn:hover {
+        background-color: #e56a45;
+      }
+      .search-container {
+        margin-bottom: 30px;
+      }
+      .search-btn {
+        border-radius: 25px;
+        padding: 8px 30px;
+        background-color: white;
+        border: 1px solid #ddd;
+        color: #333;
+      }
+      .table-container {
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      }
+      .table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        color: #333;
+      }
+      .table tr:nth-child(even) {
+        background-color: #fff9f8;
+      }
+      .barcode-icon {
+        color: #999;
+        margin-right: 5px;
+      }
+      .input-with-icon {
+        position: relative;
+      }
+      .input-with-icon i {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .input-with-icon input {
+        padding-left: 35px;
+      }
+      .date-input {
+        position: relative;
+      }
+      .date-input i {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="header-container"></header>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar Component -->
+        <div class="col-md-3" id="sidebar-container"></div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+          <div class="container account-container">
+            <!-- Header -->
+            <div class="header-container">
+              <div>
+                <h1 class="mb-1">Lịch sử đặt vé xe</h1>
+                <p class="text-muted">
+                  Theo dõi và quản lý quá trình lịch sử đặt vé của bạn
+                </p>
+              </div>
+              <a href="/index.html" class="book-ticket-btn">Đặt vé</a>
+            </div>
+
+            <!-- Search Filters -->
+            <div class="row search-container g-3">
+              <div class="col-md-2">
+                <label class="form-label">Mã vé</label>
+                <div class="input-with-icon">
+                  <!-- <i class="bi bi-upc-scan barcode-icon"></i> -->
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Nhập Mã vé"
+                  />
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">Thời gian</label>
+                <div class="date-input">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Select date"
+                  />
+                  <i class="bi bi-calendar"></i>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Tuyến đường</label>
+                <select class="form-select">
+                  <option selected disabled value="">Chọn tuyến đường</option>
+                  <option>Nha Trang - Mien Tay</option>
+                  <option>Mien Tay - Da Lat</option>
+                  <option>Mien Tay - Nha Trang</option>
+                  <option>Da Lat - BX Mien Dong</option>
+                  <option>BX Mien Dong - Cam Ranh</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">Trạng thái</label>
+                <select class="form-select">
+                  <option selected disabled value="">Chọn trạng thái</option>
+                  <option>Đã thanh toán</option>
+                  <option>Chờ thanh toán</option>
+                  <option>Đã hủy</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">&nbsp;</label>
+                <button class="search-btn form-control">Tìm</button>
+              </div>
+            </div>
+
+            <!-- Ticket History Table -->
+            <div class="table-container">
+              <table class="table table-hover mb-0" id="tableDatVe">
+                <thead>
+                  <tr>
+                    <th>Mã vé</th>
+                    <th>Số vé</th>
+                    <th>Tuyến đường</th>
+                    <th>Ngày đi</th>
+                    <th>Số tiền</th>
+                    <th>Thanh toán</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="footer-container"></footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script
+      type="module"
+      src="../../../scripts/modules/User/thong-tin-chung.js"
+    ></script>
+    <script
+      type="module"
+      src="../../../scripts/modules/User/lich-su-dat-ve.js"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nhà xe Minh Nghĩa</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../../styles/components/footer.css" />
+    <link rel="stylesheet" href="../../../styles/components/header.css" />
+    <link
+      rel="stylesheet"
+      href="../../../styles/pages/User/thong-tin-chung.css"
+    />
+  </head>
+  <body>
+    <header id="header-container"></header>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar Component -->
+        <div class="col-md-3" id="sidebar-container"></div>
+
+        <!-- Main Content -->
+        <div class="col-md-9">
+          <div class="container account-container">
+            <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                <h1 class="mb-2">Đặt lại mật khẩu</h1>
+                <p class="text-muted mb-4">
+                  Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho
+                  người khác
+                </p>
+                <form>
+                  <div class="form-field">
+                    <label class="form-label">Mật khẩu cũ</label>
+                    <span class="colon">:</span>
+                    <input
+                      id="matkhaucu"
+                      type="password"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Mật khẩu mới</label>
+                    <span class="colon">:</span>
+                    <input
+                      id="matkhaumoi"
+                      type="password"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label">Xác nhận mật khẩu</label>
+                    <span class="colon">:</span>
+                    <input
+                      id="xacnhanmatkhau"
+                      type="password"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <div class="btn-container">
+                    <button type="submit" class="update-btn" id="btnXacNhan">
+                      Xác nhận
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer id="footer-container"></footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script
+      type="module"
+      src="../../../scripts/modules/User/thong-tin-chung.js"
+    ></script>
+    <script
+      type="module"
+      src="../../../scripts/modules/User/dat-lai-mat-khau.js"
+    ></script>
+  </body>
+</html>

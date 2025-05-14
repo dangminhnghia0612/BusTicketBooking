@@ -1,4 +1,4 @@
-async function sendDatVeRequest(datVeRequest) {
+export async function sendDatVeRequest(datVeRequest) {
   try {
     // Gửi yêu cầu POST đến API
     const response = await fetch("https://localhost:7054/api/Datve", {
@@ -14,4 +14,21 @@ async function sendDatVeRequest(datVeRequest) {
     return null;
   }
 }
-export { sendDatVeRequest };
+
+export async function layDSDatVeCuaKhachHang(maKH) {
+  try {
+    const response = await fetch(
+      `https://localhost:7054/api/Datve/lay-ds-datve-cho-kh/${maKH}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Lỗi khi tìm danh sách đặt vé xe:", error);
+  }
+}

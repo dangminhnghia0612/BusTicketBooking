@@ -73,7 +73,7 @@ function Dangxuat() {
     localStorage.removeItem("token");
     localStorage.removeItem("maKH");
     localStorage.removeItem("avatarURL");
-    window.location.reload();
+    window.location.href = "/index.html";
   });
 }
 
