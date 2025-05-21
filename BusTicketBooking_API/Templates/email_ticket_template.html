@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhà xe Minh Nghĩa - Xác nhận vé</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .divider {
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+
+        .contact-info {
+            display: flex;
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .qr-code {
+            width: 120px;
+            height: 120px;
+            margin-right: 20px;
+        }
+
+        .info-section {
+            flex: 1;
+        }
+
+        .trip-info {
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .trip-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+        }
+
+        .price-info {
+            text-align: right;
+        }
+
+        .total-price {
+            font-weight: bold;
+            font-size: 18px;
+            color: #ff4d4d;
+        }
+
+        .red-text {
+            color: #ff4d4d;
+        }
+
+        .note {
+            font-weight: bold;
+        }
+
+        .amenities {
+            font-style: italic;
+            color: #666;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Kính gửi: Quý khách {{Hoten}},</h2>
+        <p>Chúc mừng quý khách đã đặt vé thành công trên hệ thống Nhà xe Minh Nghĩa.</p>
+        <p>Mã vé <strong class="red-text">{{Mave}}</strong> của quý khách đặt ngày <strong>{{Ngaydat}}</strong> với hình thức thanh toán là <strong>{{Tenphuongthuc}}</strong>.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="contact-info">
+        <!--<div class="qr-code">
+            <img src="{{QrCodeUrl}}" alt="QR Code" width="120" height="120">
+        </div>-->
+        <div class="info-section">
+            <h3>Thông tin liên hệ:</h3>
+            <p><strong class="red-text">{{Hoten}}</strong></p>
+            <p>Email: <a href="mailto:{{Email}}">{{Email}}</a></p>
+            <p>SĐT: {{Sodienthoai}}</p>
+        </div>
+    </div>
+
+    <h3>Thông tin chuyến xe:</h3>
+    <div class="trip-info">
+        <div class="trip-row">
+            <div>
+                <p><strong>{{Diemdi}} ⇒ {{Diemden}}</strong></p>
+                <p>Giờ: {{Giodi}}</p>
+                <p>Ngày khởi hành: {{Ngaydi}}</p>
+                <p>Số ghế: {{dsGhe}}</p>
+                <p><strong>Biển số xe: {{Bienso}}</strong></p>
+            </div>
+            <div class="price-info">
+                <p>Giá vé: <strong>{{Giave}} VND</strong></p>
+                <p>Số lượng vé: {{Soluongve}}</p>
+                <p>Tổng cộng: <strong>{{Tongtien}} VND</strong></p>
+            </div>
+        </div>
+        <!--<div class="trip-row note">
+            <p>Quý khách có mặt lúc {{CheckinTime}} để được trung chuyển hoặc kiểm tra thông tin trước khi lên xe.</p>
+        </div>-->
+    </div>
+
+    <!--<div class="price-summary">
+        <table style="width: 100%;">
+            <tr>
+                <td style="text-align: right; padding: 5px;">Thành tiền:</td>
+                <td style="text-align: right; padding: 5px;">{{TotalAmount}} VND</td>
+            </tr>
+            <tr>
+                <td style="text-align: right; padding: 5px;">Giảm giá (Voucher):</td>
+                <td style="text-align: right; padding: 5px;">{{Discount}} VND</td>
+            </tr>
+            <tr>
+                <td style="text-align: right; padding: 5px; font-weight: bold;">Tổng cộng:</td>
+                <td style="text-align: right; padding: 5px;" class="total-price">{{FinalTotal}} VND</td>
+            </tr>
+        </table>
+        <p class="amenities">(Miễn phí nước uống, khăn lạnh, Wi-fi, tivi)</p>
+    </div>-->
+</body>
+</html>
