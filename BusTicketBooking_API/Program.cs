@@ -52,7 +52,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://127.0.0.1:5500", "https://127.0.0.1:5501")
+        policy.WithOrigins("https://localhost:5173")
               .AllowAnyMethod() // Cho phép mọi phương thức (GET, POST, PUT, DELETE)
               .AllowAnyHeader() // Cho phép mọi header
               .AllowCredentials(); // Cho phép gửi thông tin xác thực (cookies, Authorization header...)
@@ -70,6 +70,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
