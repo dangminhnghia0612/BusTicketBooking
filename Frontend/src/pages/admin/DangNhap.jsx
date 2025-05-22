@@ -17,10 +17,11 @@ export default function DangNhap() {
       const data = await adminLogin(username, password);
       if (data.message === "Đăng nhập thành công.") {
         setError("");
-        Cookies.set("ma", data.ma, { expires: 1 });
-        Cookies.set("hoten", data.hoten, { expires: 1 });
-        Cookies.set("sdt", data.sdt, { expires: 1 });
-        Cookies.set("anh", data.avatarURL, { expires: 1 });
+        Cookies.set("ma", data.ma);
+        Cookies.set("hoten", data.hoten);
+        Cookies.set("sdt", data.sdt);
+        Cookies.set("anh", data.avatarURL);
+        Cookies.set("isLoggedIn", "true");
         navigate("/admin");
       } else {
         setError(data.message);

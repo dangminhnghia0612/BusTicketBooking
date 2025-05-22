@@ -1,9 +1,16 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Outlet,
+} from "react-router-dom";
 import "./App.css";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 import DangNhap from "./pages/admin/DangNhap";
 import BangDieuKhien from "./pages/admin/BangDieuKhien";
 import KhachHang from "./pages/admin/KhachHang";
-import Xe from "./pages/admin/Xe";
+import Xe from "./pages/admin/quanlyxe/Xe";
+import LoaiXe from "./pages/admin/quanlyxe/LoaiXe";
 import TuyenXe from "./pages/admin/TuyenXe";
 import ChuyenXe from "./pages/admin/ChuyenXe";
 import DatVe from "./pages/admin/DatVe";
@@ -16,21 +23,27 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<DangNhap />} />
-
+        <Route path="/" element={<DangNhap />} /> {/* Trang chủ */}
         <Route path="/admin/dangnhap" element={<DangNhap />} />
-        <Route path="/admin" element={<BangDieuKhien />} />
-        <Route path="/admin/khachhang" element={<KhachHang />} />
-        <Route path="/admin/xe" element={<Xe />} />
-        <Route path="/admin/tuyenxe" element={<TuyenXe />} />
-        <Route path="/admin/chuyenxe" element={<ChuyenXe />} />
-        <Route path="/admin/datve" element={<DatVe />} />
-        <Route path="/admin/khuyenmai" element={<KhuyenMai />} />
-        <Route path="/admin/noidung/tintuc" element={<TinTuc />} />
-        <Route path="/admin/noidung/bieungu" element={<BieuNgu />} />
-        <Route path="/admin/noidung/nhaxe" element={<NhaXe />} />
-
-        {/* <Route path="/user/login" element={<UserLogin />} /> */}
+        <Route
+          element={
+            <ProtectedRoute>
+              <Outlet />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/admin" element={<BangDieuKhien />} />
+          <Route path="/admin/khachhang" element={<KhachHang />} />
+          <Route path="/admin/quanlyxe/xe" element={<Xe />} />
+          <Route path="/admin/quanlyxe/loaixe" element={<LoaiXe />} />
+          <Route path="/admin/tuyenxe" element={<TuyenXe />} />
+          <Route path="/admin/chuyenxe" element={<ChuyenXe />} />
+          <Route path="/admin/datve" element={<DatVe />} />
+          <Route path="/admin/khuyenmai" element={<KhuyenMai />} />
+          <Route path="/admin/noidung/tintuc" element={<TinTuc />} />
+          <Route path="/admin/noidung/bieungu" element={<BieuNgu />} />
+          <Route path="/admin/noidung/nhaxe" element={<NhaXe />} />
+        </Route>
       </Routes>
     </Router>
   );

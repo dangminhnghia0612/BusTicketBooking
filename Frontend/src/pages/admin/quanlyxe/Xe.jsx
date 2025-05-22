@@ -1,28 +1,25 @@
-import React from "react";
-import { AdminLayout } from "../../components/admin/AdminLayout";
-import AdminPageLayout from "../../components/admin/AdminPageLayout";
+import { AdminLayout } from "../../../components/admin/AdminLayout";
+import AdminPageLayout from "../../../components/admin/AdminPageLayout";
 import { Search, PlusCircle, Edit, Trash2 } from "lucide-react";
 
-export default function TuyenXe() {
+export default function Xe() {
   return (
     <AdminLayout>
       <AdminPageLayout
-        title="Quản Lý Tuyến Xe"
+        title="Quản Lý Xe"
         addButton={
           <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center text-sm">
             <PlusCircle className="h-4 w-4 mr-2" />
-            Thêm tuyến xe
+            Thêm xe mới
           </button>
         }
-        tableTitle="Danh sách tuyến xe"
-        tableDescription="Quản lý tất cả các tuyến xe trong hệ thống"
         search={
           <div className="flex flex-col sm:flex-row gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
                 type="search"
-                placeholder="Tìm kiếm tuyến xe..."
+                placeholder="Tìm kiếm xe..."
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
@@ -31,10 +28,12 @@ export default function TuyenXe() {
             </button>
           </div>
         }
+        tableTitle="Danh sách xe"
+        tableDescription="Quản lý tất cả các xe trong hệ thốngg"
         pagination={
           <>
             <div className="text-sm text-gray-500">
-              Hiển thị 1-5 của 12 kết quả
+              Hiển thị 1-5 của 20 kết quả
             </div>
             <div className="flex space-x-2">
               <button className="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50">
@@ -55,31 +54,25 @@ export default function TuyenXe() {
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  ID
+                  Biển số
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Điểm đi
+                  Loại xe
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Điểm đến
+                  Số ghế
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Khoảng cách
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Thời gian
+                  Tài xế
                 </th>
                 <th
                   scope="col"
@@ -96,63 +89,35 @@ export default function TuyenXe() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {[
-                {
-                  from: "Hà Nội",
-                  to: "Hồ Chí Minh",
-                  distance: "1,760 km",
-                  time: "36 giờ",
-                },
-                {
-                  from: "Hà Nội",
-                  to: "Đà Nẵng",
-                  distance: "790 km",
-                  time: "16 giờ",
-                },
-                {
-                  from: "Hồ Chí Minh",
-                  to: "Đà Lạt",
-                  distance: "310 km",
-                  time: "8 giờ",
-                },
-                {
-                  from: "Hà Nội",
-                  to: "Hải Phòng",
-                  distance: "120 km",
-                  time: "2.5 giờ",
-                },
-                {
-                  from: "Hồ Chí Minh",
-                  to: "Cần Thơ",
-                  distance: "170 km",
-                  time: "4 giờ",
-                },
-              ].map((route, i) => (
+              {Array.from({ length: 5 }).map((_, i) => (
                 <tr key={i} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    TX{1000 + i}
+                    29A-{10000 + i}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {route.from}
+                    {i % 2 === 0 ? "Giường nằm" : "Ghế ngồi"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {route.to}
+                    {i % 2 === 0 ? "45" : "35"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {route.distance}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {route.time}
+                    Nguyễn Văn B{i}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         i % 3 === 0
                           ? "bg-green-100 text-green-800"
-                          : "bg-yellow-100 text-yellow-800"
+                          : i % 3 === 1
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-red-100 text-red-800"
                       }`}
                     >
-                      {i % 3 === 0 ? "Hoạt động" : "Tạm ngưng"}
+                      {i % 3 === 0
+                        ? "Hoạt động"
+                        : i % 3 === 1
+                        ? "Bảo trì"
+                        : "Ngưng hoạt động"}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

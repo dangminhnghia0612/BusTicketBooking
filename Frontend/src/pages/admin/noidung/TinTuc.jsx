@@ -1,26 +1,22 @@
 import React from "react";
 import { AdminLayout } from "../../../components/admin/AdminLayout";
+import AdminPageLayout from "../../../components/admin/AdminPageLayout";
 import { Search, PlusCircle, Edit, Trash2, Eye } from "lucide-react";
 
 export default function TinTuc() {
   return (
     <AdminLayout>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Quản Lý Tin Tức</h1>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center text-sm">
-          <PlusCircle className="h-4 w-4 mr-2" />
-          Thêm tin tức
-        </button>
-      </div>
-
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="p-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900 mb-1">
-            Danh sách tin tức
-          </h2>
-          <p className="text-sm text-gray-500 mb-4">
-            Quản lý tất cả các bài viết tin tức trong hệ thống
-          </p>
+      <AdminPageLayout
+        title="Quản Lý Tin Tức"
+        addButton={
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center text-sm">
+            <PlusCircle className="h-4 w-4 mr-2" />
+            Thêm tin tức
+          </button>
+        }
+        tableTitle="Danh sách tin tức"
+        tableDescription="Quản lý tất cả các bài viết tin tức trong hệ thống"
+        search={
           <div className="flex flex-col sm:flex-row gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -34,8 +30,23 @@ export default function TinTuc() {
               Lọc
             </button>
           </div>
-        </div>
-
+        }
+        pagination={
+          <>
+            <div className="text-sm text-gray-500">
+              Hiển thị 1-5 của 24 kết quả
+            </div>
+            <div className="flex space-x-2">
+              <button className="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50">
+                Trước
+              </button>
+              <button className="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50">
+                Sau
+              </button>
+            </div>
+          </>
+        }
+      >
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -167,21 +178,7 @@ export default function TinTuc() {
             </tbody>
           </table>
         </div>
-
-        <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-          <div className="text-sm text-gray-500">
-            Hiển thị 1-5 của 24 kết quả
-          </div>
-          <div className="flex space-x-2">
-            <button className="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50">
-              Trước
-            </button>
-            <button className="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50">
-              Sau
-            </button>
-          </div>
-        </div>
-      </div>
+      </AdminPageLayout>
     </AdminLayout>
   );
 }

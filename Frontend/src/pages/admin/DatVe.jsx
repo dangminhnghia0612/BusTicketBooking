@@ -1,21 +1,15 @@
 import { AdminLayout } from "../../components/admin/AdminLayout";
+import AdminPageLayout from "../../components/admin/AdminPageLayout";
 import { Search, Calendar, Eye, CheckCircle, XCircle } from "lucide-react";
 
 export default function DatVe() {
   return (
     <AdminLayout>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Quản Lý Đặt Vé</h1>
-      </div>
-
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="p-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900 mb-1">
-            Danh sách đặt vé
-          </h2>
-          <p className="text-sm text-gray-500 mb-4">
-            Quản lý tất cả các đơn đặt vé trong hệ thống
-          </p>
+      <AdminPageLayout
+        title="Quản Lý Đặt Vé"
+        tableTitle="Danh sách đặt vé"
+        tableDescription="Quản lý tất cả các đơn đặt vé trong hệ thống"
+        search={
           <div className="flex flex-col sm:flex-row gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -35,8 +29,23 @@ export default function DatVe() {
               </button>
             </div>
           </div>
-        </div>
-
+        }
+        pagination={
+          <>
+            <div className="text-sm text-gray-500">
+              Hiển thị 1-5 của 18 kết quả
+            </div>
+            <div className="flex space-x-2">
+              <button className="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50">
+                Trước
+              </button>
+              <button className="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50">
+                Sau
+              </button>
+            </div>
+          </>
+        }
+      >
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -188,21 +197,7 @@ export default function DatVe() {
             </tbody>
           </table>
         </div>
-
-        <div className="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
-          <div className="text-sm text-gray-500">
-            Hiển thị 1-5 của 18 kết quả
-          </div>
-          <div className="flex space-x-2">
-            <button className="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50">
-              Trước
-            </button>
-            <button className="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50">
-              Sau
-            </button>
-          </div>
-        </div>
-      </div>
+      </AdminPageLayout>
     </AdminLayout>
   );
 }
