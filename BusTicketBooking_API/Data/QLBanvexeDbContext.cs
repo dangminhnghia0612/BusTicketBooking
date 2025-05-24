@@ -477,6 +477,7 @@ public partial class QLBanvexeDbContext : DbContext
 
             entity.Property(e => e.MaQuantrivien).HasColumnName("Ma_Quantrivien");
             entity.Property(e => e.Anh).HasMaxLength(100);
+            entity.Property(e => e.Dangnhapcuoi).HasColumnType("datetime");
             entity.Property(e => e.Hoten).HasMaxLength(50);
             entity.Property(e => e.MaVaitro).HasColumnName("Ma_Vaitro");
             entity.Property(e => e.Matkhau).HasMaxLength(255);

@@ -60,7 +60,6 @@ DELETE FROM Tinh
 DELETE FROM Loaixe
 
 
-
 INSERT INTO Vaitro(Ten, Mota) VALUES
 ('Admin',N'Quản trị viên'),      
 ('User', N'Khách hàng');
@@ -1017,7 +1016,8 @@ INSERT INTO Tuyenxe(Khoangthoigian, Khoangcach, Giave) VALUES
 (10, 400, 315000.00),
 (24, 1200, 600000.00),
 (20, 1045, 480000.00);
-select * from lotrinh
+
+
 INSERT INTO Lotrinh (Ma_Tuyenxe, Ma_Benxe, Labendau, Thutu) VALUES (1, 2, 1, 1);
 INSERT INTO Lotrinh (Ma_Tuyenxe, Ma_Benxe, Labencuoi, Thutu) VALUES (1, 5, 1, 2);
 

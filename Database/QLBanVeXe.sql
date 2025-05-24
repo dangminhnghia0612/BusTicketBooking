@@ -32,6 +32,7 @@ create table Quantrivien (
    Anh                  nvarchar(100)        null,
    Ngaytao              datetime             null,
    Ngaycapnhat          datetime             null,
+   Dangnhapcuoi			datetime			 null,
    constraint PK_Quantrivien primary key (Ma_Quantrivien)
 )
 go

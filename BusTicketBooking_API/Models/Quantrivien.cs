@@ -23,6 +23,8 @@ public partial class Quantrivien
 
     public DateTime? Ngaycapnhat { get; set; }
 
+    public DateTime? Dangnhapcuoi { get; set; }
+
     public virtual ICollection<Bieungu> Bieungu { get; set; } = new List<Bieungu>();
 
     public virtual ICollection<Chinhsachhuyve> Chinhsachhuyve { get; set; } = new List<Chinhsachhuyve>();

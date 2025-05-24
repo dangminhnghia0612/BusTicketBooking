@@ -2,7 +2,7 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { adminLogin } from "../../api/auth.js";
-import FullScreenSpinner from "../../components/FullScreenSpinner.jsx";
+import FullScreenSpinner from "../../components/common/FullScreenSpinner.jsx";
 export default function DangNhap() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

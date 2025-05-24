@@ -14,14 +14,14 @@ export default function MobileSidebar({
     <>
       <div
         className={cn(
-          "fixed inset-0 z-50 bg-black/50 md:hidden",
+          "fixed inset-0 z-50 bg-black/50 lg:hidden",
           mobileMenuOpen ? "block" : "hidden"
         )}
         onClick={() => setMobileMenuOpen(false)}
       ></div>
       <div
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 bg-white transform transition-transform duration-200 ease-in-out md:hidden",
+          "fixed inset-y-0 left-0 z-50 w-64 bg-white transform transition-transform duration-200 ease-in-out lg:hidden",
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >

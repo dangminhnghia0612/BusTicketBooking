@@ -1,20 +1,193 @@
+import { useEffect, useState } from "react";
 import { AdminLayout } from "../../../components/admin/AdminLayout";
 import AdminPageLayout from "../../../components/admin/AdminPageLayout";
+import Table from "../../../components/admin/Table";
+import ConfirmDialog from "../../../components/common/ConfirmDialog";
+import AlertDialog from "../../../components/common/AlertDialog";
+import Modal from "../../../components/admin/Modal";
+import { layDSXe, xoaXe, themXe, suaXe } from "../../../api/xe.js";
+import { layDSTinh } from "../../../api/tinh.js";
+import { layDSBenXeCuaTinh } from "../../../api/benxe.js";
+import { layDSLoaiXe } from "../../../api/loaixe.js";
 import { Search, PlusCircle, Edit, Trash2 } from "lucide-react";
 
+const columns = [
+  {
+    key: "maxe",
+    title: "ID",
+    tdClassName: "px-6 py-4 text-sm font-bold",
+  },
+  { key: "bienso", title: "Biển số" },
+  { key: "tenloai", title: "Loại xe" },
+  { key: "soghe", title: "Số ghế" },
+  { key: "noidauxe", title: "Nơi đậu xe" },
+  { key: "tenxe", title: "Tên xe" },
+  {
+    key: "actions",
+    title: "Thao tác",
+    className:
+      "px-6 py-3 text-center text-xs font-bold uppercase tracking-wider",
+    render: (row, i, onDelete, onEdit) => (
+      <div className="flex justify-center space-x-2">
+        <button
+          className="text-blue-600 hover:text-blue-900"
+          onClick={() => onEdit(row)}
+        >
+          <Edit className="h-4 w-4" />
+        </button>
+        <button
+          className="text-red-600 hover:text-red-900"
+          onClick={() => onDelete(row.maxe)}
+        >
+          <Trash2 className="h-4 w-4" />
+        </button>
+      </div>
+    ),
+  },
+];
+
 export default function Xe() {
+  const [data, setData] = useState([]);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertMsg, setAlertMsg] = useState("");
+  const [deleteId, setDeleteId] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [dsTinh, setDsTinh] = useState([]);
+  const [dsLoaiXe, setDsLoaiXe] = useState([]);
+  const [dsBenXe, setDsBenXe] = useState([]);
+  const [xe, setXe] = useState({
+    bienso: "",
+    tenxe: "",
+    matinh: "",
+    maloai: "",
+    mabenxe: "",
+  });
+  const [isEdit, setIsEdit] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await layDSXe();
+      setData(res);
+    }
+    fetchData();
+    if (openModal) {
+      layDSTinh().then(setDsTinh);
+      layDSLoaiXe().then(setDsLoaiXe);
+    }
+  }, [openModal]);
+
+  const columnsWithActions = columns.map((col) =>
+    col.key === "actions"
+      ? {
+          ...col,
+          render: (row, i) =>
+            columns
+              .find((c) => c.key === "actions")
+              .render(
+                row,
+                i,
+                (maxe) => {
+                  setDeleteId(maxe);
+                  setConfirmOpen(true);
+                },
+                async (row) => {
+                  setIsEdit(true);
+                  setXe(row);
+                  setOpenModal(true);
+                  if (row.matinh) {
+                    const ds = await layDSBenXeCuaTinh(row.matinh);
+                    setDsBenXe(ds);
+                  }
+                }
+              ),
+        }
+      : col
+  );
+
+  const handleDelete = async () => {
+    setConfirmOpen(false);
+    try {
+      const res = await xoaXe(deleteId);
+      if (res.message === "Xóa thành công") {
+        setData((prev) => prev.filter((item) => item.maxe !== deleteId));
+        setAlertMsg("Xóa xe thành công");
+      } else {
+        setAlertMsg(res.message);
+      }
+    } catch (error) {
+      setAlertMsg("Lỗi khi xóa xe: " + error.message);
+    }
+    setAlertOpen(true);
+  };
+
+  function resetModal() {
+    setOpenModal(false);
+    setXe({
+      bienso: "",
+      tenxe: "",
+      matinh: "",
+      maloai: "",
+      mabenxe: "",
+    });
+    setDsBenXe([]);
+  }
+
+  const handleSave = async () => {
+    try {
+      if (!xe.bienso || !xe.maloai || !xe.mabenxe || !xe.matinh) {
+        setAlertMsg(
+          "Vui lòng điền và chọn đầy đủ thông tin xe với những trường (*)"
+        );
+        setAlertOpen(true);
+        return;
+      } else {
+        if (isEdit) {
+          const res = await suaXe(xe);
+          if (res.message === "Sửa thành công") {
+            setData((prev) =>
+              prev.map((item) => (item.maxe === xe.maxe ? xe : item))
+            );
+            setAlertMsg("Sửa thông tin xe thành công");
+            resetModal();
+          } else {
+            setAlertMsg(res.message);
+          }
+        } else {
+          const res = await themXe(xe);
+          if (res.message === "Thêm thành công") {
+            setData((prev) => [...prev, xe]);
+            setAlertMsg("Thêm xe thành công");
+            resetModal();
+          } else {
+            setAlertMsg(res.message);
+          }
+        }
+      }
+    } catch (error) {
+      setAlertMsg("Lỗi khi lưu xe: " + error.message);
+    }
+    setAlertOpen(true);
+  };
+
   return (
     <AdminLayout>
       <AdminPageLayout
         title="Quản Lý Xe"
         addButton={
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center text-sm">
+          <button
+            className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-md flex items-center text-sm"
+            onClick={() => {
+              setOpenModal(true);
+              setIsEdit(false);
+            }}
+          >
             <PlusCircle className="h-4 w-4 mr-2" />
             Thêm xe mới
           </button>
         }
         search={
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex flex-col lg:flex-row gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
@@ -46,96 +219,122 @@ export default function Xe() {
           </>
         }
       >
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Biển số
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Loại xe
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Số ghế
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Tài xế
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Trạng thái
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Thao tác
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <tr key={i} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    29A-{10000 + i}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {i % 2 === 0 ? "Giường nằm" : "Ghế ngồi"}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {i % 2 === 0 ? "45" : "35"}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    Nguyễn Văn B{i}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        i % 3 === 0
-                          ? "bg-green-100 text-green-800"
-                          : i % 3 === 1
-                          ? "bg-yellow-100 text-yellow-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {i % 3 === 0
-                        ? "Hoạt động"
-                        : i % 3 === 1
-                        ? "Bảo trì"
-                        : "Ngưng hoạt động"}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex justify-end space-x-2">
-                      <button className="text-blue-600 hover:text-blue-900">
-                        <Edit className="h-4 w-4" />
-                      </button>
-                      <button className="text-red-600 hover:text-red-900">
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Table columns={columnsWithActions} data={data} />
+        <ConfirmDialog
+          open={confirmOpen}
+          title="Xác nhận xóa"
+          message={"Bạn có chắc chắn muốn xóa xe có ID " + deleteId + " không?"}
+          onConfirm={handleDelete}
+          onCancel={() => setConfirmOpen(false)}
+        />
+        <AlertDialog
+          open={alertOpen}
+          title="Thông báo"
+          message={alertMsg}
+          onClose={() => setAlertOpen(false)}
+        />
       </AdminPageLayout>
+      <Modal
+        open={openModal}
+        title={isEdit ? "Chỉnh sửa xe" : "Thêm xe mới"}
+        onClose={resetModal}
+        handleSave={handleSave}
+      >
+        <div className="space-y-3">
+          {/* Biển số */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Biển số (51A-123.45)
+            </label>
+            <input
+              type="text"
+              className="w-full border rounded px-3 py-2"
+              placeholder="Biển số"
+              value={xe.bienso}
+              onChange={(e) => setXe({ ...xe, bienso: e.target.value })}
+            />
+          </div>
+          {/* Loại xe*/}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Loại xe (*)
+            </label>
+            <select
+              className="w-full border rounded px-3 py-2"
+              value={xe.maloai || ""}
+              onChange={(e) => setXe({ ...xe, maloai: e.target.value })}
+            >
+              <option value="">Chọn loại xe</option>
+              {dsLoaiXe.map((loai) => (
+                <option key={loai.maloaixe} value={loai.maloaixe}>
+                  {loai.tenloai}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* Tỉnh và nơi đậu xe */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1 ">
+                Tỉnh (*)
+              </label>
+              <select
+                className="w-full border rounded px-3 py-2"
+                value={xe.matinh || ""}
+                onChange={(e) => handleChangeTinh(e, xe, setXe, setDsBenXe)}
+              >
+                <option value="">Chọn tỉnh</option>
+                {dsTinh.map((tinh) => (
+                  <option key={tinh.maTinh} value={tinh.maTinh}>
+                    {tinh.ten}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Nơi đậu xe (*)
+              </label>
+              <select
+                className="w-full border rounded px-3 py-2"
+                value={xe.mabenxe || ""}
+                onChange={(e) => setXe({ ...xe, mabenxe: e.target.value })}
+              >
+                <option value="">Chọn nơi đậu xe</option>
+                {dsBenXe.map((benXe) => (
+                  <option key={benXe.mabenxe} value={benXe.mabenxe}>
+                    {benXe.tenbenxe}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          {/* Tên xe */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Tên xe
+            </label>
+            <input
+              type="text"
+              className="w-full border rounded px-3 py-2"
+              placeholder="Tên xe"
+              value={xe.tenxe}
+              onChange={(e) => setXe({ ...xe, tenxe: e.target.value })}
+            />
+          </div>
+        </div>
+      </Modal>
     </AdminLayout>
   );
+}
+
+async function handleChangeTinh(e, xe, setXe, setDsBenXe) {
+  const maTinh = e.target.value;
+  setXe({ ...xe, matinh: maTinh, mabenxe: "" }); // reset nơi đậu xe khi đổi tỉnh
+  if (maTinh) {
+    const ds = await layDSBenXeCuaTinh(maTinh);
+    setDsBenXe(ds);
+  } else {
+    setDsBenXe([]);
+  }
 }

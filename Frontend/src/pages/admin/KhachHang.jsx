@@ -16,7 +16,7 @@ export default function KhachHang() {
         tableTitle="Danh sách người dùng"
         tableDescription="Danh sách các người dùng hiện có trong hệ thống."
         search={
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex flex-col lg:flex-row gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
@@ -52,43 +52,43 @@ export default function KhachHang() {
               <tr>
                 <th
                   scope="col"
-                  className="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                  className="px-2 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider "
                 >
                   ID
                 </th>
                 <th
                   scope="col"
-                  className="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                  className="px-2 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider "
                 >
                   Họ tên
                 </th>
                 <th
                   scope="col"
-                  className="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                  className="px-2 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider "
                 >
                   Email
                 </th>
                 <th
                   scope="col"
-                  className="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                  className="px-2 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider "
                 >
                   Số điện thoại
                 </th>
                 <th
                   scope="col"
-                  className="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                  className="px-2 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider "
                 >
                   Vai trò
                 </th>
                 <th
                   scope="col"
-                  className="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                  className="px-2 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider "
                 >
                   Trạng thái
                 </th>
                 <th
                   scope="col"
-                  className="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap"
+                  className="px-2 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider "
                 >
                   Thao tác
                 </th>
@@ -97,22 +97,22 @@ export default function KhachHang() {
             <tbody className="bg-white divide-y divide-gray-200">
               {Array.from({ length: 5 }).map((_, i) => (
                 <tr key={i} className="hover:bg-gray-50">
-                  <td className="px-2 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <td className="px-2 lg:px-6 py-4  text-sm font-medium text-gray-900">
                     ND{1000 + i}
                   </td>
-                  <td className="px-2 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-2 lg:px-6 py-4  text-sm text-gray-500">
                     Nguyễn Văn A{i}
                   </td>
-                  <td className="px-2 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-2 lg:px-6 py-4  text-sm text-gray-500">
                     user{i}@example.com
                   </td>
-                  <td className="px-2 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-2 lg:px-6 py-4  text-sm text-gray-500">
                     098765432{i}
                   </td>
-                  <td className="px-2 sm:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-2 lg:px-6 py-4  text-sm text-gray-500">
                     {i % 3 === 0 ? "Admin" : "Khách hàng"}
                   </td>
-                  <td className="px-2 sm:px-6 py-4 whitespace-nowrap">
+                  <td className="px-2 sm:px-6 py-4 ">
                     <span
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         i % 2 === 0
@@ -123,7 +123,7 @@ export default function KhachHang() {
                       {i % 2 === 0 ? "Hoạt động" : "Chờ xác nhận"}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <td className="px-6 py-4  text-right text-sm font-medium">
                     <div className="flex justify-end space-x-2">
                       <button className="text-blue-600 hover:text-blue-900">
                         <Edit className="h-4 w-4" />
