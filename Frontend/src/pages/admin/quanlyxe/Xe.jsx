@@ -64,13 +64,14 @@ export default function Xe() {
     mabenxe: "",
   });
   const [isEdit, setIsEdit] = useState(false);
-
   useEffect(() => {
     async function fetchData() {
       const res = await layDSXe();
       setData(res);
     }
     fetchData();
+  }, []);
+  useEffect(() => {
     if (openModal) {
       layDSTinh().then(setDsTinh);
       layDSLoaiXe().then(setDsLoaiXe);
@@ -110,7 +111,8 @@ export default function Xe() {
     try {
       const res = await xoaXe(deleteId);
       if (res.message === "Xóa thành công") {
-        setData((prev) => prev.filter((item) => item.maxe !== deleteId));
+        const newData = await layDSXe();
+        setData(newData);
         setAlertMsg("Xóa xe thành công");
       } else {
         setAlertMsg(res.message);
@@ -145,9 +147,8 @@ export default function Xe() {
         if (isEdit) {
           const res = await suaXe(xe);
           if (res.message === "Sửa thành công") {
-            setData((prev) =>
-              prev.map((item) => (item.maxe === xe.maxe ? xe : item))
-            );
+            const newData = await layDSXe();
+            setData(newData);
             setAlertMsg("Sửa thông tin xe thành công");
             resetModal();
           } else {
@@ -156,7 +157,8 @@ export default function Xe() {
         } else {
           const res = await themXe(xe);
           if (res.message === "Thêm thành công") {
-            setData((prev) => [...prev, xe]);
+            const newData = await layDSXe();
+            setData(newData);
             setAlertMsg("Thêm xe thành công");
             resetModal();
           } else {
@@ -201,8 +203,8 @@ export default function Xe() {
             </button>
           </div>
         }
+        description="Quản lý tất cả các xe trong hệ thống"
         tableTitle="Danh sách xe"
-        tableDescription="Quản lý tất cả các xe trong hệ thốngg"
         pagination={
           <>
             <div className="text-sm text-gray-500">

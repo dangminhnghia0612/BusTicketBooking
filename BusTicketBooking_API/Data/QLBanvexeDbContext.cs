@@ -66,15 +66,14 @@ public partial class QLBanvexeDbContext : DbContext
 
     public virtual DbSet<Tuyenxe> Tuyenxe { get; set; }
 
+    public virtual DbSet<TuyenxeView> TuyenxeView { get; set; }
+
     public virtual DbSet<Vaitro> Vaitro { get; set; }
 
     public virtual DbSet<Vexe> Vexe { get; set; }
 
     public virtual DbSet<Xe> Xe { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Data Source=MinhNghia;Initial Catalog=QLBanVeXe;Persist Security Info=True;User ID=sa;Password=123456;Trust Server Certificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -562,6 +561,21 @@ public partial class QLBanvexeDbContext : DbContext
             entity.Property(e => e.MaTuyenxe).HasColumnName("Ma_Tuyenxe");
             entity.Property(e => e.Giave).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.Khoangcach).HasColumnType("decimal(18, 0)");
+        });
+
+        modelBuilder.Entity<TuyenxeView>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("TuyenxeView");
+
+            entity.Property(e => e.Giave).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.Khoangcach).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.MaBenxe).HasColumnName("Ma_Benxe");
+            entity.Property(e => e.MaTinh).HasColumnName("Ma_Tinh");
+            entity.Property(e => e.MaTuyenxe).HasColumnName("Ma_Tuyenxe");
+            entity.Property(e => e.Tenbenxe).HasMaxLength(50);
+            entity.Property(e => e.Tentinh).HasMaxLength(50);
         });
 
         modelBuilder.Entity<Vaitro>(entity =>

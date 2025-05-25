@@ -3,7 +3,7 @@ export default function AdminPageLayout({
   addButton,
   search,
   tableTitle,
-  tableDescription,
+  description,
   children,
   pagination,
 }) {
@@ -12,6 +12,9 @@ export default function AdminPageLayout({
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3 mb-6">
         <h1 className="text-2xl font-bold text-gray-900 text-center md:text-left">
           {title}
+          <div>
+            <p className="text-sm text-gray-400 mt-4">{description}</p>
+          </div>
         </h1>
         {addButton && (
           <div className="flex justify-center md:justify-end">{addButton}</div>
@@ -22,7 +25,7 @@ export default function AdminPageLayout({
           <h2 className="text-lg font-semibold text-gray-900 mb-1">
             {tableTitle}
           </h2>
-          <p className="text-sm text-gray-500 mb-4">{tableDescription}</p>
+          {/* <p className="text-sm text-gray-500 mb-4">{tableDescription}</p> */}
           {search}
         </div>
       </div>

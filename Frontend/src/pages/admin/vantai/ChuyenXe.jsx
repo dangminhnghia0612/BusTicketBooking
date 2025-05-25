@@ -34,8 +34,8 @@ export default function ChuyenXe() {
             </button>
           </div>
         }
+        description="Danh sách các chuyến xe hiện có trong hệ thống."
         tableTitle="Danh sách chuyến xe"
-        tableDescription="Danh sách các chuyến xe hiện có trong hệ thống."
         pagination={
           <>
             <div className="text-sm text-gray-500">

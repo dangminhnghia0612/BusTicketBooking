@@ -637,3 +637,17 @@ alter table Lotrinh
    add constraint FK_Benxe_Lotrinh foreign key (Ma_Benxe)
       references Benxe (Ma_Benxe)
 go
+
+
+/*==============================================================*/
+/* View: Tuyến Xe					                            */
+/*==============================================================*/
+create view TuyenxeView as
+select tx.Ma_Tuyenxe, tx.Khoangthoigian, tx.Khoangcach, tx.Giave, lt.Thutu, bx.Ma_Benxe, bx.Tenbenxe, t.Ma_Tinh, t.Ten as Tentinh
+from Tuyenxe tx join Lotrinh lt on tx.Ma_Tuyenxe = lt.Ma_Tuyenxe
+				join Benxe bx   on lt.Ma_Benxe = bx.Ma_Benxe
+				join Quan q     on bx.Ma_Quan = q.Ma_Quan
+				join Tinh t     on q.Ma_Tinh = t.Ma_Tinh
+
+
+			

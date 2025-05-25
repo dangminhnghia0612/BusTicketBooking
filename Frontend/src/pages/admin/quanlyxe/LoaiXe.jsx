@@ -29,8 +29,8 @@ export default function LoaiXe() {
             </button>
           </div>
         }
+        description="Quản lý các loại xe trong hệ thống"
         tableTitle="Loại xe"
-        tableDescription="Quản lý các loại xe trong hệ thống"
       >
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">

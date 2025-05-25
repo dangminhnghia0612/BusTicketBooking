@@ -60,13 +60,14 @@ export default function BenXe() {
     matinh: "",
   });
   const [isEdit, setIsEdit] = useState(false);
-
   useEffect(() => {
     async function fetchData() {
       const res = await layDSBenXe();
       setData(res);
     }
     fetchData();
+  }, []);
+  useEffect(() => {
     if (openModal) {
       layDSTinh().then(setDsTinh);
     }
@@ -105,7 +106,8 @@ export default function BenXe() {
     try {
       const res = await xoaBenXe(deleteId);
       if (res.message === "Xóa thành công") {
-        setData((prev) => prev.filter((item) => item.mabenxe !== deleteId));
+        const newData = await layDSBenXe();
+        setData(newData);
         setAlertMsg("Xóa bến xe thành công");
       } else {
         setAlertMsg(res.message);
@@ -130,7 +132,7 @@ export default function BenXe() {
 
   const handleSave = async () => {
     try {
-      if (!benXe.diachi || !benXe.maquan || !benXe.matinh) {
+      if (!benXe.diachi || !benXe.maquan || !benXe.matinh || !benXe.tenbenxe) {
         setAlertMsg(
           "Vui lòng điền và chọn đầy đủ thông tin xe với những trường (*)"
         );
@@ -140,11 +142,8 @@ export default function BenXe() {
         if (isEdit) {
           const res = await suaBenXe(benXe);
           if (res.message === "Sửa thành công") {
-            setData((prev) =>
-              prev.map((item) =>
-                item.mabenxe === benXe.mabenxe ? benXe : item
-              )
-            );
+            const newData = await layDSBenXe();
+            setData(newData);
             setAlertMsg("Sửa thông tin bến xe thành công");
             resetModal();
           } else {
@@ -153,7 +152,8 @@ export default function BenXe() {
         } else {
           const res = await themBenXe(benXe);
           if (res.message === "Thêm thành công") {
-            setData((prev) => [...prev, benXe]);
+            const newData = await layDSBenXe();
+            setData(newData);
             setAlertMsg("Thêm bến xe thành công");
             resetModal();
           } else {
@@ -183,8 +183,8 @@ export default function BenXe() {
             Thêm bến xe
           </button>
         }
+        description="Thông tin chi tiết về các bến xe trong hệ thống"
         tableTitle="Danh sách bến xe"
-        tableDescription="Thông tin chi tiết về các bến xe trong hệ thống"
         search={
           <div className="flex flex-col lg:flex-row gap-2">
             <div className="relative flex-1">
@@ -235,8 +235,7 @@ export default function BenXe() {
       </AdminPageLayout>
       <Modal
         open={openModal}
-        // title={isEdit ? "Chỉnh sửa bến xe" : "Thêm bến xe mới"}
-        title={"Thêm bến xe mới"}
+        title={isEdit ? "Chỉnh sửa bến xe" : "Thêm bến xe mới"}
         onClose={resetModal}
         handleSave={handleSave}
       >
@@ -244,7 +243,7 @@ export default function BenXe() {
           {/* Tên bến xe */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Tên bến xe
+              Tên bến xe (*)
             </label>
             <input
               type="text"
