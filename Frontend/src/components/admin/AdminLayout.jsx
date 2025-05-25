@@ -13,6 +13,11 @@ import {
   ImageIcon,
   Building2,
   BusFront,
+  MapPin,
+  Route,
+  Navigation,
+  Truck,
+  MoveRight,
 } from "lucide-react";
 import Header from "./Header";
 import DesktopSidebar from "./DesktopSidebar";
@@ -47,14 +52,26 @@ const menuItems = [
     ],
   },
   {
-    title: "Tuyến xe",
-    href: "/admin/tuyenxe",
-    icon: Map,
-  },
-  {
-    title: "Chuyến xe",
-    href: "/admin/chuyenxe",
-    icon: Calendar,
+    title: "Quản lý vận tải",
+    href: "/admin/vantai",
+    icon: Route,
+    submenu: [
+      {
+        title: "Chuyến xe",
+        href: "/admin/vantai/chuyenxe",
+        icon: Calendar,
+      },
+      {
+        title: "Tuyến xe",
+        href: "/admin/vantai/tuyenxe",
+        icon: Map,
+      },
+      {
+        title: "Bến xe",
+        href: "/admin/vantai/benxe",
+        icon: MapPin,
+      },
+    ],
   },
   {
     title: "Đặt vé",

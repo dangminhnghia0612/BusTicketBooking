@@ -1,40 +1,45 @@
 import React from "react";
-import { AdminLayout } from "../../components/admin/AdminLayout";
-import AdminPageLayout from "../../components/admin/AdminPageLayout";
+import { AdminLayout } from "../../../components/admin/AdminLayout";
+import AdminPageLayout from "../../../components/admin/AdminPageLayout";
 import { Search, PlusCircle, Edit, Trash2 } from "lucide-react";
 
-export default function TuyenXe() {
+export default function ChuyenXe() {
   return (
     <AdminLayout>
       <AdminPageLayout
-        title="Quản Lý Tuyến Xe"
+        title="Quản Lý Chuyến Xe"
         addButton={
           <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center text-sm">
             <PlusCircle className="h-4 w-4 mr-2" />
-            Thêm tuyến xe
+            Thêm chuyến xe
           </button>
         }
-        tableTitle="Danh sách tuyến xe"
-        tableDescription="Quản lý tất cả các tuyến xe trong hệ thống"
         search={
           <div className="flex flex-col lg:flex-row gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
                 type="search"
-                placeholder="Tìm kiếm tuyến xe..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Tìm kiếm chuyến xe..."
+                className="w-1/2 pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+              <input
+                type="datetime-local"
+                className="w-1/2 pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
+
             <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 text-sm">
               Lọc
             </button>
           </div>
         }
+        tableTitle="Danh sách chuyến xe"
+        tableDescription="Danh sách các chuyến xe hiện có trong hệ thống."
         pagination={
           <>
             <div className="text-sm text-gray-500">
-              Hiển thị 1-5 của 12 kết quả
+              Hiển thị 1-5 của 20 kết quả
             </div>
             <div className="flex space-x-2">
               <button className="px-3 py-1 border border-gray-300 rounded-md text-sm hover:bg-gray-50">
@@ -61,25 +66,25 @@ export default function TuyenXe() {
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Điểm đi
+                  Tuyến xe
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Điểm đến
+                  Thời gian khởi hành
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Khoảng cách
+                  Xe
                 </th>
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Thời gian
+                  Giá vé
                 </th>
                 <th
                   scope="col"
@@ -98,61 +103,71 @@ export default function TuyenXe() {
             <tbody className="bg-white divide-y divide-gray-200">
               {[
                 {
-                  from: "Hà Nội",
-                  to: "Hồ Chí Minh",
-                  distance: "1,760 km",
-                  time: "36 giờ",
+                  route: "Hà Nội - Hồ Chí Minh",
+                  time: "08:00 - 22/05/2025",
+                  bus: "29A-12345",
+                  price: "1,200,000đ",
                 },
                 {
-                  from: "Hà Nội",
-                  to: "Đà Nẵng",
-                  distance: "790 km",
-                  time: "16 giờ",
+                  route: "Hà Nội - Đà Nẵng",
+                  time: "09:30 - 22/05/2025",
+                  bus: "29A-54321",
+                  price: "800,000đ",
                 },
                 {
-                  from: "Hồ Chí Minh",
-                  to: "Đà Lạt",
-                  distance: "310 km",
-                  time: "8 giờ",
+                  route: "Hồ Chí Minh - Đà Lạt",
+                  time: "10:15 - 22/05/2025",
+                  bus: "51A-98765",
+                  price: "350,000đ",
                 },
                 {
-                  from: "Hà Nội",
-                  to: "Hải Phòng",
-                  distance: "120 km",
-                  time: "2.5 giờ",
+                  route: "Hà Nội - Hải Phòng",
+                  time: "14:00 - 22/05/2025",
+                  bus: "29A-45678",
+                  price: "150,000đ",
                 },
                 {
-                  from: "Hồ Chí Minh",
-                  to: "Cần Thơ",
-                  distance: "170 km",
-                  time: "4 giờ",
+                  route: "Hồ Chí Minh - Cần Thơ",
+                  time: "15:30 - 22/05/2025",
+                  bus: "51A-87654",
+                  price: "200,000đ",
                 },
-              ].map((route, i) => (
+              ].map((trip, i) => (
                 <tr key={i} className="hover:bg-gray-50">
                   <td className="px-6 py-4 text-sm font-medium text-gray-900">
-                    TX{1000 + i}
+                    CX{2000 + i}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">
-                    {route.from}
+                    {trip.route}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">
-                    {route.to}
+                    {trip.time}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">
-                    {route.distance}
+                    {trip.bus}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">
-                    {route.time}
+                    {trip.price}
                   </td>
                   <td className="px-6 py-4">
                     <span
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        i % 3 === 0
+                        i % 4 === 0
                           ? "bg-green-100 text-green-800"
-                          : "bg-yellow-100 text-yellow-800"
+                          : i % 4 === 1
+                          ? "bg-blue-100 text-blue-800"
+                          : i % 4 === 2
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-red-100 text-red-800"
                       }`}
                     >
-                      {i % 3 === 0 ? "Hoạt động" : "Tạm ngưng"}
+                      {i % 4 === 0
+                        ? "Đang chạy"
+                        : i % 4 === 1
+                        ? "Sắp khởi hành"
+                        : i % 4 === 2
+                        ? "Đã hoàn thành"
+                        : "Đã hủy"}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right text-sm font-medium">
