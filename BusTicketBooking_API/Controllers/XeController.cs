@@ -128,5 +128,28 @@ namespace BusTicketBooking_API.Controllers
                 return BadRequest(new { message = "Xảy ra lỗi khi sửa xe " + ex.Message });
             }
         }
+        [HttpGet("layXeTheoNoiDau/{mabenxe}")]
+        public async Task<IActionResult> layXeTheoNoiDau(int mabenxe)
+        {
+            try
+            {
+                var dsXe = await _context.Xe.AsNoTracking()
+                                            .Include(x => x.MaLoaixeNavigation)
+                                            .Where(x => x.MaBenxe == mabenxe)
+                                            .Select(x => new
+                                            {
+                                                Maxe = x.MaXe,
+                                                Bienso = x.Bienso,
+                                                Loaixe = x.MaLoaixeNavigation.Tenloai
+                                            })
+                                            .ToListAsync();
+                return Ok(dsXe);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = "Xảy ra lỗi khi lấy ds xe.", Error = ex.Message });
+            }
+        }
+
     }
 }

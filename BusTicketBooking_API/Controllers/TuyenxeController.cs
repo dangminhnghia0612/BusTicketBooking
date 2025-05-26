@@ -26,7 +26,7 @@ namespace BusTicketBooking_API.Controllers
 
                 var dsTuyenXe = data
                     .GroupBy(x => new { x.MaTuyenxe, x.Khoangthoigian, x.Khoangcach, x.Giave })
-                    .Select(g => new TuyenxeResponseDTO
+                    .Select(g => new TuyenxeReponseDTO
                     {
                         MaTuyenXe = g.Key.MaTuyenxe,
                         KhoangThoiGian = g.Key.Khoangthoigian,
@@ -221,6 +221,39 @@ namespace BusTicketBooking_API.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { message = "Xảy ra lỗi khi sửa tuyến xe: " + ex.Message });
+            }
+        }
+
+        [HttpGet("layDSTuyenXeTheoTinh")]
+        public async Task<IActionResult> layDSTuyenXeTheoTinh([FromQuery] int maTinhDi, [FromQuery] int maTinhDen)
+        {
+            try
+            {
+
+                var dsTuyenXe = await (from tx in _context.Tuyenxe
+                                      join l1 in _context.Lotrinh on tx.MaTuyenxe equals l1.MaTuyenxe
+                                      join bx1 in _context.Benxe on l1.MaBenxe equals bx1.MaBenxe
+                                      join q1 in _context.Quan on bx1.MaQuan equals q1.MaQuan
+
+                                      join l2 in _context.Lotrinh on tx.MaTuyenxe equals l2.MaTuyenxe
+                                      join bx2 in _context.Benxe on l2.MaBenxe equals bx2.MaBenxe
+                                      join q2 in _context.Quan on bx2.MaQuan equals q2.MaQuan
+
+                                      where q1.MaTinh == maTinhDi && l1.Labendau == true
+                                         && q2.MaTinh == maTinhDen && l2.Labencuoi == true
+                                      select new
+                                      {
+                                          MaTuyenxe = tx.MaTuyenxe,
+                                          MaBendi = bx1.MaBenxe,
+                                          Bendi = bx1.Tenbenxe,
+                                          Benden = bx2.Tenbenxe
+                                      }).ToListAsync();
+                return Ok(dsTuyenXe);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = "Xảy ra lỗi khi lấy ds xe.", Error = ex.Message });
             }
         }
     }

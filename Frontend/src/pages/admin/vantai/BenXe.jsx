@@ -13,7 +13,7 @@ import { layDSQuanCuaTinh } from "../../../api/quan.js";
 const columns = [
   {
     key: "mabenxe",
-    title: "ID",
+    title: "Mã bến",
     tdClassName: "px-6 py-4 text-sm font-bold",
   },
   { key: "tenbenxe", title: "Tên bến xe" },

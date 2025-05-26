@@ -14,7 +14,7 @@ import { Search, PlusCircle, Edit, Trash2 } from "lucide-react";
 const columns = [
   {
     key: "maxe",
-    title: "ID",
+    title: "Mã xe",
     tdClassName: "px-6 py-4 text-sm font-bold",
   },
   { key: "bienso", title: "Biển số" },

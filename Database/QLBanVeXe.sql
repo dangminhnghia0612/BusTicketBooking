@@ -650,4 +650,3 @@ from Tuyenxe tx join Lotrinh lt on tx.Ma_Tuyenxe = lt.Ma_Tuyenxe
 				join Tinh t     on q.Ma_Tinh = t.Ma_Tinh
 
 
-			

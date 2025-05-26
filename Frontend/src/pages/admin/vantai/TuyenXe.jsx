@@ -18,7 +18,7 @@ import { layDSBenXeCuaTinh } from "../../../api/benxe.js";
 const columns = [
   {
     key: "maTuyenXe",
-    title: "ID",
+    title: "Mã tuyến",
     tdClassName: "px-6 py-4 text-sm font-bold",
   },
   {

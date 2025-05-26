@@ -72,3 +72,22 @@ export async function suaTuyenXe(tuyenXe, loTrinh) {
     console.error("Lỗi khi sửa thông tin xe:", error);
   }
 }
+
+export async function layDSTuyenXeTheoTinh(maTinhDi, maTinhDen) {
+  try {
+    const response = await fetch(
+      `https://localhost:7057/api/Tuyenxe/layDSTuyenXeTheoTinh?maTinhDi=${maTinhDi}&maTinhDen=${maTinhDen}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Lỗi fetch API tuyến xe:", error);
+    return [];
+  }
+}

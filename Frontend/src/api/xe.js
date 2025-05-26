@@ -66,3 +66,22 @@ export async function suaXe(xe) {
     console.error("Lỗi khi sửa thông tin xe:", error);
   }
 }
+
+export async function layDSXeTheoNoiDau(maBenXe) {
+  try {
+    const response = await fetch(
+      `https://localhost:7057/api/Xe/layXeTheoNoiDau/${maBenXe}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Lỗi fetch API xe:", error);
+    return [];
+  }
+}
