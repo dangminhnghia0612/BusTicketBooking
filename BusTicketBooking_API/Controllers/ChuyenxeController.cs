@@ -73,6 +73,15 @@ namespace BusTicketBooking_API.Controllers
                 {
                     return BadRequest(new { message = "Chuyến xe này đã có vé đặt" });
                 }
+
+                var maBenXeBanDau = await _context.TuyenxeView
+                                            .Where(txv => txv.MaTuyenxe == chuyenxe.MaTuyenxe)
+                                            .OrderBy(txv => txv.Thutu)
+                                            .Select(txv => txv.MaBenxe)
+                                            .FirstOrDefaultAsync();
+                var xe = await _context.Xe.FindAsync(chuyenxe.MaXe);
+                xe.MaBenxe = maBenXeBanDau;
+
                 if (chuyenxe.Chitietghe != null && chuyenxe.Chitietghe.Any())
                 {
                     _context.Chitietghe.RemoveRange(chuyenxe.Chitietghe);
@@ -97,8 +106,8 @@ namespace BusTicketBooking_API.Controllers
                 {
                     return NotFound(new { message = "Không tìm thấy tuyến xe " });
                 }
-                var xe = await _context.Xe.AnyAsync(x => x.MaXe == dto.MaXe);
-                if (!xe)
+                var xe = await _context.Xe.FindAsync(dto.MaXe);
+                if (xe == null)
                 {
                     return NotFound(new { message = "Không tìm thấy xe " });
                 }
@@ -109,6 +118,7 @@ namespace BusTicketBooking_API.Controllers
                 {
                     return BadRequest(new { message = "Xe này đã có chuyến trong khoảng thời gian này." });
                 }
+
                 var cx = new Chuyenxe
                 {
                     MaTuyenxe = dto.MaTuyenxe,
@@ -116,6 +126,14 @@ namespace BusTicketBooking_API.Controllers
                     Giodi = dto.Giodi.Value,
                     Gioden = gioden
                 };
+
+                var maBenXeDen = await _context.TuyenxeView
+                            .Where(txv => txv.MaTuyenxe == dto.MaTuyenxe)
+                            .OrderByDescending(txv => txv.Thutu)
+                            .Select(txv => txv.MaBenxe)
+                            .FirstOrDefaultAsync();
+                xe.MaBenxe = maBenXeDen;
+
                 _context.Chuyenxe.Add(cx);
                 await _context.SaveChangesAsync();
                 return Ok(new { message = "Thêm thành công" });

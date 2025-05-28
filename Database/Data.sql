@@ -40,8 +40,9 @@ DELETE FROM Datve
 DELETE FROM Chuyenxe
 DELETE FROM Tuyenxe
 DELETE FROM Khuyenmai
-DELETE FROM Benxe
 DELETE FROM Ghe
+DELETE FROM Xe
+DELETE FROM Benxe
 DELETE FROM Thongtinnhaxe
 DELETE FROM Bieungu
 DELETE FROM Tintuc
@@ -49,7 +50,6 @@ DELETE FROM Khachhang
 DELETE FROM Chinhsachhuyve
 DELETE FROM Quantrivien
 DELETE FROM Quan
-DELETE FROM Xe
 DELETE FROM Trangthaikhachhang
 DELETE FROM Vaitro
 DELETE FROM Lydohuydatve
@@ -82,7 +82,7 @@ INSERT INTO Khachhang(Ma_Vaitro, Ma_Trangthai, Sodienthoai, Matkhau, Email, Hote
 (2, 3, '+84965874123', '$2b$10$U3aVZRl4mhWYPoDcy7eGxu.fF4H4sYvqgK2DrXhDYMKZUZKys3H9m', 'banneduser@gmail.com', N'Hoàng Văn E', NULL, 1, '1978-07-10', N'654 Đường 3/2, Q.10, TP.HCM', N'Kinh doanh', NULL, N'Vi phạm điều khoản sử dụng', GETDATE(), GETDATE(), GETDATE());
 
 INSERT INTO Quantrivien(Ma_Vaitro, Tendangnhap, Matkhau, Sodienthoai, Hoten, Anh, Ngaytao, Ngaycapnhat) VALUES
-(1, 'admin', '$2a$11$9e6oydpab.0SaL/hwqEUvOBsqfNrEWKun6Dw5iAgQUNPLT90eV22G', '+84901234567', N'Đặng Minh Nghĩa', NULL, GETDATE(), GETDATE());
+(1, 'admin', '$2a$11$9e6oydpab.0SaL/hwqEUvOBsqfNrEWKun6Dw5iAgQUNPLT90eV22G', '+84901234567', N'Đặng Minh Nghĩa', 'avtDefault.jpg', GETDATE(), GETDATE());
 
 
 INSERT INTO Thongtinnhaxe(Ma_Quantrivien, Ten, Mota, Ngaytao, Ngaycapnhat) VALUES
@@ -94,73 +94,93 @@ INSERT INTO Thongtinnhaxe(Ma_Quantrivien, Ten, Mota, Ngaytao, Ngaycapnhat) VALUE
 
 
 INSERT INTO Loaixe(Tenloai, Soluongghe, Nhavesinh, Anh, Sodoghe) VALUES
-(N'Xe giường nằm đôi 22 chỗ', 22, 1, NULL, '[
+(N'Xe giường nằm đôi 22 chỗ', 22, 1, 'ef9bbe70b90fecb8ecbdd33ae5dc7727.jpg', '[
 									  {
 										"tang": 1,
 										"cacday": [
 										  { "dayso": 1, "soghe": ["A1","A3","A5","A7","A9"] },
-										  { "dayso": 2, "soghe": ["B1","B3","B5","B7","B9"] }
+										  { "dayso": 2, "soghe": ["A2","A4","A6","A8","A10"] }
 										]
 									  },
 									  {
 										"tang": 2,
 										"cacday": [
-										  { "dayso": 1, "soghe": ["A2","A4","A6","A8","A10","A12"] },
+										  { "dayso": 1, "soghe": ["B1","B3","B5","B7","B9","B11"] },
 										  { "dayso": 2, "soghe": ["B2","B4","B6","B8","B10","B12"] }
 										]
 									  }
 									]'),
-(N'Xe giường phòng 22 chỗ', 22, 1, NULL, '[
+(N'Xe giường phòng 22 chỗ', 22, 1, '5b37b99b0ce45223b8ad74802e7b24cd.png', '[
 									  {
 										"tang": 1,
 										"cacday": [
 										  { "dayso": 1, "soghe": ["A1","A3","A5","A7","A9"] },
-										  { "dayso": 2, "soghe": ["B1","B3","B5","B7","B9"] }
+										  { "dayso": 2, "soghe": ["A2","A4","A6","A8","A10"] }
 										]
 									  },
 									  {
 										"tang": 2,
 										"cacday": [
-										  { "dayso": 1, "soghe": ["A2","A4","A6","A8","A10","A12"] },
+										  { "dayso": 1, "soghe": ["B1","B3","B5","B7","B9","B11"] },
 										  { "dayso": 2, "soghe": ["B2","B4","B6","B8","B10","B12"] }
 										]
 									  }
 									]'),
-(N'Xe giường nằm 34 chỗ', 34, 0, NULL, '[
+(N'Xe giường nằm 34 chỗ', 34, 0, 'f7b6c402fef753c6e48ec551b49844ef.jpg', '[
 									  {
 										"tang": 1,
 										"cacday": [
-										  { "dayso": 1, "soghe": ["A1","A3","A5","A7","A9","A11"] },
-										  { "dayso": 2, "soghe": ["B1","B3","B5","B7","B9"] },
-										  { "dayso": 3, "soghe": ["C1","C3","C5","C7","C9","C11"] }
+										  { "dayso": 1, "soghe": ["A1","A4","A7","A10","A13","A16"] },
+										  { "dayso": 2, "soghe": ["A2","A5","A8","A11","A14"] },
+										  { "dayso": 3, "soghe": ["A3","A6","A9","A12","A15","A17"] }
 										]
 									  },
 									  {
 										"tang": 2,
 										"cacday": [
-										  { "dayso": 1, "soghe": ["A2","A4","A6","A8","A10","A12"] },
-										  { "dayso": 2, "soghe": ["B2","B4","B6","B8","B10"] },
-										  { "dayso": 3, "soghe": ["C2","C4","C6","C8","C10","C12"] }
+										  { "dayso": 1, "soghe": ["B1","B4","B7","B10","B13","B16"] },
+										  { "dayso": 2, "soghe": ["B2","B5","B8","B11","B14"]},
+										  { "dayso": 3, "soghe": ["B3","B6","B9","B12","B15","B17"] }
 										]
 									  }
 									]'),
-(N'Xe giường nằm 40 chỗ', 40, 0, NULL, '[
+(N'Xe giường nằm 40 chỗ', 40, 0, 'b413b7203a189de15e1ef2b0063c83de.jpg', '[
 									  {
 										"tang": 1,
 										"cacday": [
-										  { "dayso": 1, "soghe": ["A1","A3","A5","A7","A9"] },
-										  { "dayso": 2, "soghe": ["B1","B3","B5","B7","B9"] },
-										  { "dayso": 3, "soghe": ["C1","C3","C5","C7","C9"] },
-										  { "dayso": 4, "soghe": ["A11","A13","B11","C13","C11"] }
+										  { "dayso": 1, "soghe": ["A1","A4","A7","A10","A13"] },
+										  { "dayso": 2, "soghe": ["A2","A5","A8","A11","A14"] },
+										  { "dayso": 3, "soghe": ["A3","A6","A9","A12","A15"] },
+										  { "dayso": 4, "soghe": ["A16","A17","A18","A19","A20"] }
 										]
 									  },
 									  {
 										"tang": 2,
 										"cacday": [
-										  { "dayso": 1, "soghe": ["A2","A4","A6","A8","A10"] },
-										  { "dayso": 2, "soghe": ["B2","B4","B6","B8","B10"] },
-										  { "dayso": 3, "soghe": ["C2","C4","C6","C8","C10"] },
-										  { "dayso": 4, "soghe": ["A12","A14","B12","C14","C12"] }
+										  { "dayso": 1, "soghe": ["B1","B4","B7","B10","B13"] },
+										  { "dayso": 2, "soghe": ["B2","B5","B8","B11","B14"] },
+										  { "dayso": 3, "soghe": ["B3","B6","B9","B12","B15"] },
+										  { "dayso": 4, "soghe": ["B16","B17","B18","B19","B20"] }
+										]
+									  }
+									]'),
+(N'Xe giường nằm 44 chỗ', 44, 0, '1fab2a66d6798430d705bc02d9cde572.jpg', '[
+									  {
+										"tang": 1,
+										"cacday": [
+										  { "dayso": 1, "soghe": ["A1","A4","A7","A10","A13","A16"] },
+										  { "dayso": 2, "soghe": ["A2","A5","A8","A11","A14"] },
+										  { "dayso": 3, "soghe": ["A3","A6","A9","A12","A15","A17"] },
+										  { "dayso": 4, "soghe": ["A18","A19","A20","A21","A22"] }
+										]
+									  },
+									  {
+										"tang": 2,
+										"cacday": [
+										  { "dayso": 1, "soghe": ["B1","B4","B7","B10","B13","B16"] },
+										  { "dayso": 2, "soghe": ["B2","B5","B8","B11","B14"] },
+										  { "dayso": 3, "soghe": ["B3","B6","B9","B12","B15","B17"] },
+										  { "dayso": 4, "soghe": ["B18","B19","B20","B21","B22"] }
 										]
 									  }
 									]');

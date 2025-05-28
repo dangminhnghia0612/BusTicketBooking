@@ -14,9 +14,11 @@ namespace BusTicketBooking_API.Controllers
     public class QuantrivienController : ControllerBase
     {
         private readonly QLBanvexeDbContext _context;
-        public QuantrivienController(QLBanvexeDbContext context, IJwtService jwtService)
+        private readonly IConfiguration _configuration;
+        public QuantrivienController(QLBanvexeDbContext context, IJwtService jwtService, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
         [HttpPost("Captaikhoan")]
         public async Task<IActionResult> Captaikhoan([FromBody] DangkyDTO dto)
@@ -34,6 +36,7 @@ namespace BusTicketBooking_API.Controllers
                 qtv.Matkhau = BCrypt.Net.BCrypt.HashPassword(dto.Matkhau);
                 qtv.Sodienthoai = dto.Sodienthoai;
                 qtv.Hoten = "Admin";
+                qtv.Anh = "avtDefault.jpg";
                 qtv.MaVaitro = 1;
                 qtv.Ngaytao = DateTime.Now;
                 qtv.Ngaycapnhat = DateTime.Now;
@@ -66,13 +69,16 @@ namespace BusTicketBooking_API.Controllers
                     return BadRequest(new { message = "Mật khẩu không chính xác." });
                 }
                 admin.Dangnhapcuoi = DateTime.Now;
+                await _context.SaveChangesAsync();
                 return Ok(new
                 {
                     message = "Đăng nhập thành công.",
                     hoten = admin.Hoten,
                     sdt = admin.Sodienthoai,
                     ma = admin.MaQuantrivien,
-                    avatarURL = admin.Anh
+                    avatarURL = admin.Anh != null 
+                                ? $"{_configuration["Domain"]}/images/profileAdmin/{admin.Anh}" 
+                                : null
                 });
             }
             catch (Exception ex)
