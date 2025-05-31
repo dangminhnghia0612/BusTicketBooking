@@ -1,20 +1,27 @@
 import { ArrowLeftRight, Calendar, Users, MapPin } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { timChuyenXe } from "../../api/chuyenxe.js";
 import FullscreenSpinner from "../common/FullScreenSpinner.jsx";
+import AlertDialog from "../common/AlertDialog.jsx";
+
 import { layDSTinh } from "../../api/tinh.js";
 
 export default function TimChuyenXe() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [diemDi, setDiemDi] = useState("");
   const [diemDen, setDiemDen] = useState("");
   const [maTinhDi, setMaTinhDi] = useState("");
   const [maTinhDen, setMaTinhDen] = useState("");
-  const [ngayDi, setNgayDi] = useState("");
+  const today = new Date().toISOString().split("T")[0];
+  const [ngayDi, setNgayDi] = useState(today);
   const [soLuongVe, setSoLuongVe] = useState(1);
   const [dsTinh, setDsTinh] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertMsg, setAlertMsg] = useState("");
 
   useEffect(() => {
     // Gọi API lấy danh sách tỉnh khi component mount
@@ -30,14 +37,34 @@ export default function TimChuyenXe() {
     fetchTinh();
   }, []);
 
-  const handleTimChuyenXe = async (e) => {
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get("diemDi")) setDiemDi(params.get("diemDi"));
+    if (params.get("diemDen")) setDiemDen(params.get("diemDen"));
+    if (params.get("maTinhDi")) setMaTinhDi(params.get("maTinhDi"));
+    if (params.get("maTinhDen")) setMaTinhDen(params.get("maTinhDen"));
+    if (params.get("ngayDi")) setNgayDi(params.get("ngayDi"));
+    if (params.get("soLuongVe")) setSoLuongVe(Number(params.get("soLuongVe")));
+  }, [location.search]);
+
+  const handleTimChuyenXe = (e) => {
     e.preventDefault();
+    if (!diemDi || !diemDen || !maTinhDi || !maTinhDen || !ngayDi) {
+      setAlertMsg("Vui lòng điền đầy đủ thông tin tìm chuyến xe.");
+      setAlertOpen(true);
+      return;
+    }
     setLoading(true);
     try {
-      const res = await timChuyenXe(maTinhDi, maTinhDen, ngayDi, soLuongVe);
-      navigate("/tim-chuyen-xe", {
-        state: { diemDi, diemDen, ngayDi, soLuongVe, ketQua: res },
-      });
+      const params = new URLSearchParams({
+        diemDi,
+        maTinhDi,
+        diemDen,
+        maTinhDen,
+        ngayDi,
+        soLuongVe,
+      }).toString();
+      navigate(`/tim-chuyen-xe?${params}`);
     } catch (error) {
       console.error("Lỗi khi tìm chuyến xe:", error);
     } finally {
@@ -45,9 +72,23 @@ export default function TimChuyenXe() {
     }
   };
 
+  const handleClickSwap = () => {
+    // Hoán đổi điểm đi và điểm đến
+    setMaTinhDi(maTinhDen);
+    setMaTinhDen(maTinhDi);
+    setDiemDi(diemDen);
+    setDiemDen(diemDi);
+  };
+
   return (
     <div className="px-4 py-8">
       {loading && <FullscreenSpinner />}
+      <AlertDialog
+        open={alertOpen}
+        title="Thông báo"
+        message={alertMsg}
+        onClose={() => setAlertOpen(false)}
+      />
       <div className="max-w-6xl mx-auto">
         <div className="bg-white border border-orange-500 rounded-2xl p-6 md:p-8 shadow-xl">
           {/* Trip type selection */}
@@ -92,7 +133,7 @@ export default function TimChuyenXe() {
               {/* Điểm đi */}
               <div className="flex-1">
                 <label className="text-gray-700 text-sm font-semibold flex items-center gap-1">
-                  <MapPin className="w-4 h-4 text-orange-500" />
+                  <MapPin className="w-4 h-4 text-blue-500" />
                   Điểm đi
                 </label>
                 <div className="relative">
@@ -116,6 +157,7 @@ export default function TimChuyenXe() {
               {/* Button swap */}
               <div className="flex items-end pb-0">
                 <button
+                  onClick={handleClickSwap}
                   type="button"
                   className="h-10 w-10 bg-orange-50 hover:bg-orange-100 border border-orange-200 hover:border-orange-300 rounded-full flex items-center justify-center text-orange-500 hover:text-orange-600 transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-300"
                 >
@@ -125,7 +167,7 @@ export default function TimChuyenXe() {
               {/* Điểm đến */}
               <div className="flex-1">
                 <label className="text-gray-700 text-sm font-semibold flex items-center gap-1">
-                  <MapPin className="w-4 h-4 text-green-500" />
+                  <MapPin className="w-4 h-4 text-orange-500" />
                   Điểm đến
                 </label>
                 <select
@@ -150,7 +192,7 @@ export default function TimChuyenXe() {
               {/* Ngày đi */}
               <div className="flex-1">
                 <label className="text-gray-700 text-sm font-semibold flex items-center gap-1">
-                  <Calendar className="w-4 h-4 text-blue-500" />
+                  <Calendar className="w-4 h-4 text-green-500" />
                   Ngày đi
                 </label>
                 <div className="relative">

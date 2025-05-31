@@ -56,32 +56,32 @@ BEGIN
 END
 GO
 
-ALTER PROC sp_TimChuyenXe
-    @MaTinhDi int,
-    @MaTinhDen int,
+CREATE PROC sp_TimChuyenXe
+    @MaTinhDi INT,
+    @MaTinhDen INT,
     @NgayDi DATE,
 	@Soluongve INT
 AS
 BEGIN
-	select cx.Ma_Chuyenxe, cx.Giodi, cx.Gioden, txv1.Khoangthoigian, txv1.Khoangcach, txv1.Giave, txv1.Tenbenxe as Bendi,
+	SELECT cx.Ma_Chuyenxe, cx.Giodi, cx.Gioden, txv1.Khoangthoigian, txv1.Khoangcach, txv1.Giave, txv1.Tenbenxe AS Bendi,
 	 (
             SELECT TOP 1 Tenbenxe
             FROM TuyenxeView txv3
             WHERE txv3.Ma_Tuyenxe = cx.Ma_Tuyenxe
             ORDER BY Thutu DESC
-     ) as Benden,
+     ) AS Benden,
 	l.Tenloai,
 	COUNT(CASE WHEN ctg.Trangthai = 0 THEN 1 END) AS SoGheConTrong
-	from Chuyenxe cx join TuyenxeView txv1 on cx.Ma_Tuyenxe = txv1.Ma_Tuyenxe
-					 join TuyenxeView txv2 on cx.Ma_Tuyenxe = txv2.Ma_Tuyenxe
-					 join Chitietghe ctg  on cx.Ma_Chuyenxe = ctg.Ma_Chuyenxe
-					 join Xe x on cx.Ma_Xe = x.Ma_Xe
-					 join Loaixe l on x.Ma_Loaixe = l.Ma_Loaixe
-	where txv1.Ma_Tinh = @MaTinhDi AND txv1.Thutu = 1 AND
+	FROM Chuyenxe cx JOIN TuyenxeView txv1 ON cx.Ma_Tuyenxe = txv1.Ma_Tuyenxe
+					 JOIN TuyenxeView txv2 ON cx.Ma_Tuyenxe = txv2.Ma_Tuyenxe
+					 JOIN Chitietghe ctg  ON cx.Ma_Chuyenxe = ctg.Ma_Chuyenxe
+					 JOIN Xe x ON cx.Ma_Xe = x.Ma_Xe
+					 JOIN Loaixe l ON x.Ma_Loaixe = l.Ma_Loaixe
+	WHERE txv1.Ma_Tinh = @MaTinhDi AND txv1.Thutu = 1 AND
 		  txv2.Ma_Tinh = @MaTinhDen AND txv2.Thutu <> 1 AND
 		  CAST(cx.Giodi AS DATE) = @NgayDi
-	group by cx.Ma_Chuyenxe, cx.Giodi, cx.Gioden, txv1.Khoangthoigian, txv1.Khoangcach, txv1.Giave,  txv1.Tenbenxe, l.Tenloai, cx.Ma_Tuyenxe
-	having COUNT(CASE WHEN ctg.Trangthai = 0 THEN 1 END) >= @Soluongve
+	GROUP BY cx.Ma_Chuyenxe, cx.Giodi, cx.Gioden, txv1.Khoangthoigian, txv1.Khoangcach, txv1.Giave,  txv1.Tenbenxe, l.Tenloai, cx.Ma_Tuyenxe
+	HAVING COUNT(CASE WHEN ctg.Trangthai = 0 THEN 1 END) >= @Soluongve
 	ORDER BY cx.Giodi;
 END
 GO

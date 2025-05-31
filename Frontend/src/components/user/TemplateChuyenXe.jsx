@@ -1,79 +1,86 @@
-"use client";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MapPin, Clock, Users, ArrowRight } from "lucide-react";
-import { formatDateTime } from "../../lib/utils.js";
+import { formatDateTime, formatPrice } from "../../lib/utils.js";
+import { useLocation } from "react-router-dom";
+import { timChuyenXe } from "../../api/chuyenxe.js";
 
-export default function TemplateChuyenXe({
-  diemDi,
-  diemDen,
-  ngayDi,
-  soLuongVe,
-  ketQua,
-}) {
-  const [activeTab, setActiveTab] = useState("price");
+export default function TemplateChuyenXe({ props }) {
+  // const [activeTab, setActiveTab] = useState("price");
+  const location = useLocation();
+  const [dsChuyenXe, setDsChuyenXe] = useState([]);
 
-  // Đảm bảo busTrips luôn là mảng
-  const busTrips = Array.isArray(ketQua) ? ketQua : [];
+  // Lấy tham số từ URL
+  const searchParams = new URLSearchParams(location.search);
+  const diemDi = searchParams.get("diemDi") || props.diemDi || "";
+  const maTinhDi = searchParams.get("maTinhDi") || props.maTinhDi || "";
+  const diemDen = searchParams.get("diemDen") || props.diemDen || "";
+  const maTinhDen = searchParams.get("maTinhDen") || props.maTinhDen || "";
+  const ngayDi = searchParams.get("ngayDi") || props.ngayDi || "";
+  const soLuongVe = searchParams.get("soLuongVe") || props.soLuongVe || "";
 
-  const tabs = [
-    {
-      id: "price",
-      label: "Giá rẻ bất ngờ",
-      icon: "💰",
-      color: "bg-green-50 text-green-600 border-green-200",
-    },
-    {
-      id: "time",
-      label: "Giờ khởi hành",
-      icon: "🕐",
-      color: "bg-blue-50 text-blue-600 border-blue-200",
-    },
-    {
-      id: "seats",
-      label: "Ghế trống",
-      icon: "💺",
-      color: "bg-purple-50 text-purple-600 border-purple-200",
-    },
-  ];
+  useEffect(() => {
+    async function fetchData() {
+      const ketQua = await timChuyenXe(maTinhDi, maTinhDen, ngayDi, soLuongVe);
+      setDsChuyenXe(Array.isArray(ketQua) ? ketQua : []);
+    }
+    fetchData();
+  }, [maTinhDi, maTinhDen, ngayDi, soLuongVe]);
 
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(price);
-  };
+  // const tabs = [
+  //   {
+  //     id: "price",
+  //     label: "Giá rẻ bất ngờ",
+  //     icon: "💰",
+  //     color: "bg-green-50 text-green-600 border-green-200",
+  //   },
+  //   {
+  //     id: "time",
+  //     label: "Giờ khởi hành",
+  //     icon: "🕐",
+  //     color: "bg-blue-50 text-blue-600 border-blue-200",
+  //   },
+  //   {
+  //     id: "seats",
+  //     label: "Ghế trống",
+  //     icon: "💺",
+  //     color: "bg-purple-50 text-purple-600 border-purple-200",
+  //   },
+  // ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 px-4 py-8">
       <div className="max-w-6xl mx-auto">
         {/* Header Section */}
-        <div className="bg-white rounded-2xl shadow-lg border border-orange-100 p-6 mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                {diemDi}{" "}
-                <ArrowRight className="inline mx-2 text-orange-500" size={28} />{" "}
-                {diemDen}
-              </h1>
-              <p className="text-gray-600 flex items-center gap-2">
-                <Clock size={16} />
-                Tìm thấy{" "}
-                <span className="font-semibold text-orange-600">
-                  {busTrips.length}
-                </span>{" "}
-                chuyến xe
-              </p>
-            </div>
-            <div className="text-right">
-              <div className="bg-orange-100 text-orange-800 px-4 py-2 rounded-full text-sm font-medium">
-                {formatDateTime(ngayDi).date} • {soLuongVe} vé
+        {dsChuyenXe.length !== 0 && (
+          <div className="bg-white rounded-2xl shadow-lg border border-orange-100 p-6 mb-8">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                  {diemDi}{" "}
+                  <ArrowRight
+                    className="inline mx-2 text-orange-500"
+                    size={28}
+                  />{" "}
+                  {diemDen}
+                </h1>
+                <p className="text-gray-600 flex items-center gap-2">
+                  <Clock size={16} />
+                  Tìm thấy{" "}
+                  <span className="font-semibold text-orange-600">
+                    {dsChuyenXe.length}
+                  </span>{" "}
+                  chuyến xe
+                </p>
+              </div>
+              <div className="text-center md:text-right">
+                <div className="bg-orange-100 text-orange-800 px-4 py-2 rounded-full text-sm font-medium">
+                  {formatDateTime(ngayDi).date} • {soLuongVe} vé
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Filter Tabs */}
-          <div className="flex gap-3">
+            {/* Filter Tabs */}
+            {/* <div className="flex flex-wrap gap-3">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -88,11 +95,12 @@ export default function TemplateChuyenXe({
                 {tab.label}
               </button>
             ))}
+          </div> */}
           </div>
-        </div>
+        )}
 
         {/* Results Section */}
-        {busTrips.length === 0 ? (
+        {dsChuyenXe.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
             <div className="text-6xl mb-4">🚌</div>
             <h3 className="text-2xl font-bold text-gray-800 mb-2">
@@ -104,21 +112,22 @@ export default function TemplateChuyenXe({
           </div>
         ) : (
           <div className="space-y-6">
-            {busTrips.map((trip, index) => (
+            {dsChuyenXe.map((trip, index) => (
               <div
                 key={trip.ma_Chuyenxe}
                 className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-orange-50 hover:border-orange-500"
               >
-                <div className="p-8">
+                <div className="p-4 md:p-8">
                   {/* Main Trip Info */}
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-6 md:gap-0">
                     {/* Departure Section */}
                     <div className="flex flex-col items-center text-center min-w-[120px]">
                       <div className="text-4xl font-bold text-gray-900 mb-1">
                         {formatDateTime(trip.giodi).time}
                       </div>
-                      <div className="text-sm text-gray-500 mb-2">
-                        {trip.route}
+                      <div className="text-sm text-blue-500 mb-2 flex items-center gap-1">
+                        <MapPin size={14} />
+                        Điểm đi
                       </div>
                       <div className="text-sm text-gray-700 font-medium px-3 py-1 bg-gray-100 rounded-full">
                         {trip.bendi}
@@ -176,30 +185,13 @@ export default function TemplateChuyenXe({
                     </div>
 
                     {/* Price Section */}
-                    <div className="ml-8 text-right min-w-[120px]">
+                    <div className="ml-8 text-center md:text-right min-w-[120px]">
                       <div className="text-3xl font-bold text-orange-600 mb-1">
                         {formatPrice(trip.giave)}
                       </div>
                       <div className="text-sm text-gray-500">/ người</div>
                     </div>
                   </div>
-
-                  {/* Promo Message */}
-                  {trip.hasPromo && (
-                    <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-xl p-4 mb-6">
-                      <div className="flex items-start gap-3">
-                        <div className="text-yellow-600 text-xl">⚠️</div>
-                        <div>
-                          <p className="text-sm text-yellow-800">
-                            <span className="font-semibold text-yellow-900">
-                              LƯU Ý:
-                            </span>{" "}
-                            {trip.promoText}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
 
                   {/* Action Section */}
                   <div className="flex items-center justify-between pt-4 border-t border-gray-100">

@@ -1,12 +1,12 @@
 export default function Menu() {
   const menuItems = [
-    "TRANG CHỦ",
-    "LỊCH TRÌNH",
-    "TRA CỨU VÉ",
-    "TIN TỨC",
-    "HÓA ĐƠN",
-    "LIÊN HỆ",
-    "VỀ CHÚNG TÔI",
+    { label: "TRANG CHỦ", href: "/" },
+    { label: "LỊCH TRÌNH", href: "/lich-trinh" },
+    { label: "TRA CỨU VÉ", href: "/tra-cuu-ve" },
+    { label: "TIN TỨC", href: "/tin-tuc" },
+    { label: "HÓA ĐƠN", href: "/hoa-don" },
+    { label: "LIÊN HỆ", href: "/lien-he" },
+    { label: "VỀ CHÚNG TÔI", href: "/ve-chung-toi" },
   ];
 
   return (
@@ -16,12 +16,12 @@ export default function Menu() {
           {menuItems.map((item, index) => (
             <li key={index}>
               <a
-                href="#"
+                href={item.href}
                 className={`text-white font-medium hover:text-orange-200 transition-colors ${
                   index === 0 ? "border-b-2 border-white pb-1" : ""
                 }`}
               >
-                {item}
+                {item.label}
               </a>
             </li>
           ))}
