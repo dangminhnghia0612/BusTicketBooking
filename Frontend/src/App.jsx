@@ -20,18 +20,23 @@ import TinTuc from "./pages/admin/noidung/TinTuc";
 import BieuNgu from "./pages/admin/noidung/BieuNgu";
 import NhaXe from "./pages/admin/noidung/NhaXe";
 
+import TrangChu from "./pages/user/TrangChu";
+import TimChuyenXePage from "./pages/user/TimChuyenXePage";
+
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<DangNhap />} /> {/* Trang chủ */}
+        <Route path="/" element={<TrangChu />} />
+        <Route path="/tim-chuyen-xe" element={<TimChuyenXePage />} />
+
         <Route path="/admin/dangnhap" element={<DangNhap />} />
         <Route
-        // element={
-        //   <ProtectedRoute>
-        //     <Outlet />
-        //   </ProtectedRoute>
-        // }
+          element={
+            <ProtectedRoute>
+              <Outlet />
+            </ProtectedRoute>
+          }
         >
           <Route path="/admin" element={<BangDieuKhien />} />
           <Route path="/admin/khachhang" element={<KhachHang />} />

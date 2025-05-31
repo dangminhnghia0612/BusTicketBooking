@@ -56,41 +56,35 @@ BEGIN
 END
 GO
 
---CREATE PROC sp_TimChuyenXe
---    @TinhDi NVARCHAR(100),
---    @TinhDen NVARCHAR(100),
---    @NgayDi DATE,
---	@Soluongve INT
---AS
---BEGIN
---	SELECT 
---		  cx.Ma_Chuyenxe,
---		  cx.Giodi,
---		  cx.Gioden,
---		  tx.Khoangthoigian,
---		  tx.Giave,
---		  bd.Tenbenxe as Diemdi,
---		  bden.Tenbenxe as Diemden,
---		  lx.Tenloai,
---		  COUNT(CASE WHEN ctg.Trangthai = 0 THEN 1 END) AS SoGheConTrong
---	FROM Chuyenxe cx
---	JOIN Tuyenxe tx ON cx.Ma_Tuyenxe = tx.Ma_Tuyenxe
---	JOIN Benxe bd ON tx.Ma_Diemdi = bd.Ma_Benxe
---	JOIN Quan qd ON bd.Ma_Quan = qd.Ma_Quan
---	JOIN Tinh td ON qd.Ma_Tinh = td.Ma_Tinh
---	JOIN Benxe bden ON tx.Ma_Diemden = bden.Ma_Benxe
---	JOIN Quan qden ON bden.Ma_Quan = qden.Ma_Quan
---	JOIN Tinh tden ON qden.Ma_Tinh = tden.Ma_Tinh
---	JOIN Xe xe ON cx.Ma_Xe = xe.Ma_Xe
---	JOIN Loaixe lx on lx.Ma_Loaixe = Xe.Ma_Loaixe
---	JOIN Ghe g ON g.Ma_Xe = xe.Ma_Xe
---	JOIN Chitietghe ctg on ctg.Ma_Chuyenxe = cx.Ma_Chuyenxe and ctg.Ma_Ghe = g.Ma_Ghe
---	WHERE td.Ten = @TinhDi AND tden.Ten = @TinhDen AND CAST(cx.Giodi AS DATE) = @NgayDi
---	GROUP BY cx.Ma_Chuyenxe, cx.Giodi, cx.Gioden, tx.Khoangthoigian, tx.Giave, bd.Tenbenxe, bden.Tenbenxe, lx.Tenloai
---	HAVING COUNT(CASE WHEN ctg.Trangthai = 0 THEN 1 END) >= @Soluongve
---	ORDER BY cx.Giodi;
---END
---GO
+ALTER PROC sp_TimChuyenXe
+    @MaTinhDi int,
+    @MaTinhDen int,
+    @NgayDi DATE,
+	@Soluongve INT
+AS
+BEGIN
+	select cx.Ma_Chuyenxe, cx.Giodi, cx.Gioden, txv1.Khoangthoigian, txv1.Khoangcach, txv1.Giave, txv1.Tenbenxe as Bendi,
+	 (
+            SELECT TOP 1 Tenbenxe
+            FROM TuyenxeView txv3
+            WHERE txv3.Ma_Tuyenxe = cx.Ma_Tuyenxe
+            ORDER BY Thutu DESC
+     ) as Benden,
+	l.Tenloai,
+	COUNT(CASE WHEN ctg.Trangthai = 0 THEN 1 END) AS SoGheConTrong
+	from Chuyenxe cx join TuyenxeView txv1 on cx.Ma_Tuyenxe = txv1.Ma_Tuyenxe
+					 join TuyenxeView txv2 on cx.Ma_Tuyenxe = txv2.Ma_Tuyenxe
+					 join Chitietghe ctg  on cx.Ma_Chuyenxe = ctg.Ma_Chuyenxe
+					 join Xe x on cx.Ma_Xe = x.Ma_Xe
+					 join Loaixe l on x.Ma_Loaixe = l.Ma_Loaixe
+	where txv1.Ma_Tinh = @MaTinhDi AND txv1.Thutu = 1 AND
+		  txv2.Ma_Tinh = @MaTinhDen AND txv2.Thutu <> 1 AND
+		  CAST(cx.Giodi AS DATE) = @NgayDi
+	group by cx.Ma_Chuyenxe, cx.Giodi, cx.Gioden, txv1.Khoangthoigian, txv1.Khoangcach, txv1.Giave,  txv1.Tenbenxe, l.Tenloai, cx.Ma_Tuyenxe
+	having COUNT(CASE WHEN ctg.Trangthai = 0 THEN 1 END) >= @Soluongve
+	ORDER BY cx.Giodi;
+END
+GO
 
 CREATE PROC sp_XoaKhachHang
 AS

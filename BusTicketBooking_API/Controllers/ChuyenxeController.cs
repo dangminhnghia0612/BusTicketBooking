@@ -190,5 +190,22 @@ namespace BusTicketBooking_API.Controllers
                 return BadRequest(new { message = "Xảy ra lỗi khi sửa chuyến xe " + ex.Message });
             }
         }
+        [HttpPost("tim-chuyen-xe")]
+        public async Task<IActionResult> timChuyenXe([FromBody] TimChuyenXeRequestDTO dto)
+        {
+            try
+            {
+                //var ds = await _context.ChuyenxeResponseDTO.FromSqlInterpolated(
+                //   $@"EXEC sp_TimChuyenXe @MaTinhDi = {dto.MaTinhDi}, @MaTinhDen = {dto.MaTinhDen}, @NgayDi = {dto.Ngaydi}, @Soluongve = {dto.Soluongve}").ToListAsync();
+                var ds = await _context.Database.SqlQuery<TimChuyenXeReponseDTO>
+                    ($@"EXEC sp_TimChuyenXe @MaTinhDi = {dto.MaTinhDi}, @MaTinhDen = {dto.MaTinhDen}, @NgayDi = {dto.Ngaydi}, @Soluongve = {dto.Soluongve}")
+                .ToListAsync();
+                return Ok(ds);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = "Xảy ra lỗi khi tìm chuyến xe.", Error = ex.Message });
+            }
+        }
     }
 }

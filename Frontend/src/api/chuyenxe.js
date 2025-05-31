@@ -70,3 +70,28 @@ export async function suaChuyenXe(chuyenXe) {
     console.error("Lỗi fetch API chuyến xe:", error);
   }
 }
+
+export async function timChuyenXe(diemDi, diemDen, ngayDi, soLuongVe) {
+  try {
+    const response = await fetch(
+      "https://localhost:7057/api/Chuyenxe/tim-chuyen-xe",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          maTinhDi: diemDi,
+          maTinhDen: diemDen,
+          ngaydi: ngayDi,
+          soluongve: soLuongVe,
+        }),
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Lỗi fetch API chuyến xe:", error);
+    return [];
+  }
+}
