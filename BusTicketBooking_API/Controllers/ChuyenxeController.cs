@@ -1,12 +1,14 @@
 ﻿using BusTicketBooking_API.Data;
 using BusTicketBooking_API.DTOs;
 using BusTicketBooking_API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusTicketBooking_API.Controllers
 {
+    [Authorize(Roles = "1")]
     [Route("api/[controller]")]
     [ApiController]
     public class ChuyenxeController : ControllerBase
@@ -24,10 +26,10 @@ namespace BusTicketBooking_API.Controllers
             {
                 
                 var dsChuyenXe = await _context.Chuyenxe.Include(cx => cx.MaXeNavigation).AsNoTracking().ToListAsync();
-                List<ChuyenxeReponseDTO> dsChuyenXeResponse = new List<ChuyenxeReponseDTO>();
+                List<ChuyenxeResponseDTO> dsChuyenXeResponse = new List<ChuyenxeResponseDTO>();
                 foreach (var cx in dsChuyenXe)
                 {
-                    ChuyenxeReponseDTO chuyenXeResponse = new ChuyenxeReponseDTO
+                    ChuyenxeResponseDTO chuyenXeResponse = new ChuyenxeResponseDTO
                     {
                         MaChuyenxe = cx.MaChuyenxe,
                         MaTuyenxe = cx.MaTuyenxe,
@@ -190,6 +192,8 @@ namespace BusTicketBooking_API.Controllers
                 return BadRequest(new { message = "Xảy ra lỗi khi sửa chuyến xe " + ex.Message });
             }
         }
+
+        [AllowAnonymous]
         [HttpPost("tim-chuyen-xe")]
         public async Task<IActionResult> timChuyenXe([FromBody] TimChuyenXeRequestDTO dto)
         {
@@ -197,7 +201,7 @@ namespace BusTicketBooking_API.Controllers
             {
                 //var ds = await _context.ChuyenxeResponseDTO.FromSqlInterpolated(
                 //   $@"EXEC sp_TimChuyenXe @MaTinhDi = {dto.MaTinhDi}, @MaTinhDen = {dto.MaTinhDen}, @NgayDi = {dto.Ngaydi}, @Soluongve = {dto.Soluongve}").ToListAsync();
-                var ds = await _context.Database.SqlQuery<TimChuyenXeReponseDTO>
+                var ds = await _context.Database.SqlQuery<TimChuyenXeResponseDTO>
                     ($@"EXEC sp_TimChuyenXe @MaTinhDi = {dto.MaTinhDi}, @MaTinhDen = {dto.MaTinhDen}, @NgayDi = {dto.Ngaydi}, @Soluongve = {dto.Soluongve}")
                 .ToListAsync();
                 return Ok(ds);

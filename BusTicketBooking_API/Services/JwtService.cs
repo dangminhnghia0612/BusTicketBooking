@@ -22,20 +22,17 @@ namespace BusTicketBooking_API.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, khachhang.MaKhachhang.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("Email", khachhang.Email.ToString()),
-                new Claim("Sodienthoai", khachhang.Sodienthoai.ToString()),
-                new Claim("Hoten", khachhang.Hoten ?? ""),
-                new Claim("MaVaitro", khachhang.MaVaitro.ToString())
+                new Claim(ClaimTypes.Role, khachhang.MaVaitro.ToString()),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(3),
+                expires: DateTime.UtcNow.AddDays(1),
                 signingCredentials: creds
             );
 
@@ -47,19 +44,17 @@ namespace BusTicketBooking_API.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, quantrivien.MaQuantrivien.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("Sodienthoai", quantrivien.Sodienthoai ?? ""),
-                new Claim("Hoten", quantrivien.Hoten ?? ""),
-                new Claim("MaVaitro", quantrivien.MaVaitro.ToString())
+                new Claim(ClaimTypes.Role, quantrivien.MaVaitro.ToString()),
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])); // Key bí mật
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256); // Chữ ký của token
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(3),
+                expires: DateTime.UtcNow.AddDays(1),
                 signingCredentials: creds
             );
 

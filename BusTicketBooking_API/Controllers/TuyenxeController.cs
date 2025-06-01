@@ -1,12 +1,14 @@
 ﻿using BusTicketBooking_API.Data;
 using BusTicketBooking_API.DTOs;
 using BusTicketBooking_API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BusTicketBooking_API.Controllers
 {
+    [Authorize(Roles = "1")]
     [Route("api/[controller]")]
     [ApiController]
     public class TuyenxeController : ControllerBase
@@ -26,7 +28,7 @@ namespace BusTicketBooking_API.Controllers
 
                 var dsTuyenXe = data
                     .GroupBy(x => new { x.MaTuyenxe, x.Khoangthoigian, x.Khoangcach, x.Giave })
-                    .Select(g => new TuyenxeReponseDTO
+                    .Select(g => new TuyenxeResponseDTO
                     {
                         MaTuyenXe = g.Key.MaTuyenxe,
                         KhoangThoiGian = g.Key.Khoangthoigian,

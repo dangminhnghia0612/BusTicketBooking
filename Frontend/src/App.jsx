@@ -21,6 +21,7 @@ import BieuNgu from "./pages/admin/noidung/BieuNgu";
 import NhaXe from "./pages/admin/noidung/NhaXe";
 
 import TrangChu from "./pages/user/TrangChu";
+import DangNhapUser from "./pages/user/DangNhap";
 import TimChuyenXePage from "./pages/user/TimChuyenXePage";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
       <Routes>
         <Route path="/" element={<TrangChu />} />
         <Route path="/tim-chuyen-xe" element={<TimChuyenXePage />} />
+        <Route path="/dangnhap" element={<DangNhapUser />} />
 
         <Route path="/admin/dangnhap" element={<DangNhap />} />
         <Route

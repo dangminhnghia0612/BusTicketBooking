@@ -1,8 +1,14 @@
-import { useState } from "react";
-import { User, Menu as MenuIcon, X } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { User, Menu as MenuIcon, X, LogOut, ChevronDown } from "lucide-react";
+import Cookies from "js-cookie";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const userName = Cookies.get("tenUser");
+  const avatar = Cookies.get("avatarUser");
+  const isLoggedIn = Cookies.get("isUserLoggedIn") === "true";
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const dropdownRef = useRef(null);
   const menuItems = [
     "TRANG CHỦ",
     "LỊCH TRÌNH",
@@ -12,6 +18,26 @@ export default function Header() {
     "LIÊN HỆ",
     "VỀ CHÚNG TÔI",
   ];
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpenDropdown(false);
+      }
+    }
+    if (openDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openDropdown]);
+
+  const handleLogin = () => {
+    window.location.href = "/dangnhap";
+  };
 
   return (
     <header className="bg-gradient-to-b from-orange-500 to-orange-600 px-4 py-3 relative z-50">
@@ -44,10 +70,65 @@ export default function Header() {
 
         {/* Right section */}
         <div className="flex-1 flex justify-end">
-          <button className="w-auto px-4 py-2 bg-white rounded-full flex items-center justify-center cursor-pointer">
-            <User className="w-4 h-4 mr-2" />
-            <span className="xs:inline max-md:hidden">Đăng nhập/Đăng ký</span>
-          </button>
+          {!isLoggedIn ? (
+            <button
+              onClick={handleLogin}
+              className="w-auto px-4 py-2 bg-white rounded-full flex items-center justify-center cursor-pointer"
+            >
+              <User className="w-4 h-4 mr-2" />
+              <span className="xs:inline max-md:hidden">Đăng nhập/Đăng ký</span>
+            </button>
+          ) : (
+            <div
+              className="ml-auto flex items-center relative"
+              ref={dropdownRef}
+            >
+              <div
+                className="flex items-center gap-2 cursor-pointer select-none"
+                onMouseEnter={() => setOpenDropdown(true)}
+                onClick={() => setOpenDropdown((prev) => !prev)}
+              >
+                {avatar ? (
+                  <img
+                    src={avatar}
+                    alt="avatar"
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                    <User className="w-5 h-5 text-gray-500" />
+                  </div>
+                )}
+                <span className="hidden md:block font-medium text-white">
+                  {userName}
+                </span>
+                <ChevronDown
+                  className="hidden md:block w-4 h-4 text-white"
+                  strokeWidth={5}
+                />
+              </div>
+              {/* Dropdown menu */}
+              {openDropdown && (
+                <div
+                  className="absolute right-0 top-12 w-40 bg-white rounded shadow-lg border z-50 animate-fade-in"
+                  onMouseLeave={() => setOpenDropdown(false)}
+                >
+                  <a
+                    href="/thong-tin-tai-khoan"
+                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    <User className="w-4 h-4 mr-2" /> Hồ sơ
+                  </a>
+                  <button
+                    className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    onClick={handleDangXuat}
+                  >
+                    <LogOut className="w-4 h-4 mr-2" /> Đăng xuất
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
@@ -92,4 +173,14 @@ export default function Header() {
       </aside>
     </header>
   );
+}
+
+function handleDangXuat() {
+  Cookies.remove("isUserLoggedIn");
+  Cookies.remove("tenUser");
+  Cookies.remove("sdtUser");
+  Cookies.remove("emailUser");
+  Cookies.remove("avatarUser");
+  Cookies.remove("jwtTokenUser");
+  window.location.href = "/";
 }

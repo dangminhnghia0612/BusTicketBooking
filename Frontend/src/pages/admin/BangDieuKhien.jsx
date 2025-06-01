@@ -1,4 +1,5 @@
 import { AdminLayout } from "../../components/admin/AdminLayout";
+import Cookies from "js-cookie";
 import {
   BarChart3,
   Ticket,

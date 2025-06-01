@@ -1,6 +1,7 @@
 ﻿using BusTicketBooking_API.Data;
 using BusTicketBooking_API.DTOs;
 using BusTicketBooking_API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using System.Text.Json;
 
 namespace BusTicketBooking_API.Controllers
 {
+    [Authorize(Roles = "1")]
     [Route("api/[controller]")]
     [ApiController]
     public class LoaixeController : ControllerBase

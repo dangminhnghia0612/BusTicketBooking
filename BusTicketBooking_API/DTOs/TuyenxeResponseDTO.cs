@@ -1,6 +1,6 @@
 ﻿namespace BusTicketBooking_API.DTOs
 {
-    public class TuyenxeReponseDTO
+    public class TuyenxeResponseDTO
     {
         public int? MaTuyenXe { get; set; }
         public List<LotrinhItemDTO> LoTrinh { get; set; }

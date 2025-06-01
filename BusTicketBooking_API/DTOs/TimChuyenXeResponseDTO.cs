@@ -1,6 +1,6 @@
 ﻿namespace BusTicketBooking_API.DTOs
 {
-    public class TimChuyenXeReponseDTO
+    public class TimChuyenXeResponseDTO
     {
         public int Ma_Chuyenxe { get; set; }
         public DateTime Giodi { get; set; }

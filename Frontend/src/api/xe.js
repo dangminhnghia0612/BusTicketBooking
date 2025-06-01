@@ -1,9 +1,11 @@
+import { getToken } from "../lib/utils";
 export async function layDSXe() {
   try {
     const response = await fetch("https://localhost:7057/api/Xe", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken("admin")}`,
       },
     });
     const data = await response.json();
@@ -20,6 +22,7 @@ export async function xoaXe(maXe) {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken("admin")}`,
       },
     });
     const data = await response.json();
@@ -33,7 +36,10 @@ export async function themXe(xe) {
   try {
     const response = await fetch(`https://localhost:7057/api/Xe/ThemXe`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken("admin")}`,
+      },
       body: JSON.stringify({
         maLoaixe: xe.maloai,
         maBenxe: xe.mabenxe,
@@ -52,7 +58,10 @@ export async function suaXe(xe) {
   try {
     const response = await fetch(`https://localhost:7057/api/Xe/${xe.maxe}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken("admin")}`,
+      },
       body: JSON.stringify({
         maLoaixe: xe.maloai,
         maBenxe: xe.mabenxe,
@@ -75,6 +84,7 @@ export async function layDSXeTheoNoiDau(maBenXe) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken("admin")}`,
         },
       }
     );

@@ -1,9 +1,11 @@
+import { getToken } from "../lib/utils";
 export async function layDSLoaiXe() {
   try {
     const response = await fetch("https://localhost:7057/api/Loaixe", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken("admin")}`,
       },
     });
     const data = await response.json();
@@ -22,6 +24,7 @@ export async function xoaLoaiXe(maLoaiXe) {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken("admin")}`,
         },
       }
     );
@@ -36,6 +39,9 @@ export async function themLoaiXe(formData) {
   try {
     const response = await fetch(`https://localhost:7057/api/Loaixe`, {
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${getToken("admin")}`,
+      },
       body: formData,
     });
     const data = await response.json();
@@ -49,6 +55,9 @@ export async function suaLoaiXe(id, formData) {
   try {
     const response = await fetch(`https://localhost:7057/api/Loaixe/${id}`, {
       method: "PUT",
+      headers: {
+        Authorization: `Bearer ${getToken("admin")}`,
+      },
       body: formData,
     });
     const data = await response.json();

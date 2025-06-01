@@ -1,3 +1,4 @@
+import { getToken } from "../lib/utils";
 export async function layDSBenXeCuaTinh(maTinh) {
   try {
     const response = await fetch(
@@ -6,6 +7,7 @@ export async function layDSBenXeCuaTinh(maTinh) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken("admin")}`,
         },
       }
     );
@@ -23,6 +25,7 @@ export async function layDSBenXe() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken("admin")}`,
       },
     });
     const data = await response.json();
@@ -41,6 +44,7 @@ export async function xoaBenXe(maBenXe) {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken("admin")}`,
         },
       }
     );
@@ -55,7 +59,10 @@ export async function themBenXe(benXe) {
   try {
     const response = await fetch(`https://localhost:7057/api/Benxe`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken("admin")}`,
+      },
       body: JSON.stringify({
         tenbenxe: benXe.tenbenxe,
         diachi: benXe.diachi,
@@ -76,7 +83,10 @@ export async function suaBenXe(benXe) {
       `https://localhost:7057/api/Benxe/${benXe.mabenxe}`,
       {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken("admin")}`,
+        },
         body: JSON.stringify({
           tenbenxe: benXe.tenbenxe,
           diachi: benXe.diachi,

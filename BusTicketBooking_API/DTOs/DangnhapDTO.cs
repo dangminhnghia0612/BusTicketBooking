@@ -4,6 +4,5 @@
     {
         public string Tendangnhap { get; set; } = null!;
         public string Matkhau { get; set; } = null!;
-        public string? Sodienthoai { get; set; }
     }
 }

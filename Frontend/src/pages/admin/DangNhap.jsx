@@ -21,6 +21,7 @@ export default function DangNhap() {
         Cookies.set("hoten", data.hoten);
         Cookies.set("sdt", data.sdt);
         Cookies.set("anh", data.avatarURL);
+        Cookies.set("jwtTokenAdmin", data.token);
         Cookies.set("isLoggedIn", "true");
         navigate("/admin");
       } else {

@@ -1,9 +1,11 @@
+import { getToken } from "../lib/utils";
 export async function layDSChuyenXe() {
   try {
     const response = await fetch("https://localhost:7057/api/Chuyenxe", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken("admin")}`,
       },
     });
     const data = await response.json();
@@ -22,6 +24,7 @@ export async function xoaChuyenXe(maChuyenXe) {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken("admin")}`,
         },
       }
     );
@@ -36,7 +39,10 @@ export async function themChuyenXe(chuyenXe) {
   try {
     const response = await fetch(`https://localhost:7057/api/Chuyenxe`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken("admin")}`,
+      },
       body: JSON.stringify({
         maTuyenxe: chuyenXe.maTuyenXe,
         maXe: chuyenXe.maXe,
@@ -56,7 +62,10 @@ export async function suaChuyenXe(chuyenXe) {
       `https://localhost:7057/api/Chuyenxe/${chuyenXe.maChuyenXe}`,
       {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken("admin")}`,
+        },
         body: JSON.stringify({
           maTuyenxe: chuyenXe.maTuyenXe,
           maXe: chuyenXe.maXe,

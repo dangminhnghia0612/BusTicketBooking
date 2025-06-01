@@ -14,10 +14,12 @@ namespace BusTicketBooking_API.Controllers
     public class QuantrivienController : ControllerBase
     {
         private readonly QLBanvexeDbContext _context;
+        private readonly IJwtService _jwtService;
         private readonly IConfiguration _configuration;
         public QuantrivienController(QLBanvexeDbContext context, IJwtService jwtService, IConfiguration configuration)
         {
             _context = context;
+            _jwtService = jwtService;
             _configuration = configuration;
         }
         [HttpPost("Captaikhoan")]
@@ -68,11 +70,15 @@ namespace BusTicketBooking_API.Controllers
                 {
                     return BadRequest(new { message = "Mật khẩu không chính xác." });
                 }
+
+                var token = _jwtService.TaoTokenQuantrivien(admin);
+
                 admin.Dangnhapcuoi = DateTime.Now;
                 await _context.SaveChangesAsync();
                 return Ok(new
                 {
                     message = "Đăng nhập thành công.",
+                    token = token,
                     hoten = admin.Hoten,
                     sdt = admin.Sodienthoai,
                     ma = admin.MaQuantrivien,

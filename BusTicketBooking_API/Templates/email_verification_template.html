@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác thực Email</title>
+    <style>
+        /* Reset styles for email clients */
+        body, table, td, p, a, li, blockquote {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+            border: 0;
+            height: auto;
+            line-height: 100%;
+            outline: none;
+            text-decoration: none;
+        }
+
+        /* Main styles */
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+            .header h1 {
+                color: #ffffff;
+                margin: 0;
+                font-size: 28px;
+                font-weight: 600;
+            }
+
+        .content {
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+            .content h2 {
+                color: #333333;
+                font-size: 24px;
+                margin-bottom: 20px;
+                font-weight: 600;
+            }
+
+            .content p {
+                color: #666666;
+                font-size: 16px;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+
+        .verification-code {
+            background-color: #f8f9fa;
+            border: 2px dashed #ff6b35;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            display: inline-block;
+        }
+
+        .code {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ff6b35;
+            letter-spacing: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .verify-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+            .verify-button:hover {
+                background: linear-gradient(135deg, #e55a2b, #e8841a);
+                transform: translateY(-2px);
+            }
+
+        .info-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+            .info-box p {
+                margin: 0;
+                color: #856404;
+                font-size: 14px;
+            }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+            .footer p {
+                color: #6c757d;
+                font-size: 14px;
+                margin: 5px 0;
+            }
+
+        .social-links {
+            margin: 20px 0;
+        }
+
+            .social-links a {
+                display: inline-block;
+                margin: 0 10px;
+                color: #6c757d;
+                text-decoration: none;
+            }
+
+        /* Responsive styles */
+        @media only screen and (max-width: 600px) {
+            .email-container {
+                width: 100% !important;
+            }
+
+            .content {
+                padding: 20px !important;
+            }
+
+            .header {
+                padding: 30px 20px !important;
+            }
+
+                .header h1 {
+                    font-size: 24px !important;
+                }
+
+            .code {
+                font-size: 28px !important;
+                letter-spacing: 4px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🔐 Xác Thực Email</h1>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <h2>Chào mừng {{HoTen}}!</h2>
+            <p>Cảm ơn bạn đã đăng ký tài khoản để sử dụng dịch vụ từ Nhà xe Minh Nghĩa. Để hoàn tất quá trình đăng ký, vui lòng xác thực địa chỉ email của bạn.</p>
+
+            <!-- Verification Code -->
+            <!--<div class="verification-code">
+                <div class="code">{VERIFICATION_CODE}</div>
+            </div>-->
+
+            <!--<p>Nhập mã xác thực trên vào ứng dụng để hoàn tất quá trình đăng ký.</p>-->
+
+            <!-- Verify Button -->
+            <a href="{{VerificationLink}}" class="verify-button">Xác Thực Email</a>
+
+            <!-- Important Information -->
+            <div class="info-box">
+                <p><strong>Lưu ý quan trọng:</strong></p>
+                <p>• Mã xác thực này có hiệu lực trong <strong>5</strong> phút</p>
+                <p>• Nếu bạn không yêu cầu xác thực này, vui lòng bỏ qua email này</p>
+                <!--<p>• Không chia sẻ mã xác thực với bất kỳ ai</p>-->
+            </div>
+
+            <p>Nếu bạn gặp khó khăn trong việc xác thực, vui lòng liên hệ với chúng tôi qua email hỗ trợ.</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Nhà xe Minh Nghĩa</strong></p>
+            <p>180 Cao Lỗ, Phường 4, Quận 8, TP. HCM</p>
+            <p>Email: DH52111357@student.stu.edu.vn | Hotline: 0901234567</p>
+
+            <!--<div class="social-links">
+                <a href="{FACEBOOK_LINK}">Facebook</a>
+                <a href="{TWITTER_LINK}">Twitter</a>
+                <a href="{WEBSITE_LINK}">Website</a>
+            </div>-->
+
+            <p style="font-size: 12px; color: #adb5bd;">
+                © 2025 {Nhà xe Minh Nghĩa}. Tất cả quyền được bảo lưu.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

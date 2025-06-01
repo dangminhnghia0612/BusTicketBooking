@@ -85,5 +85,6 @@ function dangXuat() {
   Cookies.remove("ma");
   Cookies.remove("sdt");
   Cookies.remove("anh");
+  Cookies.remove("jwtTokenAdmin");
   window.location.href = "/admin/dangnhap";
 }

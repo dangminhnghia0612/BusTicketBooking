@@ -4,7 +4,7 @@ import TimChuyenXe from "../../components/user/TimChuyenXe";
 import Footer from "../../components/user/Footer";
 import Banner from "../../components/user/Banner";
 
-export default function HomePage() {
+export default function TrangChu() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
