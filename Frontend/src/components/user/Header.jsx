@@ -1,8 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { User, Menu as MenuIcon, X, LogOut, ChevronDown } from "lucide-react";
 import Cookies from "js-cookie";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
   const userName = Cookies.get("tenUser");
   const avatar = Cookies.get("avatarUser");
@@ -36,7 +40,9 @@ export default function Header() {
   }, [openDropdown]);
 
   const handleLogin = () => {
-    window.location.href = "/dangnhap";
+    navigate("/dangnhap", {
+      state: { from: location.pathname + location.search },
+    });
   };
 
   return (

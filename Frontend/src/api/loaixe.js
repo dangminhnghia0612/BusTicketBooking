@@ -66,3 +66,30 @@ export async function suaLoaiXe(id, formData) {
     console.error("Lỗi fetch API loại xe:", error);
   }
 }
+
+export async function laySoDoGhe(maChuyenXe) {
+  try {
+    const response = await fetch(
+      `https://localhost:7057/api/Loaixe/laySoDoGhe/${maChuyenXe}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response.ok) {
+      const error = await response.json();
+      console.error("Lỗi khi gọi API:", error.message);
+      return null;
+    }
+    const data = await response.json();
+
+    const sodogheObject = JSON.parse(data.sodoghe);
+
+    return sodogheObject;
+  } catch (error) {
+    console.error("Lỗi fetch API loại xe:", error);
+    return null;
+  }
+}

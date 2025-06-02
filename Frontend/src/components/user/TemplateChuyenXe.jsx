@@ -1,22 +1,27 @@
 import { useEffect, useState } from "react";
 import { MapPin, Clock, Users, ArrowRight } from "lucide-react";
-import { formatDateTime, formatPrice } from "../../lib/utils.js";
-import { useLocation } from "react-router-dom";
+import {
+  formatDateTime,
+  formatPrice,
+  getParamsFromURL,
+} from "../../lib/utils.js";
+import { useLocation, useNavigate } from "react-router-dom";
 import { timChuyenXe } from "../../api/chuyenxe.js";
 
 export default function TemplateChuyenXe({ props }) {
   // const [activeTab, setActiveTab] = useState("price");
   const location = useLocation();
+  const navigate = useNavigate();
   const [dsChuyenXe, setDsChuyenXe] = useState([]);
 
   // Lấy tham số từ URL
-  const searchParams = new URLSearchParams(location.search);
-  const diemDi = searchParams.get("diemDi") || props.diemDi || "";
-  const maTinhDi = searchParams.get("maTinhDi") || props.maTinhDi || "";
-  const diemDen = searchParams.get("diemDen") || props.diemDen || "";
-  const maTinhDen = searchParams.get("maTinhDen") || props.maTinhDen || "";
-  const ngayDi = searchParams.get("ngayDi") || props.ngayDi || "";
-  const soLuongVe = searchParams.get("soLuongVe") || props.soLuongVe || "";
+  const params = getParamsFromURL(location.search);
+  const diemDi = params.diemDi || props.diemDi || "";
+  const maTinhDi = params.maTinhDi || props.maTinhDi || "";
+  const diemDen = params.diemDen || props.diemDen || "";
+  const maTinhDen = params.maTinhDen || props.maTinhDen || "";
+  const ngayDi = params.ngayDi || props.ngayDi || "";
+  const soLuongVe = params.soLuongVe || props.soLuongVe || "";
 
   useEffect(() => {
     async function fetchData() {
@@ -25,6 +30,20 @@ export default function TemplateChuyenXe({ props }) {
     }
     fetchData();
   }, [maTinhDi, maTinhDen, ngayDi, soLuongVe]);
+
+  const handleChonChuyen = (chuyenxe) => {
+    const params = new URLSearchParams({
+      maChuyenXe: chuyenxe.ma_Chuyenxe,
+      diemDi,
+      diemDen,
+      benDi: chuyenxe.bendi,
+      benDen: chuyenxe.benden,
+      ngayDi: chuyenxe.giodi,
+      giaVe: chuyenxe.giave,
+      soLuongVe,
+    }).toString();
+    navigate(`/dat-ve?${params}`);
+  };
 
   // const tabs = [
   //   {
@@ -205,7 +224,10 @@ export default function TemplateChuyenXe({ props }) {
                       </div>
                     </div>
 
-                    <button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    <button
+                      className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-8 py-3 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                      onClick={() => handleChonChuyen(trip)}
+                    >
                       Chọn chuyến
                     </button>
                   </div>

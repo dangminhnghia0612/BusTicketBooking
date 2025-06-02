@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LockIcon, UserIcon, MailIcon, PhoneIcon } from "lucide-react";
 import AlertDialog from "../../components/common/AlertDialog";
 import FullScreenSpinner from "../../components/common/FullScreenSpinner";
@@ -7,6 +8,9 @@ import { userLogin, userRegistration } from "../../api/auth";
 import { ktEmail, ktSDTHopLe, ChuanHoaSDT } from "../../lib/utils";
 
 export default function DangNhap() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
@@ -49,7 +53,8 @@ export default function DangNhap() {
           Cookies.set("emailUser", res.email);
           Cookies.set("avatarUser", res.avatarURL);
           Cookies.set("isUserLoggedIn", "true");
-          window.location.href = "/";
+          const redirectTo = location.state?.from || "/";
+          navigate(redirectTo, { replace: true });
         } else {
           setAlertMsg(res.message);
           setAlertOpen(true);

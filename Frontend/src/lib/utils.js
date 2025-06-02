@@ -54,3 +54,12 @@ export function ktSDTHopLe(phone) {
   const regex = /^(?:\+84|0)(3|5|7|8|9)\d{8}$/;
   return regex.test(phone);
 }
+
+export function getParamsFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const data = {};
+  for (const [key, value] of params.entries()) {
+    data[key] = value;
+  }
+  return data;
+}
