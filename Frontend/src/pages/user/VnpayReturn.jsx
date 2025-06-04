@@ -246,6 +246,7 @@ export default function VnpayReturn() {
             <a
               href="mailto:DH52111357@student.stu.edu.vn"
               className="text-blue-500 hover:underline"
+            >
               DH52111357@student.stu.edu.vn
             </a>
           </div>
