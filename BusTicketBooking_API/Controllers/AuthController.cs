@@ -69,7 +69,7 @@ namespace BusTicketBooking_API.Controllers
                 Hoten = dto.Hoten,
                 MaTrangthai = 1,
                 MaVaitro = 2,
-                Anh = "avtDefault.jpg",
+                Anh = "avtDefault.png",
                 Ngaytao = DateTime.Now,
                 Ngaycapnhat = DateTime.Now,
                 Token = verificationToken
@@ -125,6 +125,7 @@ namespace BusTicketBooking_API.Controllers
             {
                 Message = "Đăng nhập thành công",
                 Token = token,
+                MaKH = khachhang.MaKhachhang,
                 TenKH = khachhang.Hoten,
                 Sdt = khachhang.Sodienthoai,
                 Email = khachhang.Email,

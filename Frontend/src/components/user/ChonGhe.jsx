@@ -12,6 +12,9 @@ import Cookies from "js-cookie";
 import { laySoDoGhe } from "../../api/loaixe.js";
 import { layDSGheDaDat } from "../../api/chitietghe.js";
 import AlertDialog from "../common/AlertDialog.jsx";
+import { timKhachHang } from "../../api/khachhang.js";
+import { sendDatVeRequest } from "../../api/datve.js";
+import { thanhToanVnpay } from "../../api/thanhtoan.js";
 
 export default function ChonGhe() {
   const location = useLocation();
@@ -37,6 +40,7 @@ export default function ChonGhe() {
     ngayDi: params.ngayDi || "",
     giaVe: params.giaVe || 0,
   };
+  const tongTien = chuyenXe.giaVe * dsGheDaChon.length;
 
   useEffect(() => {
     if (Cookies.get("isUserLoggedIn") === "true") {
@@ -95,7 +99,7 @@ export default function ChonGhe() {
     }));
   };
 
-  const handleThanhToan = () => {
+  const handleThanhToan = async () => {
     if (
       !khachHang.hoten ||
       !khachHang.sdt ||
@@ -117,17 +121,50 @@ export default function ChonGhe() {
         setOpenAlert(true);
         return;
       } else {
-        const phoneNumber = ChuanHoaSDT(khachHang.sdt);
-        const thongTinDatVe = {
-          maChuyenXe: chuyenXe.maChuyenXe,
-          soGhe: dsGheDaChon.join(","),
-          tenKhachHang: khachHang.hoten,
-          sdt: phoneNumber,
-          email: khachHang.email,
-          tongtien: dsGheDaChon.length * chuyenXe.giaVe,
-          soluongve: dsGheDaChon.length,
+        const formatSdt = ChuanHoaSDT(khachHang.sdt);
+        var maKH = Cookies.get("maUser");
+        if (maKH) {
+          maKH = parseInt(maKH);
+        } else {
+          maKH = await timKhachHang(formatSdt, khachHang.email);
+          if (maKH) {
+            maKH = parseInt(maKH);
+          } else {
+            maKH = null;
+          }
+        }
+        const datVeRequest = {
+          Ma_Chuyenxe: chuyenXe.maChuyenXe,
+          Ma_Khachhang: maKH,
+          Soluong: dsGheDaChon.length,
+          Giagoc: tongTien,
+          Giasaukhuyenmai: tongTien,
+          Ghichu: null,
+          Tenkhachhang: khachHang.hoten,
+          Sodienthoai: formatSdt,
+          Email: khachHang.email,
+          dsGhe: dsGheDaChon,
         };
-        console.log("Thông tin đặt vé:", thongTinDatVe);
+        const result = await sendDatVeRequest(datVeRequest);
+        if (result.message === "Đặt vé thành công") {
+          // alert("Đặt vé thành công. Vui lòng thanh toán!");
+          setAlertMessage("Đặt vé thành công. Vui lòng thanh toán!");
+          setOpenAlert(true);
+          await thanhToanVnpay(
+            khachHang.hoten,
+            tongTien,
+            result.maDatve,
+            dsGheDaChon
+          );
+        } else if (result.message === "Ghế đã có người đặt") {
+          // alert("Ghế đã có người đặt");
+          setAlertMessage("Ghế đã có người đặt. Vui lòng chọn ghế khác.");
+          setOpenAlert(true);
+          window.location.reload();
+        } else {
+          setAlertMessage(result.message || "Đặt vé thất bại");
+          setOpenAlert(true);
+        }
       }
     }
   };
@@ -282,7 +319,7 @@ export default function ChonGhe() {
               <div className="grid grid-cols-2">
                 <div className="text-gray-600">Tổng tiền</div>
                 <div className="text-right text-green-600 font-medium">
-                  {formatPrice(chuyenXe.giaVe * dsGheDaChon.length)}
+                  {formatPrice(tongTien)}
                 </div>
               </div>
             </div>

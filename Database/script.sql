@@ -90,7 +90,7 @@ CREATE PROC sp_XoaKhachHang
 AS
 BEGIN
     DELETE FROM Khachhang
-    WHERE Ma_Trangthai = 1 AND (Token IS NOT NULL) AND DATEDIFF(MINUTE, Ngaytao, GETDATE()) >= 5;
+    WHERE Ma_Trangthai = 1 AND (Token IS NOT NULL) AND DATEDIFF(MINUTE, Ngaytao, GETDATE()) > 5;
 END
 GO
 
@@ -104,7 +104,7 @@ BEGIN
     INSERT INTO @DanhSach (MaDatve)
     SELECT Ma_Datve
     FROM Datve
-    WHERE Ma_Tinhtrang = 1 AND DATEDIFF(MINUTE, Ngaydat, GETDATE()) > 16;
+    WHERE Ma_Tinhtrang = 1 AND DATEDIFF(MINUTE, Ngaydat, GETDATE()) > 15;
 
     UPDATE Datve
     SET Ma_Tinhtrang = 2

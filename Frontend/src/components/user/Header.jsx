@@ -183,6 +183,7 @@ export default function Header() {
 
 function handleDangXuat() {
   Cookies.remove("isUserLoggedIn");
+  Cookies.remove("maUser");
   Cookies.remove("tenUser");
   Cookies.remove("sdtUser");
   Cookies.remove("emailUser");

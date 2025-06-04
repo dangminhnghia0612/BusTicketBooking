@@ -48,6 +48,7 @@ export default function DangNhap() {
         const res = await userLogin(form.email, form.password);
         if (res.message === "Đăng nhập thành công") {
           Cookies.set("jwtTokenUser", res.token);
+          Cookies.set("maUser", res.maKH);
           Cookies.set("tenUser", res.tenKH);
           Cookies.set("sdtUser", res.sdt);
           Cookies.set("emailUser", res.email);

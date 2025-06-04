@@ -24,6 +24,7 @@ import TrangChu from "./pages/user/TrangChu";
 import DangNhapUser from "./pages/user/DangNhap";
 import TimChuyenXePage from "./pages/user/TimChuyenXePage";
 import DatVePage from "./pages/user/DatVePage";
+import VnpayReturn from "./pages/user/VnpayReturn";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/dangnhap" element={<DangNhapUser />} />
         <Route path="/tim-chuyen-xe" element={<TimChuyenXePage />} />
         <Route path="/dat-ve" element={<DatVePage />} />
+        <Route path="/vnpay-return" element={<VnpayReturn />} />
 
         <Route path="/admin/dangnhap" element={<DangNhap />} />
         <Route
