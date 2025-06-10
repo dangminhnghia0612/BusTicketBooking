@@ -1,5 +1,13 @@
 import { useState, useRef, useEffect } from "react";
-import { User, Menu as MenuIcon, X, LogOut, ChevronDown } from "lucide-react";
+import {
+  User,
+  Menu as MenuIcon,
+  X,
+  LogOut,
+  ChevronDown,
+  History,
+  KeyRound,
+} from "lucide-react";
 import Cookies from "js-cookie";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -116,14 +124,26 @@ export default function Header() {
               {/* Dropdown menu */}
               {openDropdown && (
                 <div
-                  className="absolute right-0 top-12 w-40 bg-white rounded shadow-lg border z-50 animate-fade-in"
+                  className="absolute right-0 top-12 w-50 bg-white rounded shadow-lg border z-50 animate-fade-in"
                   onMouseLeave={() => setOpenDropdown(false)}
                 >
                   <a
-                    href="/thong-tin-tai-khoan"
+                    href="/thong-tin"
                     className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
                   >
-                    <User className="w-4 h-4 mr-2" /> Hồ sơ
+                    <User className="w-4 h-4 mr-2" /> Thông tin tài khoản
+                  </a>
+                  <a
+                    href="/lich-su-mua-ve"
+                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    <History className="w-4 h-4 mr-2" /> Lịch sử mua vé
+                  </a>
+                  <a
+                    href="/dat-lai-mat-khau"
+                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  >
+                    <KeyRound className="w-4 h-4 mr-2" /> Đặt lại mật khẩu
                   </a>
                   <button
                     className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100"

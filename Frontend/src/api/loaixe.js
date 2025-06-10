@@ -1,7 +1,9 @@
 import { getToken } from "../lib/utils";
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function layDSLoaiXe() {
   try {
-    const response = await fetch("https://localhost:7057/api/Loaixe", {
+    const response = await fetch(`${API_URL}/Loaixe`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -18,16 +20,13 @@ export async function layDSLoaiXe() {
 
 export async function xoaLoaiXe(maLoaiXe) {
   try {
-    const response = await fetch(
-      `https://localhost:7057/api/Loaixe/${maLoaiXe}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken("admin")}`,
-        },
-      }
-    );
+    const response = await fetch(`${API_URL}/Loaixe/${maLoaiXe}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken("admin")}`,
+      },
+    });
     const data = await response.json();
     return data;
   } catch (error) {
@@ -37,7 +36,7 @@ export async function xoaLoaiXe(maLoaiXe) {
 
 export async function themLoaiXe(formData) {
   try {
-    const response = await fetch(`https://localhost:7057/api/Loaixe`, {
+    const response = await fetch(`${API_URL}/Loaixe`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${getToken("admin")}`,
@@ -53,7 +52,7 @@ export async function themLoaiXe(formData) {
 
 export async function suaLoaiXe(id, formData) {
   try {
-    const response = await fetch(`https://localhost:7057/api/Loaixe/${id}`, {
+    const response = await fetch(`${API_URL}/Loaixe/${id}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${getToken("admin")}`,
@@ -69,15 +68,12 @@ export async function suaLoaiXe(id, formData) {
 
 export async function laySoDoGhe(maChuyenXe) {
   try {
-    const response = await fetch(
-      `https://localhost:7057/api/Loaixe/laySoDoGhe/${maChuyenXe}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${API_URL}/Loaixe/laySoDoGhe/${maChuyenXe}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     if (!response.ok) {
       const error = await response.json();
       console.error("Lỗi khi gọi API:", error.message);

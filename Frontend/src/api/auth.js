@@ -1,8 +1,10 @@
 import { ChuanHoaSDT, ktSDTHopLe, ktEmail } from "../lib/utils.js";
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function adminLogin(username, password) {
   try {
     const response = await fetch(
-      "https://localhost:7057/api/Quantrivien/Dangnhap",
+      `${API_URL}/Quantrivien/Dangnhap`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -35,7 +37,7 @@ export async function userLogin(username, password) {
     username = ChuanHoaSDT(username);
   }
   try {
-    const response = await fetch("https://localhost:7057/api/Auth/dangnhap", {
+    const response = await fetch(`${API_URL}/Auth/dangnhap`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +56,7 @@ export async function userLogin(username, password) {
 
 export async function userRegistration(fullname, email, phone, password) {
   try {
-    const response = await fetch("https://localhost:7057/api/Auth/dangky", {
+    const response = await fetch(`${API_URL}/Auth/dangky`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

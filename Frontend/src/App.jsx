@@ -25,6 +25,10 @@ import DangNhapUser from "./pages/user/DangNhap";
 import TimChuyenXePage from "./pages/user/TimChuyenXePage";
 import DatVePage from "./pages/user/DatVePage";
 import VnpayReturn from "./pages/user/VnpayReturn";
+import UserProtectedRoute from "./components/user/UserProtectedRoute";
+import ThongTin from "./pages/user/taikhoan/ThongTin";
+import LichSuMuaVe from "./pages/user/taikhoan/LichSuMuaVe";
+import DoiMatKhau from "./pages/user/taikhoan/DoiMatKhau";
 
 function App() {
   return (
@@ -35,6 +39,17 @@ function App() {
         <Route path="/tim-chuyen-xe" element={<TimChuyenXePage />} />
         <Route path="/dat-ve" element={<DatVePage />} />
         <Route path="/vnpay-return" element={<VnpayReturn />} />
+        <Route
+          element={
+            <UserProtectedRoute>
+              <Outlet />
+            </UserProtectedRoute>
+          }
+        >
+          <Route path="/thong-tin" element={<ThongTin />} />
+          <Route path="/lich-su-mua-ve" element={<LichSuMuaVe />} />
+          <Route path="/dat-lai-mat-khau" element={<DoiMatKhau />} />
+        </Route>
 
         <Route path="/admin/dangnhap" element={<DangNhap />} />
         <Route

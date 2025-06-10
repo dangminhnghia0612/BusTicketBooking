@@ -1,7 +1,9 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function layDSGheDaDat(maChuyenXe) {
   try {
     const response = await fetch(
-      `https://localhost:7057/api/Chitietghe/layDSGheDaDat/${maChuyenXe}`,
+      `${API_URL}/Chitietghe/layDSGheDaDat/${maChuyenXe}`,
       {
         method: "GET",
         headers: {

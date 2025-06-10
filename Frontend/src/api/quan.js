@@ -1,7 +1,9 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function layDSQuanCuaTinh(maTinh) {
   try {
     const response = await fetch(
-      `https://localhost:7057/api/Quan/lay-ds-quan-cua-tinh/${maTinh}`,
+      `${API_URL}/Quan/lay-ds-quan-cua-tinh/${maTinh}`,
       {
         method: "GET",
         headers: {

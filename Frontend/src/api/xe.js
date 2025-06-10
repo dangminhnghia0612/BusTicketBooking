@@ -1,7 +1,9 @@
 import { getToken } from "../lib/utils";
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function layDSXe() {
   try {
-    const response = await fetch("https://localhost:7057/api/Xe", {
+    const response = await fetch(`${API_URL}/Xe`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -18,7 +20,7 @@ export async function layDSXe() {
 
 export async function xoaXe(maXe) {
   try {
-    const response = await fetch(`https://localhost:7057/api/Xe/${maXe}`, {
+    const response = await fetch(`${API_URL}/Xe/${maXe}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +36,7 @@ export async function xoaXe(maXe) {
 
 export async function themXe(xe) {
   try {
-    const response = await fetch(`https://localhost:7057/api/Xe/ThemXe`, {
+    const response = await fetch(`${API_URL}/Xe/ThemXe`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +58,7 @@ export async function themXe(xe) {
 
 export async function suaXe(xe) {
   try {
-    const response = await fetch(`https://localhost:7057/api/Xe/${xe.maxe}`, {
+    const response = await fetch(`${API_URL}/Xe/${xe.maxe}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -78,16 +80,13 @@ export async function suaXe(xe) {
 
 export async function layDSXeTheoNoiDau(maBenXe) {
   try {
-    const response = await fetch(
-      `https://localhost:7057/api/Xe/layXeTheoNoiDau/${maBenXe}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken("admin")}`,
-        },
-      }
-    );
+    const response = await fetch(`${API_URL}/Xe/layXeTheoNoiDau/${maBenXe}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken("admin")}`,
+      },
+    });
     const data = await response.json();
     return data;
   } catch (error) {

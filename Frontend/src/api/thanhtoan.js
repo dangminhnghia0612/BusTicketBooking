@@ -1,5 +1,7 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function thanhToanVnpay(tenKhachHang, soTien, maDatVe, dsGhe) {
-  fetch("https://localhost:7057/api/Thanhtoan", {
+  fetch(`${API_URL}/Thanhtoan`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

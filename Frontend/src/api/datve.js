@@ -1,7 +1,9 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function sendDatVeRequest(datVeRequest) {
   try {
     // Gửi yêu cầu POST đến API
-    const response = await fetch("https://localhost:7057/api/Datve", {
+    const response = await fetch(`${API_URL}/Datve`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
